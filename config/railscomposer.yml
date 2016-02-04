@@ -1,0 +1,31 @@
+# This application was generated with Rails Composer
+
+development:
+  apps4: rails-devise-roles
+  announcements: none
+  dev_webserver: puma
+  prod_webserver: puma
+  database: sqlite
+  templates: erb
+  tests: rspec
+  continuous_testing: none
+  frontend: none
+  email: smtp
+  authentication: devise
+  devise_modules: default
+  omniauth_provider: 
+  authorization: roles
+  form_builder: simple_form
+  pages: users
+  layouts: 
+  locale: 
+  analytics: 
+  deployment: 
+  ban_spiders: 
+  github: 
+  local_env_file: 
+  quiet_assets: 
+  better_errors: 
+  pry: 
+  rvmrc: 
+  dashboard: none
