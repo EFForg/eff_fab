@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204025248) do
+ActiveRecord::Schema.define(version: 20160211025416) do
+
+  create_table "fabs", force: :cascade do |t|
+    t.integer  "users_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "gif_tag_file_name"
+    t.string   "gif_tag_content_type"
+    t.integer  "gif_tag_file_size"
+    t.datetime "gif_tag_updated_at"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

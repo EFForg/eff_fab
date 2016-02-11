@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Fabs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Users</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fabs.each do |fab| %>
+      <tr>
+        <td><%= fab.users_id %></td>
+        <td><%= link_to 'Show', fab %></td>
+        <td><%= link_to 'Edit', edit_fab_path(fab) %></td>
+        <td><%= link_to 'Destroy', fab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fab', new_fab_path %>

@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Users:</strong>
+  <%= @fab.users_id %>
+  <%= image_tag @fab.gif_tag.url %>
+</p>
+
+<%= link_to 'Edit', edit_fab_path(@fab) %> |
+<%= link_to 'Back', fabs_path %>

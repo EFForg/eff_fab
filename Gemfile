@@ -16,6 +16,7 @@ group :development do
 end
 gem 'devise'
 gem 'figaro'
+gem "paperclip", "~> 4.3"
 gem 'puma'
 gem 'simple_form'
 group :development do
