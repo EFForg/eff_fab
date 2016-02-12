@@ -4,6 +4,11 @@
 <td>
   <%= form_for(user) do |f| %>
     <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+
+      <%= f.fields_for :fabs do |builder| %>
+       <%= render '/fabs/fab_fields', :f => builder %>
+      <% end %>
+
     <%= f.submit 'Change Role', :class => 'button-xs' %>
   <% end %>
 </td>
