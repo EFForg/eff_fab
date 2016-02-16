@@ -1,10 +1,12 @@
 class FabsController < ApplicationController
+  before_action :set_user
   before_action :set_fab, only: [:show, :edit, :update, :destroy]
+
 
   # GET /fabs
   # GET /fabs.json
   def index
-    @fabs = Fab.all
+    @fabs = @user.fabs
   end
 
   # GET /fabs/1
@@ -64,7 +66,12 @@ class FabsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fab
-      @fab = Fab.find(params[:id])
+      # @fab = Fab.find(params[:id])
+      @fab = @user.fab
+    end
+
+    def set_user
+      @user = User.find(params[:user_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

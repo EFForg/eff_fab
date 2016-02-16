@@ -1,8 +1,9 @@
-<%= simple_form_for(@fab) do |f| %>
+<%= simple_form_for([@user, @fab]) do |f| %>
   <%= f.error_notification %>
+  <%= f.hidden_field :period, value: @fab.period %>
 
   <div class="form-inputs">
-    <%= f.input :users_id %>
+    <%= f.input :user_id %>
     <%= f.file_field :gif_tag %>
   </div>
 

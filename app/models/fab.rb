@@ -6,4 +6,9 @@ class Fab < ActiveRecord::Base
   validates_attachment_content_type :gif_tag, content_type: /\Aimage\/.*\Z/
 
   belongs_to :user
+
+  has_many :notes
+
+  accepts_nested_attributes_for :notes, reject_if: :all_blank, :allow_destroy => true
+
 end
