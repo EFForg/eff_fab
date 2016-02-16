@@ -69,6 +69,8 @@ class FabsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fab_params
-      params.require(:fab).permit(:users_id, :gif_tag)
+      params.require(:fab).permit(:user_id, :gif_tag,
+        notes_attributes: [:id, :body, :_destroy]
+      )
     end
 end

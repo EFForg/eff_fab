@@ -13,7 +13,7 @@
   <tbody>
     <% @fabs.each do |fab| %>
       <tr>
-        <td><%= fab.users_id %></td>
+        <td><%= fab.user_id %></td>
         <td><%= link_to 'Show', fab %></td>
         <td><%= link_to 'Edit', edit_fab_path(fab) %></td>
         <td><%= link_to 'Destroy', fab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
