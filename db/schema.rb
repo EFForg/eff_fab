@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20160211025416) do
 
   create_table "fabs", force: :cascade do |t|
     t.integer  "user_id"
+    t.datetime "period"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.string   "gif_tag_file_name"
