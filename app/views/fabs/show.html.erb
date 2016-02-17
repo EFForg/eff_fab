@@ -6,10 +6,7 @@
   <%= image_tag @fab.gif_tag.url %>
 </p>
 
-
-  <!--  FIXME: make dry with helper-->
   <%= show_fab_notes forward: false %>
-
   <%= show_fab_notes forward: true %>
 
   <div>
@@ -19,4 +16,5 @@
 </div>
 
 <%= link_to 'Edit', edit_user_fab_path %> |
+<%= link_to 'Destroy', [@user, @fab], method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', user_fabs_path %>

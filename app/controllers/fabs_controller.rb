@@ -29,7 +29,6 @@ class FabsController < ApplicationController
   def create
     @fab = @user.fabs.new(fab_params)
 
-
     respond_to do |format|
       if @fab.save
         format.html { redirect_to [@user, @fab], notice: 'Fab was successfully created.' }
@@ -60,7 +59,7 @@ class FabsController < ApplicationController
   def destroy
     @fab.destroy
     respond_to do |format|
-      format.html { redirect_to fabs_url, notice: 'Fab was successfully destroyed.' }
+      format.html { redirect_to user_fabs_url, notice: 'Fab was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -78,8 +77,8 @@ class FabsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fab_params
-      params.require(:fab).permit(:user_id, :gif_tag,
-        notes_attributes: [:id, :body, :_destroy]
+      params.require(:fab).permit(:user_id, :gif_tag, :period,
+        notes_attributes: [:id, :body, :_destroy, :forward]
       )
     end
 end
