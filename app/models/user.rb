@@ -16,4 +16,11 @@ class User < ActiveRecord::Base
 
   # accepts_nested_attributes_for :fabs
 
+  # this function returns the FAB due for the upcoming week, or builds it if
+  # no such fab already exists
+  def upcoming_fab
+   # FIXME: this is a stub
+    fabs.find_or_create_this_periods_fab
+  end
+
 end

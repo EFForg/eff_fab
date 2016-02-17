@@ -1,17 +1,23 @@
 <td>
   <%= link_to user.email, user %>
 </td>
-<td>
-  <%= form_for(user) do |f| %>
-    <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+  <%= simple_form_for(user) do |f| %>
+    <td>
+      <%# f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+    </td>
 
-      <%= f.fields_for :fabs do |builder| %>
-       <%= render '/fabs/fab_fields', :f => builder %>
-      <% end %>
+    <td>
+      <div class="nested-fields"</div>
+        <%= f.fields_for :fabs do |builder| %>
+          <%= render 'fab_fields', :f => builder %>
+        <% end %>
+      </div>
 
-    <%= f.submit 'Change Role', :class => 'button-xs' %>
+    </td>
+
+    <td>
+      <%# f.submit 'Submit', :class => 'button-xs' %>
+    </td>
+
   <% end %>
-</td>
-<td>
-  <%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user %>
 </td>

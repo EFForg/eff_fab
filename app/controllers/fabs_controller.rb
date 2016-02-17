@@ -16,7 +16,7 @@ class FabsController < ApplicationController
 
   # GET /fabs/new
   def new
-    @fab = @user.fabs.new
+    @fab = @user.fabs.find_or_build_this_periods_fab
 
   end
 
@@ -45,7 +45,7 @@ class FabsController < ApplicationController
   def update
     respond_to do |format|
       if @fab.update(fab_params)
-        format.html { redirect_to @fab, notice: 'Fab was successfully updated.' }
+        format.html { redirect_to [@user, @fab], notice: 'Fab was successfully updated.' }
         format.json { render :show, status: :ok, location: @fab }
       else
         format.html { render :edit }
@@ -67,7 +67,6 @@ class FabsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fab
-      # @fab = Fab.find(params[:id])
       @fab = @user.fabs.find(params[:id])
     end
 
