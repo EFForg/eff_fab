@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get '/v', to: "visitors#version"
   root to: 'visitors#index'
   devise_for :users
 
