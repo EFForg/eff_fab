@@ -1,0 +1,13 @@
+<% title = forward ? 'forward' : 'back' %>
+<% time_span = @fab.send("display_#{title}_time_span") %>
+<% notes = forward ? @fab.forward : @fab.backward %>
+
+<div><%= title.capitalize %> (<%= time_span %>):
+  <% notes.each do |x| %>
+    <div class="nested-fields"</div>
+      <%= f.fields_for(:notes, x) do |builder| %>
+        <%= render 'note_fields', :f => builder, :x => x %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

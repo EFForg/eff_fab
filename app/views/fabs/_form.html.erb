@@ -3,10 +3,22 @@
   <%= f.hidden_field :period, value: @fab.period %>
 
   <div class="form-inputs">
-    <%= f.input :user_id %>
-    <%= f.file_field :gif_tag %>
+    <div>Period:
+      <span><%= @fab.display_back_time_span %></span>
+    </div>
+    <div>User:
+      <span><%= @user.email %></span>
+    </div>
+
+    <%= display_fab_note_inputs form: f, forward: false %>
+    <%= display_fab_note_inputs form: f, forward: true %>
+
+    <div>Gif Tag:
+      <%= f.file_field :gif_tag %>
+    </div>
   </div>
 
+  <br>
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
