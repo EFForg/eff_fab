@@ -23,20 +23,20 @@ class Fab < ActiveRecord::Base
 
   def setup_children
     if notes.empty?
-      3.times { notes.build(forward: true)}
-      3.times { notes.build(forward: false)}
+      3.times { notes.build(forward: true) }
+      3.times { notes.build(forward: false) }
     end
   end
 
   def forward
     n = notes.where(forward: true)
-    n = notes.select {|n| n.forward} if n.empty?
+    n = notes.select { |n| n.forward } if n.empty?
     n
   end
 
   def backward
     n = notes.where(forward: false)
-    n = notes.select {|n| !n.forward} if n.empty?
+    n = notes.select { |n| !n.forward } if n.empty?
     n
   end
 

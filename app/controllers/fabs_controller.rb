@@ -2,7 +2,6 @@ class FabsController < ApplicationController
   before_action :set_user
   before_action :set_fab, only: [:show, :edit, :update, :destroy]
 
-
   # GET /fabs
   # GET /fabs.json
   def index
@@ -17,7 +16,6 @@ class FabsController < ApplicationController
   # GET /fabs/new
   def new
     @fab = @user.fabs.find_or_build_this_periods_fab
-
   end
 
   # GET /fabs/1/edit
