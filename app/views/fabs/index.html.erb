@@ -2,25 +2,13 @@
 
 <h1>Listing Fabs</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Users</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @fabs.each do |fab| %>
-      <tr>
-        <td><%= fab.user_id %></td>
-        <td><%= link_to 'Show', [@user, fab] %></td>
-        <td><% link_to 'Edit', edit_user_fab_path(@user, fab) %></td>
-        <td><%= link_to 'Destroy', [@user, fab], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="fabs">
+  <% @fabs.each do |fab| %>
+    <div class="fab">
+      <%= render partial: 'index_fab_back', locals: {fab: fab} %>
+    </div>
+  <% end %>
+</div>
 
 <br>
 
