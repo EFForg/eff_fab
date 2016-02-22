@@ -8,6 +8,8 @@
 u = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << u.email
 
+u.name = "Hugh D’Andrade"
+u.save
 
 this_monday = DateTime.now - DateTime.now.wday + 1.day
 last_monday = this_monday - 7.days
