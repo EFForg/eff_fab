@@ -5,5 +5,17 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = CreateAdminService.new.call
-puts 'CREATED ADMIN USER: ' << user.email
+u = CreateAdminService.new.call
+puts 'CREATED ADMIN USER: ' << u.email
+
+
+this_monday = DateTime.now - DateTime.now.wday + 1.day
+last_monday = this_monday - 7.days
+
+f = u.fabs.create(period: last_monday)
+3.times { f.notes.create(body: "I did a thing", forward: false) }
+3.times { f.notes.create(body: "I will do a thing", forward: true) }
+
+f = u.fabs.create(period: this_monday)
+3.times { f.notes.create(body: "I was SUPER", forward: false) }
+3.times { f.notes.create(body: "I will be more super", forward: true) }
