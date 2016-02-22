@@ -40,15 +40,6 @@ class Fab < ActiveRecord::Base
     n
   end
 
-  def period
-    # FIXME: this method is a stub
-
-    # FIXME: this method needs to be changed into a database column
-    # this stub is returning the previous monday as a DateTime object
-    p_start = (DateTime.now - DateTime.now.wday + 1)
-  end
-
-
   # def present_period
   #   p_start = period
   #
