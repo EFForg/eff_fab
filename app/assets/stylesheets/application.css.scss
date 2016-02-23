@@ -13,3 +13,29 @@
  *= require_tree .
  *= require_self
  */
+
+ $normal-font: Calibri, sans-serif;
+
+
+.clear {
+  clear:both;
+}
+
+///////////
+// LINKS //
+///////////
+
+$link-color: #f33;
+$link-color-hover: #f00;
+$link-bg-color-hover: #eff;
+
+a {
+  color: $link-color;
+
+  &:visited { color: $link-color; }
+
+  &:hover {
+    color: $link-color-hover;
+    background-color: $link-bg-color-hover;
+  }
+}

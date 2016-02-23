@@ -6,6 +6,7 @@ class FabsController < ApplicationController
   # GET /fabs.json
   def index
     @fabs = @user.fabs
+    @fab = @user.fabs.find_or_build_this_periods_fab
   end
 
   # GET /fabs/1
