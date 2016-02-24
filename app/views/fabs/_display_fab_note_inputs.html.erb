@@ -2,7 +2,10 @@
 <% time_span = @fab.send("display_#{title}_time_span") %>
 <% notes = forward ? @fab.forward : @fab.backward %>
 
-<div><%= title.capitalize %> (<%= time_span %>):
+<div class="fab-note-inputs">
+  <!-- <%= title.capitalize %> (<%= time_span %>): -->
+  <h6>Last Week</h6>
+
   <% notes.each do |x| %>
     <div class="nested-fields"</div>
       <%= f.fields_for(:notes, x) do |builder| %>

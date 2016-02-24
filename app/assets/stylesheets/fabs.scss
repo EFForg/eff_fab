@@ -1,86 +1,94 @@
-// Place all the styles related to the fabs controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-$normal-font: Calibri, sans-serif;
-
-// $normal-width: 980px;
-$narrow-width: 740px;
-
-// FIXME:  Ask vbrown how to sort out font sizes
-$font-size-big: 15pt;
-$font-color: #333;
-
-// Not dry, per scaffolds.scss
-$link-color: #f33;
-$link-color-hover: #f00;
-$link-bg-color-hover: #eff;
-
-
-body {
-  font-family: $normal-font;
-}
-
-// This media query allows us to change the presentation of the page depending
-// on how wide the window is.
-// STYLING COMMON TO BOTH TABLET AND DESKTOP
-@media (min-width: $narrow-width){
-  // Makes fabs float side by side when there's more room
-  // on the screen
-  .fab {
-  	float: left;
-  	width: 50%;
-  }
-}
-
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 500px;
-}
-
 h1 {
   text-align: center;
   text-transform: uppercase;
 }
 
-.subheader {
+.rotating-thing img {
+  width: 100%;
 }
 
-.nav-container {
-  // margin-left: auto;
-  // margin-right: auto;
-  // width: 90%;
+.f-and-b-header {
+  width: 60%;
+  height: 60px;
+  background: image-url('forward-text.svg') no-repeat top center;
+  fill: black;
+
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  background-size: contain;
+}
+
+.subheader {
 }
 
 .nav-container nav {
   text-align: center;
 }
 
+.user-details {
+  color: $font-color-alt;
 
-// FIXME: ask vbrown how she'd do this
-.team-name {
-  font-family: DINWeb-CondBold,​Arial,​sans-serif;
-  font-weight: normal;
-  line-height: 20px;
+  .team-name {
+    font-family: $font-family-alt;
+    font-weight: normal;
+    line-height: 20px;
+    border-bottom: dotted 2px $font-color-normal;
+  }
+
+  .profile-image{
+    float:left;
+    margin-right: 5%;
+  }
+
+  .profile-name {
+    color: $font-color-alt;
+    font-weight: bold;
+    font-size: $font-size-big;
+  }
 }
 
-.profile-image{
-  float:left;
-  margin-right: 5%;
+
+
+
+// This media query allows us to change the presentation of the page depending
+// on how wide the window is.
+// STYLING COMMON TO BOTH TABLET AND DESKTOP
+@media (min-width: $narrow-width){
+  .fab-note-inputs {
+    float:left;
+    width:50%;
+    margin-right: 0%;
+  }
+
+  .fab-note-inputs:nth-child(2) div{
+    text-align: right;
+  }
+  .fab-note-inputs:nth-child(2) h6{
+    padding-left:3%;
+  }
 }
 
-.profile-name {
-  font-weight: bold;
-  font-size: $font-size-big;
+
+.fab-note-inputs {
+  input {
+    width: 94%;
+  }
+
+  div {
+    padding-bottom: 1%;
+  }
 }
 
+.form-actions {
+  text-align: right;
+}
 
 h3 a {
-  color: $font-color;
+  color: $font-color-alt;
   text-decoration: none;
 
-  &:visited { color: $font-color; }
+  &:visited { color: $font-color-alt; }
 
   &:hover {
     color: $link-color-hover;

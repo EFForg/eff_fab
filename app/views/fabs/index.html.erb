@@ -1,6 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Forward &amp; Back</h1>
+<div class="rotating-thing">
+  <%= image_tag "parker_dan_mohawk.jpg" %>
+</div>
+
+<div class="f-and-b-header"></div>
 
 <div class="subheader">
   Where are your coworkers located on the time/space continuum, and what are they doing now?
@@ -33,11 +37,14 @@
 </div>
 
 
-<h2 class="team-name">
-  <%= @user.team_name %>
-</h2>
+
 
 <div class="user-details">
+
+  <h2 class="team-name">
+    <%= @user.team_name %>
+  </h2>
+
   <div class="profile-image">
     <img width="60" height="90" alt="" src="https://www.eff.org/files/styles/staff_thumb/public/hugh-mural-2.jpg?itok=jb9VYpSZ">
   </div>
@@ -52,7 +59,7 @@
 
 <!-- Fab Entry -->
 <%= render 'form' %>
-<%= link_to 'New Fab', new_user_fab_path %>
+
 <br>
 
 
