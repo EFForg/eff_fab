@@ -23,4 +23,15 @@ class User < ActiveRecord::Base
     fabs.find_or_create_this_periods_fab
   end
 
+  # job title for the user
+  def title
+    #FIXME: this is a stub
+    "Art Director"
+  end
+
+  def team_name
+    #FIXME: this is a stub
+    "Action Team"
+  end
+
 end

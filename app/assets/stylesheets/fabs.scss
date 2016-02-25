@@ -1,3 +1,97 @@
-// Place all the styles related to the fabs controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.rotating-thing img {
+  width: 100%;
+}
+
+.f-and-b-header {
+  width: 60%;
+  height: 60px;
+  background: image-url('forward-text.svg') no-repeat top center;
+  fill: black;
+
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  background-size: contain;
+}
+
+.subheader {
+}
+
+.nav-container nav {
+  text-align: center;
+}
+
+.user-details {
+  color: $font-color-alt;
+
+  .team-name {
+    font-family: $font-family-alt;
+    font-weight: normal;
+    line-height: 20px;
+    border-bottom: dotted 2px $font-color-normal;
+  }
+
+  .profile-image{
+    float:left;
+    margin-right: 5%;
+  }
+
+  .profile-name {
+    color: $font-color-alt;
+    font-weight: bold;
+    font-size: $font-size-big;
+  }
+}
+
+
+
+
+// This media query allows us to change the presentation of the page depending
+// on how wide the window is.
+// STYLING COMMON TO BOTH TABLET AND DESKTOP
+@media (min-width: $narrow-width){
+  .fab-note-inputs {
+    float:left;
+    width:50%;
+    margin-right: 0%;
+  }
+
+  .fab-note-inputs:nth-child(2) div{
+    text-align: right;
+  }
+  .fab-note-inputs:nth-child(2) h6{
+    padding-left:3%;
+  }
+}
+
+
+.fab-note-inputs {
+  input {
+    width: 94%;
+  }
+
+  div {
+    padding-bottom: 1%;
+  }
+}
+
+.form-actions {
+  text-align: right;
+}
+
+h3 a {
+  color: $font-color-alt;
+  text-decoration: none;
+
+  &:visited { color: $font-color-alt; }
+
+  &:hover {
+    color: $link-color-hover;
+    background-color: $link-bg-color-hover;
+  }
+}

@@ -23,31 +23,22 @@ class Fab < ActiveRecord::Base
 
   def setup_children
     if notes.empty?
-      3.times { notes.build(forward: true)}
-      3.times { notes.build(forward: false)}
+      3.times { notes.build(forward: true) }
+      3.times { notes.build(forward: false) }
     end
   end
 
   def forward
     n = notes.where(forward: true)
-    n = notes.select {|n| n.forward} if n.empty?
+    n = notes.select { |n| n.forward } if n.empty?
     n
   end
 
   def backward
     n = notes.where(forward: false)
-    n = notes.select {|n| !n.forward} if n.empty?
+    n = notes.select { |n| !n.forward } if n.empty?
     n
   end
-
-  def period
-    # FIXME: this method is a stub
-
-    # FIXME: this method needs to be changed into a database column
-    # this stub is returning the previous monday as a DateTime object
-    p_start = (DateTime.now - DateTime.now.wday + 1)
-  end
-
 
   # def present_period
   #   p_start = period

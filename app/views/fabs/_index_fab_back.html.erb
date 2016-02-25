@@ -1,0 +1,8 @@
+<% time_span = fab.period.strftime("%b %e") + "-" + (fab.period + 4.days).strftime("%e") %>
+
+<div>
+  <h3><%= link_to time_span, [@user, fab] %> </h3>
+  <% fab.backward.each do |note| %>
+    <%= render 'note_content', :note => note %>
+  <% end %>
+</div>
