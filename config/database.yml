@@ -21,10 +21,10 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: ENV['db_adapter']
-  encoding: ENV['db_encoding']
-  database: ENV['db_database']
-  username: ENV['db_username']
-  password: ENV['db_password']
-  host: ENV['db_host']
-  port: ENV['db_port']
+  adapter: <%= ENV['db_adapter'] %>
+  encoding: <%= ENV['db_encoding'] %>
+  database: <%= ENV['db_database'] %>
+  username: <%= ENV['db_username'] %>
+  password: <%= ENV['db_password'] %>
+  host: <%= ENV['db_host'] %>
+  port: <%= ENV['db_port'] %>
