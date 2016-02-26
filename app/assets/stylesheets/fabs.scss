@@ -59,12 +59,19 @@ h1 {
     float:left;
     width:50%;
     margin-right: 0%;
+    margin-top: 10px;
   }
 
   .fab-note-inputs:nth-child(2) div{
     text-align: right;
   }
-  .fab-note-inputs:nth-child(2) h6{
+
+  .fab-note-inputs h6 {
+    margin: 4px 0 4px 0;
+    font-size: $font-size-nudge;
+  }
+
+  .fab-note-inputs:nth-child(2) h6 {
     padding-left:3%;
   }
 }
@@ -82,7 +89,18 @@ h1 {
 
 .form-actions {
   text-align: right;
+
+  input {
+    background-color: red;
+    color: white;
+    font-weight: 400;
+    border: none;
+    border-radius: 4px;
+
+  }
 }
+
+
 
 h3 a {
   color: $font-color-alt;
