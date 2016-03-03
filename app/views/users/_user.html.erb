@@ -1,23 +1,9 @@
-<td>
-  <%= link_to user.email, user %>
-</td>
-  <%= simple_form_for(user) do |f| %>
-    <td>
-      <%# f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
-    </td>
+<div class="user">
 
-    <td>
-      <div class="nested-fields"</div>
-        <%= f.fields_for :fabs do |builder| %>
-          <%= render 'fab_fields', :f => builder %>
-        <% end %>
-      </div>
+  <div>
+    <%= render partial: '/users/user_details', locals: {user: user}%>
+    <%# render 'fab_fields' %>
+  </div>
 
-    </td>
-
-    <td>
-      <%# f.submit 'Submit', :class => 'button-xs' %>
-    </td>
-
-  <% end %>
-</td>
+  <div class="clear"></div>
+</div>

@@ -26,15 +26,15 @@ h1 {
   text-align: center;
 }
 
+.team-name-header {
+  font-family: $font-family-alt;
+  font-weight: normal;
+  line-height: 20px;
+  border-bottom: dotted 2px $font-color-normal;
+}
+
 .user-details {
   color: $font-color-alt;
-
-  .team-name {
-    font-family: $font-family-alt;
-    font-weight: normal;
-    line-height: 20px;
-    border-bottom: dotted 2px $font-color-normal;
-  }
 
   .profile-image{
     float:left;

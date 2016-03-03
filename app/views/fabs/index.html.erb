@@ -1,67 +1,10 @@
-<p id="notice"><%= notice %></p>
+<%= render "/layouts/navigation_links" %>
 
-<div class="rotating-thing">
-  <%= image_tag "parker_dan_mohawk.jpg" %>
-</div>
-
-<div class="f-and-b-header"></div>
-
-<div class="subheader">
-  Where are your coworkers located on the time/space continuum, and what are they doing now?
-</div>
-
-<div class="nav-container">
-  <nav>
-    <%= link_to "Fab View", "#" %> |
-    <%= link_to "Where View", "#" %> |
-    <%= link_to "View Both", "#" %>
-  </nav>
-  <br>
-
-  <nav>
-    <%= link_to "Action", "#" %> |
-    <%= link_to "International", "#" %> |
-    <%= link_to "Ops", "#" %> |
-    <%= link_to "Legal", "#" %> |
-    <%= link_to "Graphics", "#" %> |
-    <%= link_to "Tech Projects", "#" %> |
-    <%= link_to "Press", "#" %> |
-    <%= link_to "Tech Ops", "#" %>
-  </nav>
-
-  <nav>
-    <%= link_to "815 Eddy", "#" %> |
-    <%= link_to "Willo", "#" %> |
-    <%= link_to "Alphabetical", "#" %>
-  </nav>
-</div>
-
-
-
-
-<div class="user-details">
-
-  <h2 class="team-name">
-    <%= @user.team_name %>
-  </h2>
-
-  <div class="profile-image">
-    <img width="60" height="90" alt="" src="https://www.eff.org/files/styles/staff_thumb/public/hugh-mural-2.jpg?itok=jb9VYpSZ">
-  </div>
-  <div class="profile-name">
-    <%= @user.name %>
-  </div>
-  <div class="profile-title">
-    <%= @user.title %>
-  </div>
-  <div class="clear"></div>
-</div>
+<%= render partial: '/users/user_details', locals: {user: @user}%>
 
 <!-- Fab Entry -->
 <%= render 'form' %>
-
 <br>
-
 
 <div class="fabs-back">
   <% @fabs.each do |fab| %>
