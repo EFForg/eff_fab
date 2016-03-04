@@ -31,7 +31,8 @@ class User < ActiveRecord::Base
 
   def team_name
     #FIXME: this is a stub
-    "Action Team"
+    return team.name if team
+    "No Team"
   end
 
 end

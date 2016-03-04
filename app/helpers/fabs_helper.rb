@@ -10,7 +10,7 @@ module FabsHelper
   def show_fab_notes(options)
     forward = options[:forward]
 
-    render partial: 'show_fab_notes', locals: { forward: forward }
+    render partial: '/fabs/show_fab_notes', locals: { forward: forward }
   end
 
 end

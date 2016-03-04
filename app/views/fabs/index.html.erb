@@ -1,5 +1,6 @@
 <%= render "/layouts/navigation_links" %>
 
+<h2 class="team-name-header"><%= @user.team_name %></h2>
 <%= render partial: '/users/user_details', locals: {user: @user}%>
 
 <!-- Fab Entry -->

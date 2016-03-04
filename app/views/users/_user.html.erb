@@ -2,6 +2,11 @@
 
   <div>
     <%= render partial: '/users/user_details', locals: {user: user}%>
+
+    <% @fab = user.fabs.last %>
+    <%= show_fab_notes forward: false %>
+    <%= show_fab_notes forward: true %>
+    <div class="clear"></div>
     <%# render 'fab_fields' %>
   </div>
 
