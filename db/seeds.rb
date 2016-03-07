@@ -39,10 +39,12 @@ def build_fabs(u)
   last_monday = this_monday - 7.days
 
   f = u.fabs.create(period: last_monday)
+  f.notes.delete_all
   3.times { f.notes.create(body: "I did a thing", forward: false) }
   3.times { f.notes.create(body: "I will do a thing", forward: true) }
 
   f = u.fabs.create(period: this_monday)
+  f.notes.delete_all
   3.times { f.notes.create(body: "I was SUPER", forward: false) }
   3.times { f.notes.create(body: "I will be more super", forward: true) }
 end
