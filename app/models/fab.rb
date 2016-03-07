@@ -13,12 +13,13 @@ class Fab < ActiveRecord::Base
   after_initialize :setup_children
 
   def self.find_or_build_this_periods_fab
-    fab_attrs = {period: get_start_date_of_current_fab_period}
+    start = get_start_of_current_fab_period
+    fab_attrs = {period: start..start + 7.days}
     self.where(fab_attrs).first || self.new(fab_attrs)
   end
 
-  def self.get_start_date_of_current_fab_period
-    p_start = (DateTime.now - DateTime.now.wday + 1)
+  def self.get_start_of_current_fab_period
+    p_start = (DateTime.now - DateTime.now.wday + 1).midnight
   end
 
   def setup_children

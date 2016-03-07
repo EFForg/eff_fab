@@ -26,7 +26,7 @@ class FabsController < ApplicationController
   # POST /fabs
   # POST /fabs.json
   def create
-    @fab = @user.fabs.new(fab_params)
+    @fab = @user.fabs.new(fab_params.merge(period: DateTime.now))
 
     respond_to do |format|
       if @fab.save
