@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates_associated :team
+
   belongs_to :team
   has_many :fabs
 

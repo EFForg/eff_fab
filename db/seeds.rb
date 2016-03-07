@@ -10,12 +10,6 @@ User.delete_all
 Fab.delete_all
 Note.delete_all
 
-u = CreateAdminService.new.call
-puts 'CREATED ADMIN USER: ' << u.email
-
-u.name = "Hugh D’Andrade"
-u.save
-
 def create_teams
   Team.delete_all
 
@@ -32,6 +26,7 @@ def create_teams
   Team.create(name: "Civil Liberties", weight: 50)
   Team.create(name: "Intellectual Property", weight: 50)
   Team.create(name: "International", weight: 50)
+  Team.create(name: "Other", weight: 200)
 end
 
 def rand_team_id
@@ -54,6 +49,13 @@ end
 
 create_teams
 
-build_fabs(u)
 
 20.times { build_fabs(FactoryGirl.create(:user, team_id: rand_team_id)) }
+
+u = CreateAdminService.new.call
+puts 'CREATED ADMIN USER: ' << u.email
+
+u.name = "Hugh D’Andrade"
+u.save
+
+build_fabs(u)
