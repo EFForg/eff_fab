@@ -40,6 +40,8 @@ Now you can boot up the server
 $  rails s
 ```
 
+You may want to notice the configuration file located at `config/application.yml`
+
 
 Credits
 -------
