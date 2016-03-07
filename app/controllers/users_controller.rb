@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :admin_only, :except => :show
 
   def index
-    @users = User.all
+    @teams = Team.all
   end
 
   def show

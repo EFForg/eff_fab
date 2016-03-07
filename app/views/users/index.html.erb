@@ -1,7 +1,8 @@
 <div class="row">
-  <% @users.each do |user| %>
-    <h2 class="team-name-header"><%= user.team_name %></h2>
-
-    <%= render user %>
+  <% @teams.each do |team| %>
+    <h2 class="team-name-header"><%= team.name %></h2>
+      <% team.users.each do |user| %>
+        <%= render user %>
+      <% end %>
   <% end %>
 </div>
