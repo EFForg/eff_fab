@@ -26,6 +26,21 @@ Install dependencies, or use [mah vagrant box](https://github.com/TheNotary/ruby
 $  sudo apt-get install libmysqlclient-dev
 ```
 
+Setup the app as with most rails apps
+```
+$  cp config/application.yml.example config/application.yml
+$  bundle install
+$  rake db:create
+$  rake db:migrate
+$  rake db:seed
+```
+
+Now you can boot up the server
+```
+$  rails s
+```
+
+
 Credits
 -------
 
