@@ -44,7 +44,7 @@ class FabsController < ApplicationController
   def update
     respond_to do |format|
       if @fab.update(fab_params)
-        format.html { redirect_to [@user, @fab], notice: 'Fab was successfully updated.' }
+        format.html { redirect_to :user_fabs, notice: 'Fab was successfully updated.' }
         format.json { render :show, status: :ok, location: @fab }
       else
         format.html { render :edit }
