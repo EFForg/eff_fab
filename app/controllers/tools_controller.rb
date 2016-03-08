@@ -2,6 +2,9 @@ class ToolsController < ApplicationController
 
   # POST /tools/send_reminders
   def send_reminders
-    FabMailer.reminder(User.first).deliver_later
+    User.all.each do |user|
+      FabMailer.reminder(user).deliver_later
+    end
   end
+
 end

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :admin_only, :except => :show
+  before_action :authenticate_user!, except: [:show, :index]
+  before_action :admin_only, except: [:show, :index]
 
   def index
     @teams = Team.all.includes(users: :fabs)
@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/:id
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(secure_params)
@@ -30,16 +31,14 @@ class UsersController < ApplicationController
     redirect_to users_path, :notice => "User deleted."
   end
 
-  private
-
-  def admin_only
-    unless current_user.admin?
-      redirect_to :back, :alert => "Access denied."
-    end
+  def edit
+    @user = User.find(params[:id])
   end
 
+  private
+
   def secure_params
-    params.require(:user).permit(:role,
+    params.require(:user).permit(:role, :name,
       {fabs_attributes: [:id, :gif_tag_file_name]}
     )
   end

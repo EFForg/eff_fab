@@ -1,0 +1,14 @@
+<%= simple_form_for(@user) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <div class="form-field">
+      <%= f.input :name %>
+    </div>
+  </div>
+
+  <br>
+  <div class="form-actions">
+    <%= f.button :submit, "Update user" %>
+  </div>
+<% end %>

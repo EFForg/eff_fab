@@ -13,5 +13,12 @@
   <div class="profile-title">
     <%= user.title %>
   </div>
+
+  <% if current_user.role == "admin" %>
+    <div class="profile-edit">
+      <%= link_to("Edit", edit_user_path(user)) %>
+    </div>
+  <% end %>
+
   <div class="clear"></div>
 </div>

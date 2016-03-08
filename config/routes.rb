@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get '/admin/mailer', to: "pages#admin"
+  get '/admin', to: "pages#admin"
 
   post '/tools/send_reminders', to: "tools#send_reminders"
 
