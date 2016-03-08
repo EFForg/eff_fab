@@ -17,7 +17,7 @@ class Fab < ActiveRecord::Base
   def self.find_or_build_this_periods_fab
     start = get_start_of_current_fab_period
     fab_attrs = {period: start..start + 7.days}
-    self.where(fab_attrs).first || self.new(fab_attrs)
+    self.where(fab_attrs).first || self.new(period: start)
   end
 
   def self.get_start_of_current_fab_period
@@ -62,7 +62,6 @@ class Fab < ActiveRecord::Base
     display_time_span(period + 1.week)
   end
 
-
   private
 
     def display_time_span(p_start)
@@ -71,6 +70,5 @@ class Fab < ActiveRecord::Base
       s += p_end.strftime("%B %e, %Y")
       s
     end
-
 
 end

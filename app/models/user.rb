@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   # no such fab already exists
   def upcoming_fab
    # FIXME: this is a stub
-    fabs.find_or_create_this_periods_fab
+    fabs.find_or_build_this_periods_fab
   end
 
   # job title for the user
