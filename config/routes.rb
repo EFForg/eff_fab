@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get '/admin/mailer', to: "pages#admin"
+
+  post '/tools/send_reminders', to: "tools#send_reminders"
+
   resources :teams
   get '/v', to: "visitors#version"
   root to: 'visitors#index'
