@@ -45,6 +45,15 @@ h1 {
     color: $font-color-alt;
     font-weight: bold;
     font-size: $font-size-big;
+
+    a {
+      color: $font-color-alt;
+      text-decoration: none;
+    }
+
+    a:hover {
+      background-color: #eff;
+    }
   }
 }
 
