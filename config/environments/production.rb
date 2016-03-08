@@ -72,20 +72,20 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
+    address: ENV['mail_server'],
+    port: ENV['mail_port'].to_i,
     domain: ENV['domain_name'],
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: ENV['email_provider_username'],
-    password: ENV['email_provider_password']
+    authentication: ENV['mail_authentication'],
+    enable_starttls_auto: ENV['mail_enable_starttls_auto'],
+    user_name: ENV['mail_user_name'],
+    password: ENV['mail_password']
   }
+
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => ENV['domain_name'] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
-
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
