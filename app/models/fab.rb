@@ -5,6 +5,8 @@ class Fab < ActiveRecord::Base
 
   validates_attachment_content_type :gif_tag, content_type: /\Aimage\/.*\Z/
 
+  default_scope { order('created_at DESC') }
+
   belongs_to :user
   has_many :notes
 
