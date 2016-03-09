@@ -5,6 +5,11 @@
   <%= submit_tag "Send FAB reminder" %>
 <% end %>
 
+<%= form_for(@user, remote: true, format: :json, ) do |f| %>
+  <%= f.select :role, User.roles.collect{ |k,v| [ k,k ] } %>
+  <%= f.submit %>
+<% end %>
+
 <h2>Configuration</h2>
 
 <div><%= link_to "Add new user", "/users/new" %></div>
@@ -13,8 +18,4 @@
 
 <%= form_tag("/tools/populate_users", method: "post") do %>
   <%= submit_tag "Populate users", data: { confirm: "Are you sure?" } %>
-<% end %>
-
-<%= form_tag("/tools/change_to_admin_user_mode", method: "post") do %>
-  <%= submit_tag "Switch to Admin user mode" %>
 <% end %>
