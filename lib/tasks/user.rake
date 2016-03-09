@@ -1,8 +1,8 @@
-require_relative '../scrape_from_kittens'
+require_relative '../populate_users'
 
 namespace :user do
   desc "TODO"
-  task scrape_from_kittens: :environment do
+  task populate_users: :environment do
     scrape_procedure
   end
 
