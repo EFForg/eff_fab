@@ -14,7 +14,7 @@
     <%= user.title %>
   </div>
 
-  <% if current_user.role == "admin" %>
+  <% if current_user and current_user.role == "admin" %>
     <div class="profile-edit">
       <%= link_to("Edit", edit_user_path(user)) %>
     </div>
