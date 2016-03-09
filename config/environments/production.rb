@@ -75,7 +75,7 @@ Rails.application.configure do
     address: ENV['mail_server'],
     port: ENV['mail_port'].to_i,
     domain: ENV['domain_name'],
-    authentication: ENV['mail_authentication'],
+    authentication: ENV['mail_authentication'].to_sym,
     enable_starttls_auto: ENV['mail_enable_starttls_auto'],
     user_name: ENV['mail_user_name'],
     password: ENV['mail_password']
