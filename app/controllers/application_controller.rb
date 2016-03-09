@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def admin_only
-    unless current_user.admin?
+    unless current_user.try(:admin?) || current_user.try(:admin_user_mode?)
       redirect_to '/', :alert => "Access denied."
     end
   end
-  
+
 end

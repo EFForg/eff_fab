@@ -1,12 +1,16 @@
 <h1>Admin</h1>
 
+<h2>Usage</h2>
 <%= form_tag("/tools/send_reminders", method: "post") do %>
   <%= submit_tag "Send FAB reminder" %>
 <% end %>
 
-<%= form_tag("/tools/populate_users", method: "post") do %>
-  <%= submit_tag "Populate users", data: { confirm: "Are you sure?" } %>
-<% end %>
+<h2>Configuration</h2>
 
 <div><%= link_to "Add new user", "/users/new" %></div>
 <div><%= link_to "Edit users", "/users" %></div>
+<div><%= link_to "Edit teams", "/teams" %></div>
+
+<%= form_tag("/tools/populate_users", method: "post") do %>
+  <%= submit_tag "Populate users", data: { confirm: "Are you sure?" } %>
+<% end %>
