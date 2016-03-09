@@ -1,6 +1,7 @@
 def scrape_procedure
   # Clear out existing users.
   User.delete_all
+  Team.delete_all
 
   # Create admin user
   u = CreateAdminService.new.call
@@ -26,7 +27,7 @@ def create_user_from_profile(profile, team)
   attrs[:name] = profile.css('h2').text
   attrs[:title] = profile.css('h3').text
   attrs[:email] = profile.css('.email').text
-  attrs[:team] = team
+  attrs[:team] = get_team(profile)
   attrs[:password] = 'temporary'
 
   # Save each user and their photo.
@@ -39,6 +40,17 @@ def create_user_from_profile(profile, team)
     if u.errors.messages.count > 0
       puts u.errors.messages
     end
+  end
+end
+
+def get_team(profile)
+  name = profile.css('.views-field-field-profile-team').text
+  name = 'Other' if name.blank?
+
+  if Team.find_by name: name
+    return Team.find_by name: name
+  else
+    return Team.create(name: name)
   end
 end
 
