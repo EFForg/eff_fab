@@ -14,3 +14,7 @@
 <%= form_tag("/tools/populate_users", method: "post") do %>
   <%= submit_tag "Populate users", data: { confirm: "Are you sure?" } %>
 <% end %>
+
+<%= form_tag("/tools/change_to_admin_user_mode", method: "post") do %>
+  <%= submit_tag "Switch to Admin user mode" %>
+<% end %>

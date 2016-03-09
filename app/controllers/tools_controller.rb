@@ -7,4 +7,10 @@ class ToolsController < ApplicationController
     end
   end
 
+  def populate_users
+    require File.expand_path('../../../lib/populate_users', __FILE__)
+    scrape_procedure
+    render text: 'User population complete.'
+  end
+
 end
