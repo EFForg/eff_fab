@@ -1,4 +1,5 @@
 class ToolsController < ApplicationController
+  before_action :admin_only
 
   # POST /tools/send_reminders
   def send_reminders
