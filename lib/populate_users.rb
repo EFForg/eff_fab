@@ -2,6 +2,7 @@ def scrape_procedure
   # Clear out existing users.
   User.delete_all
   Team.delete_all
+  Fab.delete_all
 
   # Create admin user
   u = CreateAdminService.new.call
@@ -14,6 +15,7 @@ def scrape_procedure
 
   profiles.each do |profile|
     u = create_user_from_profile(profile, team_id)
+    build_fabs(u)
   end
 end
 
@@ -40,6 +42,7 @@ def create_user_from_profile(profile, team)
     if u.errors.messages.count > 0
       puts u.errors.messages
     end
+    return u
   end
 end
 
@@ -59,4 +62,21 @@ def save_user_photo(user, profile)
   cleaned_path = path.sub('staff_thumb', 'medium').split('?').first
   user.avatar = URI.parse(cleaned_path)
   user.save
+end
+
+def build_fabs(u)
+  return if u.nil?
+
+  this_monday = DateTime.now - DateTime.now.wday + 1.day
+  last_monday = this_monday - 7.days
+
+  f = u.fabs.create(period: last_monday)
+  f.notes.delete_all
+  3.times { f.notes.create(body: "I did a thing", forward: false) }
+  3.times { f.notes.create(body: "I will do a thing", forward: true) }
+
+  f = u.fabs.create(period: this_monday)
+  f.notes.delete_all
+  3.times { f.notes.create(body: "I was SUPER", forward: false) }
+  3.times { f.notes.create(body: "I will be more super", forward: true) }
 end
