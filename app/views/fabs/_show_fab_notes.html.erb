@@ -1,9 +1,10 @@
 <% title = forward ? 'forward' : 'back' %>
 <% time_span = @fab.send("display_#{title}_time_span") %>
 <% notes = forward ? @fab.forward : @fab.backward %>
+
 <div class="forward-back">
   <strong> <%= title.capitalize %> </strong>
-  (<%= time_span %>):
+  (<%= time_span %>)
   <% notes.each do |note| %>
     <%= render '/fabs/note_content', :note => note %>
   <% end %>

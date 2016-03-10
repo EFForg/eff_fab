@@ -5,7 +5,7 @@ class FabsController < ApplicationController
   # GET /fabs
   # GET /fabs.json
   def index
-    @fabs = @user.fabs
+    @fabs = @user.fabs.includes(:forward).includes(:backward)
     @fab = @user.fabs.find_or_build_this_periods_fab
   end
 

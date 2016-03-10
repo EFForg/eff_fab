@@ -3,16 +3,11 @@ class UsersController < ApplicationController
   before_action :admin_only, except: [:show, :index]
 
   def index
-    @teams = Team.all.includes(users: :fabs)
+    @teams = Team.all.includes(users: { fabs: [:notes, :forward, :backward] }).to_a
   end
 
   def show
     @user = User.find(params[:id])
-    unless current_user.admin?
-      unless @user == current_user
-        redirect_to :back, :alert => "Access denied."
-      end
-    end
   end
 
   # POST /users/:id

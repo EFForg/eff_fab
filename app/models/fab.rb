@@ -9,6 +9,9 @@ class Fab < ActiveRecord::Base
 
   belongs_to :user
   has_many :notes
+  has_many :forward, -> { where(forward: true) }, class_name: "Note"
+  has_many :backward, -> { where(forward: false) }, class_name: "Note"
+
 
   accepts_nested_attributes_for :notes, reject_if: :all_blank, :allow_destroy => true
 
@@ -31,25 +34,16 @@ class Fab < ActiveRecord::Base
     end
   end
 
-  def forward
-    n = notes.where(forward: true)
-    n = notes.select { |n| n.forward } if n.empty?
-    n
-  end
+  # def forward
+  #   n = notes.where(forward: true)
+  #   # n = notes.select { |n| n.forward } if n.empty?
+  #   # n
+  # end
 
-  def backward
-    n = notes.where(forward: false)
-    n = notes.select { |n| !n.forward } if n.empty?
-    n
-  end
-
-  # def present_period
-  #   p_start = period
-  #
-  #   p_end = p_start + 4.days
-  #   s = p_start.strftime("%B %e, %Y - ")
-  #   s += p_end.strftime("%B %e, %Y")
-  #   s
+  # def backward
+  #   n = notes.where(forward: false)
+  #   #n = notes.select { |n| !n.forward } if n.empty?
+  #   #n
   # end
 
   # This method presents to the view what period this FAB is for
@@ -66,8 +60,8 @@ class Fab < ActiveRecord::Base
 
     def display_time_span(p_start)
       p_end = p_start + 4.days
-      s = p_start.strftime("%B %e, %Y - ")
-      s += p_end.strftime("%B %e, %Y")
+      s = p_start.strftime("%b %e, %Y - ")
+      s += p_end.strftime("%b %e, %Y")
       s
     end
 
