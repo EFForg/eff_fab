@@ -19,8 +19,6 @@ class User < ActiveRecord::Base
   belongs_to :team
   has_many :fabs
 
-  # accepts_nested_attributes_for :fabs
-
   # this function returns the FAB due for the upcoming week, or builds it if
   # no such fab already exists
   def upcoming_fab
@@ -28,14 +26,7 @@ class User < ActiveRecord::Base
     fabs.find_or_build_this_periods_fab
   end
 
-  # job title for the user
-  def title
-    #FIXME: this is a stub
-    "Art Director"
-  end
-
   def team_name
-    #FIXME: this is a stub
     return team.name if team
     "No Team"
   end

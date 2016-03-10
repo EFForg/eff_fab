@@ -3,6 +3,6 @@
 <div>
   <h3><%= link_to time_span, [@user, fab] %> </h3>
   <% fab.backward.each do |note| %>
-    <%= render 'note_content', :note => note %>
+    <div class="fab-notes"><%= note.body %></div>
   <% end %>
 </div>
