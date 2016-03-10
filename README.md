@@ -42,6 +42,11 @@ $  rails s
 
 You may want to notice the configuration file located at `config/application.yml`
 
+Setup
+-----
+
+To prime up the database, you can't really rely on `rake db:seed`, instead, login as the admin user (see application.yml) and navigate to `/admin` and click the button for `Populate Users`, this will scrape eff.org/about/staff for user names, emails, and pictures and plug them into the database.  
+
 
 Credits
 -------
