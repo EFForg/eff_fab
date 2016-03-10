@@ -4,8 +4,8 @@ class FabMailer < ApplicationMailer
     @url = 'https//example.com'
 
     mail(to:@user.email, subject: 'FAB Reminder') do |format|
-      format.html {  }
-      format.text
+      format.html
+      # format.text { render text: 'some text!' }
     end
 
   end
