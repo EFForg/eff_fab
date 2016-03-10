@@ -11,19 +11,33 @@ var BasicCarousel = function() {
       // Make it so when you click the child nav button, they look for the
       // parent's data and conduct the appropriate ajax/ view change action
       $(this).children('.fab-backward-btn').first().click(function() {
-        var user_id = $(this).parent().attr('data-user-id');
-        var fab_id = $(this).parent().attr('data-fab-id');
-        var fab_element = $($(this).parent());
+        cycleFab_click(this, false);
+      });
 
-        requestPreviousFab(user_id, fab_id, function(markup) {
-          populateFabInDisplay(markup, fab_element);
-        });
-
+      $(this).children('.fab-forward-btn').first().click(function() {
+        cycleFab_click(this, true);
       });
 
     });
 
   };
+
+  function cycleFab_click(button_element, forward) {
+    var fab_encapsulator = $(button_element).parent();
+    var user_id = fab_encapsulator.attr('data-user-id');
+    var fab_id = fab_encapsulator.attr('data-fab-id');
+    var fab_element = $(fab_encapsulator);
+
+    if (!forward) {
+      requestPreviousFab(user_id, fab_id, function(markup) {
+        populateFabInDisplay(markup, fab_element);
+      });
+    } else {
+      requestNextFab(user_id, fab_id, function(markup) {
+        populateFabInDisplay(markup, fab_element);
+      });
+    }
+  }
 
   function requestPreviousFab(user_id, fab_id, cb) {
     var url = "/tools/previous_fab?" + "user_id=" + user_id + "&fab_id=" + fab_id;
@@ -62,7 +76,6 @@ var BasicCarousel = function() {
     forward_notes.remove();
     // TODO:  research how to do this with Tribby's templates and json?
     backward_notes[0].outerHTML = markup;
-    alert('done');
   }
 
 };
