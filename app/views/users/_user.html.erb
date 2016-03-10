@@ -1,12 +1,13 @@
 <div class="user">
-  <div>
+  <% @fab = user.fabs.last %>
+  <div class="basic-carousel" data-user-id="<%= user.id %>" data-fab-id="<%= @fab.try :id %>">
     <%= render partial: '/users/user_details', locals: {user: user}%>
 
-    <% @fab = user.fabs.last %>
     <% unless @fab.nil? %>
-
+      <div class="fab-backward-btn">&lt;</div>
       <%= show_fab_notes forward: false %>
       <%= show_fab_notes forward: true %>
+      <div class="fab-forward-btn">&gt;</div>
 
       <div class="clear"></div>
     <% end %>

@@ -35,6 +35,8 @@
   border: 0;
 }
 
+
+
  body {
    font-family: $font-family-normal;
    color: $font-color-normal;
@@ -72,7 +74,13 @@ pre {
 
 .forward-back {
   float: left;
-  width: 50%;
+  width: 42%;
+}
+
+.fab-backward-btn,
+.fab-worward-btn {
+  width: 3%;
+  float: left;
 }
 
 .clear {
