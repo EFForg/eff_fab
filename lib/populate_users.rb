@@ -26,9 +26,9 @@ end
 
 def create_user_from_profile(profile, team)
   attrs = {}
-  attrs[:name] = profile.css('h2').text
-  attrs[:title] = profile.css('h3').text
-  attrs[:email] = profile.css('.email').text
+  attrs[:name] = profile.css('h2').text.strip
+  attrs[:title] = profile.css('h3').text.strip
+  attrs[:email] = profile.css('.email').text.strip
   attrs[:team] = get_team(profile)
   attrs[:password] = 'temporary'
 
@@ -47,7 +47,7 @@ def create_user_from_profile(profile, team)
 end
 
 def get_team(profile)
-  name = profile.css('.views-field-field-profile-team').text
+  name = profile.css('.views-field-field-profile-team').text.strip
   name = 'Other' if name.blank?
 
   if Team.find_by name: name
@@ -58,7 +58,7 @@ def get_team(profile)
 end
 
 def save_user_photo(user, profile)
-  path = profile.css('img').attr('src').to_str
+  path = profile.css('img').attr('src').to_s
   cleaned_path = path.sub('staff_thumb', 'medium').split('?').first
   user.avatar = URI.parse(cleaned_path)
   user.save
