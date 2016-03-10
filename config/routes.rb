@@ -2,8 +2,9 @@ Rails.application.routes.draw do
 
   get '/admin', to: "pages#admin"
 
+  get '/tools/previous_fab'
+  get '/tools/next_fab'
   post '/tools/send_reminders', to: "tools#send_reminders"
-
   post '/tools/populate_users', to: "tools#populate_users"
 
   resources :teams
