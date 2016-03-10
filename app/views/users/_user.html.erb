@@ -4,10 +4,10 @@
     <%= render partial: '/users/user_details', locals: {user: user}%>
 
     <% unless @fab.nil? %>
-      <div class="fab-backward-btn">&lt;</div>
+      <a class="fab-backward-btn unselectable">&lt;</a>
       <%= show_fab_notes forward: false %>
       <%= show_fab_notes forward: true %>
-      <div class="fab-forward-btn">&gt;</div>
+      <a class="fab-forward-btn unselectable">&gt;</a>
 
       <div class="clear"></div>
     <% end %>

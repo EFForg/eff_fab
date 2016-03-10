@@ -60,8 +60,8 @@ class Fab < ActiveRecord::Base
 
     def display_time_span(p_start)
       p_end = p_start + 4.days
-      s = p_start.strftime("%b %e, %Y - ")
-      s += p_end.strftime("%b %e, %Y")
+      s = p_start.strftime("%Y: %b %e - ")
+      s += p_end.strftime("%b %e")
       s
     end
 

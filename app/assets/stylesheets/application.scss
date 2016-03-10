@@ -78,9 +78,34 @@ pre {
 }
 
 .fab-backward-btn,
-.fab-worward-btn {
+.fab-forward-btn {
+  font-weight: 900;
+  color: #889197;
+  background-color: #eff;
+  border-radius: 20px;
+  margin-top: 2.5em;
   width: 3%;
+  height: 100%;
   float: left;
+
+}
+.fab-backward-btn:hover,
+.fab-forward-btn:hover {
+  background-color: #eff;
+  cursor: pointer;
+}
+
+*.unselectable {
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
 }
 
 .clear {
