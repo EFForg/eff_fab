@@ -7,19 +7,19 @@
   <br> -->
 
   <nav>
-    <%= link_to "Action", "#" %> |
-    <%= link_to "International", "#" %> |
-    <%= link_to "Ops", "#" %> |
-    <%= link_to "Legal", "#" %> |
-    <%= link_to "Graphics", "#" %> |
-    <%= link_to "Tech Projects", "#" %> |
-    <%= link_to "Press", "#" %> |
-    <%= link_to "Tech Ops", "#" %>
+    <% Team.all.map do |team| %>
+      <%= leet_filter_button(team.name) %>
+    <% end %>
+  </nav>
+  <nav>
+    <%= button_tag "Clear Filters", onclick: "leetFilter.clearFilters();" %>
   </nav>
 
-  <nav>
+  <!-- <nav>
     <%= link_to "815 Eddy", "#" %> |
     <%= link_to "Willo", "#" %> |
     <%= link_to "Alphabetical", "#" %>
-  </nav>
+  </nav> -->
+
+
 </div>

@@ -24,6 +24,17 @@
   margin-bottom: 20px;
 }
 
+.leet-filter-button-selected,
+.leet-filter-button-selected:focus
+{
+    background-color: #000;
+    outline: 0;
+}
+
+.leet-filter-button-selected::-moz-focus-inner {
+  border: 0;
+}
+
  body {
    font-family: $font-family-normal;
    color: $font-color-normal;

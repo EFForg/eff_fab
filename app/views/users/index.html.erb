@@ -2,9 +2,12 @@
 
 <div class="row">
   <% @teams.each do |team| %>
-    <h2 class="team-name-header"><%= team.name %></h2>
-      <% team.users.each do |user| %>
-        <%= render user %>
-      <% end %>
+    <% capsul_class_name = "team-group leet-filter-candidate #{string_to_class_name(team.name)}" %>
+    <div class="<%= capsul_class_name %>">
+      <h2 class="team-name-header"><%= team.name %></h2>
+        <% team.users.each do |user| %>
+          <%= render user %>
+        <% end %>
+    </div>
   <% end %>
 </div>
