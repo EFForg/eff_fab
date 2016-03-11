@@ -30,15 +30,14 @@
       var fab_id = fab_encapsulator.attr('data-fab-id');
       var fab_element = $(fab_encapsulator);
 
-      if (!forward) {
-        requestPreviousFab(user_id, fab_id, function(markup) {
-          populateFabInDisplay(markup, fab_element);
-        });
-      } else {
-        requestNextFab(user_id, fab_id, function(markup) {
-          populateFabInDisplay(markup, fab_element);
-        });
-      }
+      var cycleFunction = forward ? requestNextFab : requestPreviousFab;
+
+      cycleFunction(user_id, fab_id, function(markup) {
+        var new_fab_id = markup.split('\n')[0];
+        markup = markup.split("\n").slice(1).join("\n");
+        populateFabInDisplay(markup, fab_element);
+        fab_encapsulator.attr('data-fab-id', new_fab_id);
+      });
     }
 
     function requestPreviousFab(user_id, fab_id, cb) {
@@ -78,6 +77,7 @@
       forward_notes.remove();
       // TODO:  research how to do this with Tribby's templates and json?
       backward_notes[0].outerHTML = markup;
+
     }
 
   };
