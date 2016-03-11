@@ -14,6 +14,10 @@ module ApplicationHelper
     button_tag(s, onclick: "leetFilter.filterAllBut(this);")
   end
 
+  def leet_filter_dropdown_option(s)
+    content_tag(:option, s, onclick: "leetFilter.filterAllBut(this);")
+  end
+
   def page_identifier
     "#{controller.controller_name}-#{action_name}"
   end

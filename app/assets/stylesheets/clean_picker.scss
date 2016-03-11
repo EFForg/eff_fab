@@ -1,0 +1,68 @@
+$blue: #0095ff;
+$montserrat: "Montserrat", Sans-Serif;
+$light-blue: #4db5ff;
+
+.nandp-translation-links {
+  position: relative;
+  text-align: center;
+  margin: 40px auto;
+  background-color: $blue;
+  max-width: 25%;
+  min-width: 150px;
+  z-index: 100;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: $montserrat;
+  color: white;
+
+  span:hover {
+    background-color: $light-blue;
+  }
+}
+.nandp-translation-links span {
+  cursor: pointer;
+  display: block;
+  padding: 0 15px;
+}
+.nandp-translation-links span::after {
+    display: inline-block;
+    content: "▼";
+}
+.nandp-translation-links ul.links {
+  position: absolute;
+  left: -9999px;
+  width: 100%;
+  top: 28px;
+  background-color: $blue;
+}
+.nandp-translation-links:hover ul.links {
+  left: 0;
+}
+.nandp-translation-links ul.links a {
+  color: white;
+  display: block;
+  text-decoration: none;
+}
+.nandp-translation-links ul.links a:hover {
+  background-color: $light-blue;
+}
+.nandp-translation-links ul.links li {
+  float: none;
+  display: block;
+  margin: 0;
+  text-align: center;
+  padding: 0;
+}
+ul.node__links {
+  text-align: center;
+}
+.node__links li,
+.node__links li a {
+  display: inline;
+  float: none;
+  padding: 0;
+}
+.node__links li {
+  margin: 0 5px;
+  font-size: 0.82rem;
+}

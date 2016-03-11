@@ -7,7 +7,7 @@
   <br> -->
 
   <nav>
-    <% Team.all.map do |team| %>
+    <% Team.all.each do |team| %>
       <%= leet_filter_button(team.name) %>
     <% end %>
   </nav>
