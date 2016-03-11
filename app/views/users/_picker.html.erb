@@ -1,5 +1,5 @@
-<select>
-   <option onclick="leetFilter.clearFilters();">All teams</option>
+<select id="nav-select" onchange="javascript: selectChange();">
+   <option>All teams</option>
   <% Team.all.each do |team| %>
     <%= leet_filter_dropdown_option(team.name) %>
   <% end %>

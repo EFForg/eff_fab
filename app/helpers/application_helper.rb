@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def leet_filter_dropdown_option(s)
-    content_tag(:option, s, onclick: "leetFilter.filterAllBut(this);")
+    content_tag(:option, s)
   end
 
   def page_identifier
