@@ -34,18 +34,6 @@ class Fab < ActiveRecord::Base
     end
   end
 
-  # def forward
-  #   n = notes.where(forward: true)
-  #   # n = notes.select { |n| n.forward } if n.empty?
-  #   # n
-  # end
-
-  # def backward
-  #   n = notes.where(forward: false)
-  #   #n = notes.select { |n| !n.forward } if n.empty?
-  #   #n
-  # end
-
   # This method presents to the view what period this FAB is for
   # Returns something like "February 8, 2016 - February 12, 2016"
   def display_back_time_span
