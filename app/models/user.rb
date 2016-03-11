@@ -26,6 +26,16 @@ class User < ActiveRecord::Base
     fabs.find_or_build_this_periods_fab
   end
 
+  def next_or_previous_fab(fab_id, previous=false)
+    current_period = Fab.find(fab_id).period
+
+    if previous
+      fab = fabs.where('period < ?', current_period).first
+    else
+      fab = fabs.where('period > ?', current_period).last
+    end
+  end
+
   def team_name
     return team.name if team
     "No Team"

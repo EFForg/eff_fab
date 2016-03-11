@@ -15,24 +15,14 @@ class ToolsController < ApplicationController
   end
 
   def next_fab
-    user_id = params[:user_id]
-    fab_id = params[:fab_id]
-
-    current_period = Fab.find(fab_id).period
-    user_fabs = User.find(user_id).fabs
-    @fab = user_fabs.where('period > ?', current_period).last
-
+    user = User.find(params[:user_id])
+    @fab = user.next_or_previous_fab(params[:fab_id])
     render '/tools/ajax_forward_back.html.erb', layout: false
   end
 
   def previous_fab
-    user_id = params[:user_id]
-    fab_id = params[:fab_id]
-
-    current_period = Fab.find(fab_id).period
-    user_fabs = User.find(user_id).fabs
-    @fab = user_fabs.where('period < ?', current_period).first
-
+    user = User.find(params[:user_id])
+    @fab = user.next_or_previous_fab(params[:fab_id], previous=true)
     render '/tools/ajax_forward_back.html.erb', layout: false
   end
 
