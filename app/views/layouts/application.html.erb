@@ -6,7 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body id="<%= page_identifier %>">
   <div class="eff-banner"></div>
   <%= render "/layouts/nav_links_for_auth" %>
 
@@ -15,6 +15,8 @@
 
     <%= yield %>
   </div>
+
+  <script>invokePageSpecificJavascript();</script>
 
 </body>
 </html>

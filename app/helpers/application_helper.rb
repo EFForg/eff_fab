@@ -14,4 +14,8 @@ module ApplicationHelper
     button_tag(s, onclick: "leetFilter.filterAllBut(this);")
   end
 
+  def page_identifier
+    "#{controller.controller_name}-#{action_name}"
+  end
+
 end
