@@ -81,7 +81,6 @@
     }
 
   };
-
   window.basicCarousel = new BasicCarousel();
 
-});
+})();
