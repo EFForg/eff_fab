@@ -87,13 +87,26 @@ pre {
   width: 3%;
   height: 100%;
   float: left;
-
 }
+
 .fab-backward-btn:hover,
 .fab-forward-btn:hover {
   background-color: #eff;
   cursor: pointer;
 }
+
+.fab-backward-btn:hover.disabled,
+.fab-forward-btn:hover.disabled {
+  background-color: #fff;
+  cursor: default;
+}
+
+.fab-backward-btn.disabled,
+.fab-forward-btn.disabled {
+  color: #ccc;
+  background-color: #fff;
+}
+
 
 *.unselectable {
    -moz-user-select: none;

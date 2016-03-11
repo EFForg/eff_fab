@@ -34,10 +34,34 @@
 
       cycleFunction(user_id, fab_id, function(markup) {
         var new_fab_id = markup.split('\n')[0];
-        markup = markup.split("\n").slice(1).join("\n");
+        var which_fabs_exist = JSON.parse(markup.split('\n')[1]);
+
+        disablePreviousOrNextBarsIfNeeded(fab_element, which_fabs_exist);
+
+        markup = markup.split("\n").slice(2).join("\n");
         populateFabInDisplay(markup, fab_element);
         fab_encapsulator.attr('data-fab-id', new_fab_id);
       });
+    }
+
+    function disablePreviousOrNextBarsIfNeeded(fab_element, which_fabs_exist) {
+      var previous_fab_exists = which_fabs_exist[0];
+      var next_fab_exists = which_fabs_exist[1];
+
+      enableAndDisableButtonsAsAppropriate();
+
+      function enableAndDisableButtonsAsAppropriate() {
+        if (previous_fab_exists)
+          fab_element.children('.fab-backward-btn').first().removeClass('disabled');
+        else
+          fab_element.children('.fab-backward-btn').first().addClass('disabled');
+
+        if (next_fab_exists)
+          fab_element.children('.fab-forward-btn').first().removeClass('disabled');
+        else
+          fab_element.children('.fab-forward-btn').first().addClass('disabled');
+      }
+
     }
 
     function requestPreviousFab(user_id, fab_id, cb) {
@@ -52,7 +76,8 @@
       var url = "/tools/next_fab?" + "user_id=" + user_id + "&fab_id=" + fab_id;
 
       return ajaxRequest(url, function(data) {
-        cb(data);
+        if (data != "no such fab")
+          cb(data);
       });
     }
 
@@ -60,7 +85,8 @@
       $.ajax({
         url: url,
         success: function(data){
-          cb(data);
+          if (data != "no such fab")
+            cb(data);
         },
         error: function(e){
           console.log("ajaxRequest failed for " + url);

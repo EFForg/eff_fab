@@ -44,11 +44,27 @@ class Fab < ActiveRecord::Base
     display_time_span(period + 1.week)
   end
 
+  def previous_fab
+    current_period = self.period
+    self.user.fabs.where('period < ?', current_period).first
+  end
+
+  def next_fab
+    current_period = self.period
+    self.user.fabs.where('period > ?', current_period).last
+  end
+
+  # returns an array of two, indicating true or false whether there's a previos
+  # or next fab relative to the fab_id supplied
+  def which_neighbor_fabs_exist?
+    [!self.previous_fab.nil?, !self.next_fab.nil?]
+  end
+
   private
 
     def display_time_span(p_start)
       p_end = p_start + 4.days
-      s = p_start.strftime("%Y: %b %e - ")
+      s = p_start.strftime("'%y: %b %e - ")
       s += p_end.strftime("%b %e")
       s
     end
