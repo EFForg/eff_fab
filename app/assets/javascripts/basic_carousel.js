@@ -50,7 +50,7 @@
     }
 
     function requestNextFab(user_id, fab_id, cb) {
-      var url = "/tools/previous_fab?" + "user_id=" + user_id + "&fab_id=" + fab_id;
+      var url = "/tools/next_fab?" + "user_id=" + user_id + "&fab_id=" + fab_id;
 
       return ajaxRequest(url, function(data) {
         cb(data);
