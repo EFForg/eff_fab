@@ -27,8 +27,8 @@ RSpec.describe Fab, type: :model do
   it "should display time spans well" do
     fab = @user.fabs.find_or_build_this_periods_fab
 
-    expected_forward = "October 29, 2001 - November  2, 2001"
-    expected_backward = "October 22, 2001 - October 26, 2001"
+    expected_forward = "'01: Oct 29 - Nov  2"
+    expected_backward = "'01: Oct 22 - Oct 26"
     expect(fab.display_forward_time_span).to eq expected_forward
     expect(fab.display_back_time_span).to eq expected_backward
   end
@@ -39,5 +39,5 @@ def stub_time!
   t = DateTime.new(2001,10,26)
   allow(DateTime).to receive(:now) { t }
   @expected_period_beginning = YAML.load "--- !ruby/object:DateTime 2001-10-22 00:00:00.000000000 Z\n...\n"
-  
+
 end
