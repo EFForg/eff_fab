@@ -26,18 +26,23 @@
 
     function cycleFab_click(button_element, forward) {
       var fab_encapsulator = $(button_element).parent();
-      var user_id = fab_encapsulator.attr('data-user-id');
-      var fab_id = fab_encapsulator.attr('data-fab-id');
+
+      var cycle_options = {
+        user_id: fab_encapsulator.attr('data-user-id'),
+        fab_id: fab_encapsulator.attr('data-fab-id'),
+        fab_period: fab_encapsulator.attr('data-fab-period')
+      }
+
+
       var fab_element = $(fab_encapsulator);
 
-      var cycleFunction = forward ? requestNextFab : requestPreviousFab;
+      var direction = forward ? 'forward' : 'backward';
 
-      cycleFunction(user_id, fab_id, function(markup) {
+      requestCycledFab(direction, cycle_options, function(markup) {
         var new_fab_id = markup.split('\n')[0];
         var which_fabs_exist = JSON.parse(markup.split('\n')[1]);
 
         disablePreviousOrNextBarsIfNeeded(fab_element, which_fabs_exist);
-
         markup = markup.split("\n").slice(2).join("\n");
         populateFabInDisplay(markup, fab_element);
         fab_encapsulator.attr('data-fab-id', new_fab_id);
@@ -64,20 +69,17 @@
 
     }
 
-    function requestPreviousFab(user_id, fab_id, cb) {
-      var url = "/tools/previous_fab?" + "user_id=" + user_id + "&fab_id=" + fab_id;
+    function requestCycledFab(direction, cycle_options, cb) {
+      var action = (direction == "forward") ? "/tools/next_fab?" : "/tools/previous_fab?"
+      var query_list = [];
+      query_list.push("user_id=" + cycle_options.user_id);
+      if (cycle_options.fab_id != undefined)
+        query_list.push("fab_id=" + cycle_options.fab_id);
+
+      var url = action + query_list.join("&");
 
       return ajaxRequest(url, function(data) {
         cb(data);
-      });
-    }
-
-    function requestNextFab(user_id, fab_id, cb) {
-      var url = "/tools/next_fab?" + "user_id=" + user_id + "&fab_id=" + fab_id;
-
-      return ajaxRequest(url, function(data) {
-        if (data != "no such fab")
-          cb(data);
       });
     }
 
