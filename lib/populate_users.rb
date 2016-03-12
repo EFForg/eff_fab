@@ -17,6 +17,14 @@ def scrape_procedure
     u = create_user_from_profile(profile, team_id)
     build_fabs(u)
   end
+  
+  delete_other_team_if_not_needed
+end
+
+# The dogs create the other team, but don't count as real users... thus this func
+def delete_other_team_if_not_needed
+  t = Team.find_by(name: 'Other')
+  t.delete if t.users.count == 0
 end
 
 def get_staff_profiles()
@@ -53,7 +61,7 @@ def get_team(profile)
   if Team.find_by name: name
     return Team.find_by name: name
   else
-    return Team.create(name: name)
+    return Team.create(name: name, weight: get_weight(name))
   end
 end
 
@@ -79,4 +87,30 @@ def build_fabs(u)
   f.notes.delete_all
   3.times { f.notes.create(body: "I was SUPER", forward: false) }
   3.times { f.notes.create(body: "I will be more super", forward: true) }
+end
+
+def get_weight(name)
+  teams_and_weight[name]
+end
+
+def teams_and_weight
+  # The team names were generated via the command...
+  # Team.select(:name).map {|t| t.name }.to_json
+  { "Activism" => 10,
+    "International" => 15,
+
+    "Web Development" => 20,
+    "Tech Projects" => 22,
+    "Tech Ops" => 25,
+
+    "Press/Graphics" => 30,
+
+    "Legal" => 40,
+
+    "Development" => 50,
+    "Finance/HR" => 55,
+
+    "Operations" => 60,
+    "Executive" => 65,
+    "Other" => 999 }
 end
