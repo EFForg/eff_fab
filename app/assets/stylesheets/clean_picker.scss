@@ -1,13 +1,21 @@
 select {
-  //appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance:    none;
   display: block;
   height: 30px;
   color: #000;
   border: 1px solid #eee;
+  border-radius: 3px;
   background: #fff;
   outline: none;
-  font-family: Montserrat, Helvetica;
+  font-family: Helvetica;
   font-size: 1.2em;
-  font-weight: bold;
-  margin: 0 auto;
+  margin: 1em auto 0.8em auto;
+  text-align: center;
+  padding: 0 1em;
+}
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
 }
