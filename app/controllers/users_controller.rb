@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :admin_only, except: [:show, :index]
 
   def index
-    @teams = Team.all.includes(users: { fabs: [:notes, :forward, :backward] }).to_a
+    @teams = Team.all.includes(users: { current_period_fab: [:notes, :forward, :backward] }).to_a
   end
 
   def show

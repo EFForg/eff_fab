@@ -1,16 +1,29 @@
+<% @fab = user.current_period_fab %>
+<% fab_reference = @fab.nil? ?
+  "data-fab-period=#{Fab.get_start_of_current_fab_period.to_json}" :
+  "data-fab-id=#{@fab.id}"
+%>
+
 <div class="user">
-  <% @fab = user.fabs.first %>
-  <div class="basic-carousel" data-user-id="<%= user.id %>" data-fab-id="<%= @fab.try :id %>">
+  <div class="basic-carousel" data-user-id="<%= user.id %>" <%= fab_reference %>>
     <%= render partial: '/users/user_details', locals: {user: user}%>
 
-    <% unless @fab.nil? %>
       <a class="fab-backward-btn unselectable">&lt;</a>
-      <%= show_fab_notes forward: false %>
-      <%= show_fab_notes forward: true %>
+
+      <% if @fab.nil? %>
+        <div class="forward-back">
+          This one didn't do the FAB for this period!
+        </div>
+        <div class="forward-back">=(</div>
+
+      <% else %>
+        <%= show_fab_notes forward: false %>
+        <%= show_fab_notes forward: true %>
+      <% end %>
+
       <a class="fab-forward-btn unselectable disabled">&gt;</a>
 
       <div class="clear"></div>
-    <% end %>
   </div>
 
   <div class="clear"></div>

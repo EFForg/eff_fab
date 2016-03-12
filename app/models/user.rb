@@ -18,6 +18,9 @@ class User < ActiveRecord::Base
 
   belongs_to :team
   has_many :fabs
+  has_one :current_period_fab,
+    -> { where(period: Fab.get_start_of_current_fab_period..Fab.get_start_of_current_fab_period + 7.days) },
+    class_name: "Fab"
 
   # this function returns the FAB due for the upcoming week, or builds it if
   # no such fab already exists
