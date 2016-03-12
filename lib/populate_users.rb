@@ -30,7 +30,7 @@ def create_user_from_profile(profile, team)
   attrs[:title] = profile.css('h3').text.strip
   attrs[:email] = profile.css('.email').text.strip
   attrs[:team] = get_team(profile)
-  attrs[:password] = 'temporary'
+  attrs[:password] = User.generate_password
 
   # Save each user and their photo.
   if not attrs[:email].blank?
