@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/v', to: "visitors#version"
   root to: 'visitors#index'
   devise_for :users
+  post '/u/overriden_create', to: 'users#overriden_create'
 
   resources :users do
     resources :fabs

@@ -33,10 +33,28 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def new
+    @user = User.new
+  end
+
+  def overriden_create
+    @user = User.new(secure_params.merge(password: User.generate_password))
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.json { render :show, status: :created, location: @user }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def secure_params
-    params.require(:user).permit(:role, :avatar,
+    params.require(:user).permit(:role, :avatar, :name, :email, :team_id,
       {fabs_attributes: [:id, :gif_tag_file_name]}
     )
   end

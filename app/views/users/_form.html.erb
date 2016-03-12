@@ -1,18 +1,51 @@
-<%= simple_form_for(@user) do |f| %>
-  <%= f.error_notification %>
+<% if @user.new_record? %>
+  <% form_params = { url: '/u/overriden_create', html: {method: :post} } %>
+<% else %>
+  <% form_params = {} %>
+<% end %>
+
+<%= simple_form_for(@user, form_params) do |f| %>
+  <div class="form-errors">
+    <% if @user.errors.any? %>
+      <%= f.error_notification %>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
 
   <div class="form-inputs">
     <div class="form-field">
       <%= f.input :name %>
     </div>
+    <div class="form-field">
+      <%= f.input :email %>
+    </div>
+    <div class="form-field">
+      <%= f.select :team_id, Team.all.collect {|t| [t.name, t.id]} %>
+    </div>
+    <div class="form-field">
+      <%= f.input :avatar, as: :file %>
+    </div>
   </div>
 
-  <br>
-  <div class="form-actions">
-    <%= button_to 'Delete user', @user, method: :delete, data: { confirm: 'Are you sure you want to delete this user?' } %>
-  </div>
-  <div class="">
-    <%= f.button :submit, "Update user" %>
-  </div>
+  <% if @user.new_record? %>
+    <div class="">
+      <%# create user %>
+      <%= f.button :submit %>
+    </div>
+  <% else %>
+    <div class="">
+      <%# update user %>
+      <%= f.button :submit %>
+      <%= link_to "Cancel", user_fabs_path(@user), class: 'button' %>
+    </div>
+
+    <div class="form-actions">
+        <%= link_to 'Delete user', @user, method: :delete, data: { confirm: 'Are you sure you want to delete this user?' } %>
+    </div>
+  <% end %>
 
 <% end %>
