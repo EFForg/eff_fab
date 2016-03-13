@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
     -> { where(period: Fab.get_start_of_current_fab_period..Fab.get_start_of_current_fab_period + 7.days) },
     class_name: "Fab"
 
+  before_save { |t| t.email = t.email.downcase }
+
   # this function returns the FAB due for the upcoming week, or builds it if
   # no such fab already exists
   def upcoming_fab

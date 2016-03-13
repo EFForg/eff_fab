@@ -27,6 +27,7 @@ h1 {
 }
 
 .team-name-header {
+  text-transform: capitalize;
   font-family: $font-family-alt;
   font-weight: normal;
   line-height: 20px;
