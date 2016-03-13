@@ -1,2 +1,10 @@
 <h3>Welcome</h3>
-<p><%= link_to 'Users:', users_path %> <%= User.count %> registered</p>
+<p>
+  <%= link_to 'View', users_path %> the staff FAB - <%= User.count %> members (<%= User.unfinished_fabs %> FABs still unfinished!)
+</p>
+
+<p>
+  <% if current_user %>
+    <%= link_to 'Edit', user_fabs_path(current_user) %> your FAB.
+  <% end %>
+</p>

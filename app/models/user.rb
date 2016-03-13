@@ -38,4 +38,10 @@ class User < ActiveRecord::Base
     (0...50).map { o[rand(o.length)] }.join
   end
 
+  # FIXME: I'm a stub
+  def self.unfinished_fabs(target_period = nil)
+    target_period = Fab.get_start_of_current_fab_period if target_period.nil?
+    3
+  end
+
 end
