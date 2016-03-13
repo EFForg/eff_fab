@@ -36,13 +36,16 @@
       var direction = forward ? 'forward' : 'backward';
 
       requestCycledFab(direction, cycle_options, function(markup) {
-        var new_fab_id = markup.split('\n')[0];
-        var which_fabs_exist = JSON.parse(markup.split('\n')[1]);
+        var options = JSON.parse(markup.split(';')[0]);
+        var new_fab_id = options.fab_id;
+        var new_fab_period = options.fab_period;
+        var which_fabs_exist = options.neighbor_presence;
 
         disablePreviousOrNextBarsIfNeeded(fab_encapsulator, which_fabs_exist);
-        markup = markup.split("\n").slice(2).join("\n");
+        markup = markup.split(";").slice(1).join(";");
         populateFabInDisplay(markup, fab_encapsulator);
-        fab_encapsulator.attr('data-fab-id', new_fab_id);
+
+        fab_encapsulator.attr('data-fab-period', new_fab_period);
       });
     }
 
@@ -70,10 +73,9 @@
       var action = (direction == "forward") ? "/tools/next_fab?" : "/tools/previous_fab?"
       var query_list = [];
       query_list.push("user_id=" + cycle_options.user_id);
-      if (cycle_options.fab_id != undefined)
-        query_list.push("fab_id=" + cycle_options.fab_id);
       if (cycle_options.fab_period != undefined)
-        query_list.push("fab_period=" + cycle_options.fab_period);
+        query_list.push("fab_period=" + encodeURI(cycle_options.fab_period));
+
 
       var url = action + query_list.join("&");
       return ajaxRequest(url, function(data) {

@@ -15,31 +15,27 @@ class ToolsController < ApplicationController
   end
 
   def next_fab
-    @fab = cycle_fab(:forward, params)
-    render text: "no such fab" and return if @fab.nil?
+    @fab = cycle_fab_by_period(:forward, params)
 
-    @previous_fab_exists, @next_fab_exists = @fab.which_neighbor_fabs_exist?
+    @previous_fab_exists, @next_fab_exists = [true, true]
     render '/tools/ajax_forward_back.html.erb', layout: false
   end
 
   def previous_fab
-    @fab = cycle_fab(:backward, params)
-    render text: "no such fab" and return if @fab.nil?
+    @fab = cycle_fab_by_period(:backward, params)
 
-    @previous_fab_exists, @next_fab_exists = @fab.which_neighbor_fabs_exist?
+    @previous_fab_exists, @next_fab_exists = [true, true]
     render '/tools/ajax_forward_back.html.erb', layout: false
   end
 
 
   private
 
-    def cycle_fab(direction, params)
+    # pass in a user_id and period in params and it will find the next or previous fab
+    def cycle_fab_by_period(direction, params)
       user = User.find(params[:user_id])
-      current_fab = params[:fab_id] ?
-        user.fabs.find(params[:fab_id]) :
-        find_or_create_base_fab(user, params)
-
-      @fab = (direction == :forward) ? current_fab.next_fab : current_fab.previous_fab
+      current_fab = find_or_create_base_fab(user, params)
+      @fab = (direction == :forward) ? current_fab.exactly_next_fab : current_fab.exactly_previous_fab
     end
 
     # Sometimes a fab doesn't exist, so we might have to build one to use

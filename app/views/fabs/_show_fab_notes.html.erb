@@ -1,11 +1,20 @@
 <% title = forward ? 'forward' : 'back' %>
 <% time_span = @fab.send("display_#{title}_time_span") %>
-<% notes = forward ? @fab.forward : @fab.backward %>
+<% if @fab.id.nil? %>
+  <% notes = [
+    OpenStruct.new({ body: forward ? "=(" : "This user hasn't filled out this FAB!" }),
+    OpenStruct.new({ body: "" }),
+    OpenStruct.new({ body: "" })
+    ] %>
+<% else %>
+  <% notes = forward ? @fab.forward : @fab.backward %>
+<% end %>
+
 
 <div class="forward-back">
   <strong> <%= title.capitalize %> </strong>
   (<%= time_span %>)
   <% notes.each do |note| %>
-    <div class="fab-notes"><%= note.body %></div>
+    <div class="fab-notes"><%= note.body %><%= "&zwnj;".html_safe %></div>
   <% end %>
 </div>

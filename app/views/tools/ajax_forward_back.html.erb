@@ -1,6 +1,9 @@
-<%= @fab.id %>
-<%= [@previous_fab_exists, @next_fab_exists].to_json %>
-<%# lol... don't move the above line(s), white space is significant =D  -- js %>
+<%={
+  fab_id: @fab.id,
+  fab_period: @fab.period,
+  neighbor_presence: [@previous_fab_exists, @next_fab_exists],
+}.to_json.html_safe %>;
+<%# lol... The above line must be the first in this file.  It's parsed by the js... =D %>
 
 
 <%= render partial: '/fabs/show_fab_notes.html.erb', locals: {forward: false} %>

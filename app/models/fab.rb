@@ -44,15 +44,30 @@ class Fab < ActiveRecord::Base
     display_time_span(period + 1.week)
   end
 
+  # this function can be used as a seek forward and will skip blank fabs
   def previous_fab
-    current_period = self.period
-    self.user.fabs.where('period < ?', current_period).first
+    self.user.fabs.where('period < ?', self.period).first
   end
 
+  # this function can be used as a seek forward
   def next_fab
-    current_period = self.period
-    self.user.fabs.where('period > ?', current_period).last
+    fab = self.user.fabs.where('period > ?', self.period).last
   end
+
+  # this function tries to return the exact next fab for the user, or returns nil
+  def exactly_next_fab(include_hypothetical_fab = true)
+    fab = self.user.fabs.where(period: period+1.week-1.day..period+2.weeks-1.day).last
+    fab = self.user.fabs.build(period: period+1.week) if include_hypothetical_fab and fab.nil?
+    fab
+  end
+
+  # this function tries to return the exact previous fab for the user, or returns nil
+  def exactly_previous_fab(include_hypothetical_fab = true)
+    fab = self.user.fabs.where(period: period+1.day-2.week..period+1.day-1.week).last
+    fab = self.user.fabs.build(period: period-1.week) if include_hypothetical_fab and fab.nil?
+    fab
+  end
+
 
   # returns an array of two, indicating true or false whether there's a previos
   # or next fab relative to the fab_id supplied
