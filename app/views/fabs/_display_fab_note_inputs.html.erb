@@ -1,6 +1,12 @@
 <% title = forward ? 'forward' : 'back' %>
 <% time_span = @fab.send("display_#{title}_time_span") %>
-<% notes = forward ? @fab.forward : @fab.backward %>
+
+<% if @fab.id.nil? %>
+  <% notes = forward ? @fab.notes.select {|n| n.forward} : @fab.notes.select {|n| !n.forward} %>
+<% else %>
+  <% notes = forward ? @fab.forward : @fab.backward %>
+<% end %>
+
 <% week_back_forward = forward ? "Next Week" : "Last Week" %>
 
 <div class="fab-note-inputs">
