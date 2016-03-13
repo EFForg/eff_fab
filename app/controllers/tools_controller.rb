@@ -28,6 +28,28 @@ class ToolsController < ApplicationController
     render '/tools/ajax_forward_back.html.erb', layout: false
   end
 
+  # this endpoint creates a model use that's useful for figuring out flaws
+  # in the UI
+  def create_model_user
+    u = User.find_by(email: 'shahid@eff.org')
+
+    # setup long fab
+    f = u.fabs.last
+    f.backward[0].update_attributes body: "Duis vitae nisi quis enim viverra consequat at et lorem. Morbi in quam ut tellus fermentum iaculis. Nullam erat libero, suscipit eget nullam."
+    f.backward[1].update_attributes body: "Fusce malesuada odio orci, sit amet malesuada ipsum laoreet in. Aenean id pretium arcu. Integer volutpat gravida ante, quis rutrum est fermentum vel. Sed tempus justo ipsum, ac accumsan quam facilisis eu. Aliquam mollis euismod eros nullam."
+    f.backward[2].update_attributes body: "Quisque quis dignissim dui. Aliquam nec varius neque. Duis vitae lacus amet."
+
+    f.forward[0].update_attributes body: "Dolor sit amet, consectetur adipiscing elit. Nunc neque elit, lacinia eu neque id, venenatis finibus sem. Nunc vel dui ligula. Nullam vitae enim ut ligula euismod tempus vel eget tortor. Vestibulum quis tristique sapien. Nam cursus ac posuere."
+    f.forward[1].update_attributes body: "Aenean ornare mi in tellus egestas rhoncus. Quisque quam ante, ultricies at pretium dictum, pulvinar convallis dolor volutpat."
+    f.forward[2].update_attributes body: "Dolor sit amet, consectetur adipiscing elit. Nunc neque elit, lacinia eu neque id, venenatis finibus sem. Nunc vel dui ligula. Nullam vitae enim ut ligula euismod tempus vel eget tortor. Vestibulum quis tristique sapien. Nam cursus ac posuere."
+
+    # setup Gif Tag
+
+    f.gif_tag open("http://media2.giphy.com/media/9B5EkgWrF4Rri/giphy.gif")
+    f.save
+
+  end
+
 
   private
 

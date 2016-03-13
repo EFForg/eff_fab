@@ -1,4 +1,6 @@
 def scrape_procedure
+  debug_mode = true
+
   # Clear out existing users.
   User.delete_all
   Team.delete_all
@@ -15,9 +17,9 @@ def scrape_procedure
 
   profiles.each do |profile|
     u = create_user_from_profile(profile, team_id)
-    build_fabs(u)
+    build_fabs(u) if debug_mode
   end
-  
+
   delete_other_team_if_not_needed
 end
 
