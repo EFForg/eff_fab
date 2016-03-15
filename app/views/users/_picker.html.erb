@@ -1,8 +1,7 @@
 <select id="nav-select" onchange="javascript: selectChange();">
    <option>All teams</option>
   <% Team.all.each do |team| %>
+    <!-- team.glyph_class -->
     <%= leet_filter_dropdown_option(team.name) %>
   <% end %>
 </select>
-
-<!-- onchange="leetFilter.filterAllBut(this);" -->

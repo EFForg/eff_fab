@@ -1,4 +1,5 @@
-select {
+select.clean-picker {
+  float:left;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance:    none;
@@ -11,11 +12,15 @@ select {
   outline: none;
   font-family: Helvetica;
   font-size: 1.2em;
-  margin: 1em auto 0.8em auto;
-  text-align: center;
+  // margin: 1em auto 0.8em auto;
+  // text-align: center;
   padding: 0 1em;
 }
-select:-moz-focusring {
+select.clean-picker:-moz-focusring {
     color: transparent;
     text-shadow: 0 0 0 #000;
+}
+
+.clean-picker-submit {
+  float:left;
 }

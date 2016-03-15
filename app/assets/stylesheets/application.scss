@@ -36,6 +36,20 @@
   border: 0;
 }
 
+.app-nav {
+
+  li {
+    list-style: none;
+  }
+
+  a, a:visited {
+    text-decoration: none;
+    color: $font-color-normal;
+  }
+  a:hover {
+    color: blue;
+  }
+}
 
 
  body {
@@ -53,6 +67,7 @@ h1,h2,h3,h4,h5,h6 {
  p, ol, ul, td {
    font-size: 13px;
    line-height: 18px;
+   list-style: none;
  }
 
 pre {
@@ -83,6 +98,7 @@ pre {
 
 .fab-backward-btn,
 .fab-forward-btn {
+  text-decoration: none;
   font-weight: 900;
   color: #889197;
   background-color: #eff;
@@ -95,6 +111,7 @@ pre {
 
 .fab-backward-btn:hover,
 .fab-forward-btn:hover {
+  color: $font-color-normal;
   background-color: #eff;
   cursor: pointer;
 }
@@ -136,6 +153,7 @@ pre {
 
 a {
   color: $link-color;
+  text-decoration: underline;
 
   &:visited { color: $link-color; }
 
@@ -143,4 +161,41 @@ a {
     color: $link-color-hover;
     background-color: $link-bg-color-hover;
   }
+}
+
+
+.elegant a, .elegant a:visited {
+  text-decoration: none;
+  color: $font-color-normal;
+}
+.elegant a:hover {
+  color: blue;
+  background-color: $link-bg-color-hover;
+}
+
+
+.faked-link {
+  color: $font-color-normal;
+  cursor: pointer;
+
+  & > form > span {
+    margin-left: -1px;
+  }
+
+  button, input[type=submit], input[type=button] {
+    color:inherit;
+    margin-left: -2px;
+    background:none!important;
+    border:none;
+    padding:0!important;
+    font: inherit;
+    /*border is optional*/
+    cursor: inherit;
+  }
+
+  &:hover {
+    color: blue;
+    background-color: $link-bg-color-hover;
+  }
+
 }

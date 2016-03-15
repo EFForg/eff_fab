@@ -1,21 +1,60 @@
-<h1>Admin</h1>
+<div class="elegant">
+  <h1>Admin</h1>
 
-<h2>Usage</h2>
-<%= form_tag("/tools/send_reminders", method: "post") do %>
-  <%= submit_tag "Send FAB reminder" %>
-<% end %>
+  <h2>Usage</h2>
 
-<%= form_for(@user, remote: true, format: :json, ) do |f| %>
-  <%= f.select :role, User.roles.collect{ |k,v| [ k,k ] } %>
-  <%= f.submit %>
-<% end %>
+  <ul>
+    <li>
+      <span class="faked-link">
+        <%= form_tag("/tools/send_reminders", method: "post") do %>
+          <span class="icon-resize-full-alt"></span>
+          <%= submit_tag "Send FAB reminder" %>
+        <% end %>
+      </span>
 
-<h2>Configuration</h2>
+    <li>
+      <%= form_for(@user, remote: true, format: :json, ) do |f| %>
+        <%= f.select :role, User.roles.collect{ |k,v| [ k,k ] }, {}, class: "clean-picker" %>
+        <%= f.submit class: "clean-picker-submit" %>
+      <% end %>
+      <div class="clear"></div>
 
-<div><%= link_to "Add new user", "/users/new" %></div>
-<div><%= link_to "Edit users", "/users" %></div>
-<div><%= link_to "Edit teams", "/teams" %></div>
+  <h2>Configuration</h2>
 
-<%= form_tag("/tools/populate_users", method: "post") do %>
-  <%= submit_tag "Populate users", data: { confirm: "Are you sure?" } %>
-<% end %>
+  <ul>
+    <li>
+      <%= link_to "/users/new" do %>
+        <span class="icon-user-add"></span>
+        Add new user
+      <% end %>
+    <li>
+      <%= link_to "/users" do %>
+        <span class="icon-users"></span>
+        Edit users
+        <% end %>
+    <li>
+      <%= link_to "/teams" do %>
+        <span class="icon-flag"></span>
+        Edit teams
+        <% end %>
+    <li>
+      <span class="faked-link">
+        <%= form_tag("/tools/populate_users", method: "post") do %>
+          <span class="icon-database"></span>
+          <%= submit_tag "Populate users", data: { confirm: "Are you sure?" } %>
+        <% end %>
+      </span>
+  </ul>
+
+  <h2>Development</h2>
+
+  <ul>
+    <li>
+      <%= link_to '/tools/create_model_user' do %>
+        <span class="icon-user-add"></span>
+        Create Model User
+      <% end %>
+    </li>
+  </ul>
+
+</div>

@@ -1,14 +1,35 @@
-<% if user_signed_in? %>
-  <li><%= link_to 'Edit account', edit_user_registration_path %></li>
-  <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
-<% else %>
-  <li><%= link_to 'Sign in', new_user_session_path %></li>
-  <li><%= link_to 'Sign up', new_user_registration_path %></li>
-<% end %>
-<% if user_signed_in? %>
-  <% if current_user.try(:admin?) %>
-    <li><%= link_to 'View users', users_path %></li>
-    <li><%= link_to 'Administer', 'admin' %></li>
-    <li><%= link_to 'Create Model User', '/tools/create_model_user' %></li>
-  <% end %>
-<% end %>
+<nav class="app-nav">
+  <ul>
+    <% if user_signed_in? %>
+      <!-- <li><%# link_to 'Edit account', edit_user_registration_path %></li> -->
+      <li>
+        <%= link_to destroy_user_session_path, :method=>'delete' do %>
+          <span class="icon-eject"></span>
+          Sign out
+        <% end %>
+      </li>
+    <% else %>
+      <li><%= link_to 'Sign in', new_user_session_path %></li>
+      <li><%= link_to 'Sign up', new_user_registration_path %></li>
+    <% end %>
+    <% if user_signed_in? %>
+      <% if current_user.try(:admin?) %>
+        <li>
+          <%= link_to users_path do %>
+            <span class="icon-book-open"></span>
+            View Fab
+          <% end %>
+        </li>
+        <li>
+          <%= link_to '/admin' do %>
+            <span class="icon-cog"></span>
+            Administer
+          <% end %>
+        </li>
+        <li>
+          
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</nav>
