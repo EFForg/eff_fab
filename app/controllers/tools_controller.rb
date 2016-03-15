@@ -1,10 +1,15 @@
 class ToolsController < ApplicationController
-  before_action :admin_only, except: [:next_fab, :previous_fab]
+  before_action :admin_only, except: [:next_fab, :previous_fab, :send_reminders]
+  skip_before_action :verify_authenticity_token, only: :send_reminders
 
   # POST /tools/send_reminders
   def send_reminders
-    User.all.each do |user|
-      FabMailer.reminder(user).deliver_later
+    admin_password = params[ :admin_password ]
+    admin_password_application = ENV['admin_password']
+    if admin_password == admin_password_application
+      User.all.each do |user|
+        FabMailer.reminder(user).deliver_later
+      end
     end
   end
 
