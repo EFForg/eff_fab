@@ -23,7 +23,7 @@ Getting Started
 Install dependencies, or use [mah vagrant box](https://github.com/TheNotary/ruby_vagrant_box).
 
 ```
-$  sudo apt-get install libmysqlclient-dev
+$  sudo apt-get install mysql-server libmysqlclient-dev imagemagic
 ```
 
 Setup the app as with most rails apps

@@ -26,7 +26,7 @@ end
 # The dogs create the other team, but don't count as real users... thus this func
 def delete_other_team_if_not_needed
   t = Team.find_by(name: 'Other')
-  t.delete if t.users.count == 0
+  t.delete if t && t.users.count == 0
 end
 
 def get_staff_profiles()
