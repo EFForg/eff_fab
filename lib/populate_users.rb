@@ -12,7 +12,7 @@ def scrape_procedure
   u.save
   puts 'CREATED ADMIN USER: ' << u.email
 
-  team_id = (Team.find_by name: 'Other')
+  team_id = Team.find_by(name: 'Other')
   profiles = get_staff_profiles
 
   profiles.each do |profile|
@@ -60,8 +60,8 @@ def get_team(profile)
   name = profile.css('.views-field-field-profile-team').text.strip
   name = 'Other' if name.blank?
 
-  if Team.find_by name: name
-    return Team.find_by name: name
+  if t = Team.find_by(name: name)
+    return t
   else
     return Team.create(name: name, weight: get_weight(name))
   end
