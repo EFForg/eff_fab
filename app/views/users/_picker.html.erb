@@ -1,4 +1,8 @@
-<select id="nav-select" onchange="javascript: selectChange();">
+<select id="nav-select"
+  onchange="javascript: selectChange();"
+  onkeyup="javascript: return preventGlitchySelectness(event);"
+  onkeydown="javascript: return preventGlitchySelectness(event);"
+>
    <option>All teams</option>
   <% Team.all.each do |team| %>
     <!-- team.glyph_class -->

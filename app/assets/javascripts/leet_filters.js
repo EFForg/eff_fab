@@ -21,6 +21,11 @@ var LeetFilter = function(choiceWidget) {
     // document.getElementById("nav-select").options.selectedIndex = 0;
   };
 
+  this.selectCategoryByName = function(categoryName) {
+    _choiceWidget.setChoiceByName(categoryName);
+    this.refreshDisplayedCategory(categoryName);
+  }
+
   this.cyclePrevCategory = function(self) {
     var targetCategoryName = _choiceWidget.choosePrevCategory();
     self.refreshDisplayedCategory(targetCategoryName);
@@ -130,7 +135,8 @@ var ChoiceWidget = function() {
 
 
   this.setChoiceByName = function(categoryName) {
-
+    var targetCategoryName = classifyTeamName(categoryName);
+    _currentCategory = targetCategoryName;
   };
 
 
