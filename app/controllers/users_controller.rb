@@ -4,9 +4,9 @@ class UsersController < ApplicationController
 
   def index
     @teams = if params[:team_name].nil?
-      Team.all.includes(users: { current_period_fab: [:notes, :forward, :backward] }).to_a
+      Team.all_including_runner_ups
     else
-      Team.where(name: params[:team_name]).includes(users: { current_period_fab: [:notes, :forward, :backward] }).to_a
+      Team.where(name: params[:team_name]).includes(users: { current_period_fab: [:notes, :forward, :backward] }).to_a << Team.runner_ups
     end
 
     @fab_period = Fab.get_start_of_current_fab_period

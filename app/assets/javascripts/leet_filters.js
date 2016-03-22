@@ -85,7 +85,7 @@ var LeetFilter = function(choiceWidget) {
 
   // converts "Web Development" to "Web-Development"
   function classifyTeamName(teamString) {
-    return teamString.trim().replace(" ", "-").replace(/[^0-9A-z.\-]/g, "_");
+    return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "_");
   }
 
 };
@@ -192,7 +192,7 @@ var ChoiceWidget = function() {
 
   // TODO: Make dry via mixin
   function classifyTeamName(teamString) {
-    return teamString.trim().replace(" ", "-").replace(/[^0-9A-z.\-]/g, "_");
+    return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "_");
   }
 
 }

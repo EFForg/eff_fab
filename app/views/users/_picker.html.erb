@@ -3,9 +3,8 @@
   onkeyup="javascript: return preventGlitchySelectness(event);"
   onkeydown="javascript: return preventGlitchySelectness(event);"
 >
-   <option>All teams</option>
-  <% Team.all.each do |team| %>
-    <!-- team.glyph_class -->
+  <option>All teams</option>
+  <% Team.all_including_runner_ups.each do |team| %>
     <%= leet_filter_dropdown_option(team.name) %>
   <% end %>
 </select>

@@ -46,4 +46,22 @@ class User < ActiveRecord::Base
     3
   end
 
+  def self.find_users_with_missing_fabs_last_period(target_period = nil)
+    target_period = Fab.get_start_of_current_fab_period if target_period.nil?
+    rogue_users = []
+
+    User.all.each do |u|
+      rogue_users << u if u.missed_fab_for_period?(target_period)
+    end
+
+    rogue_users
+  end
+
+  def missed_fab_for_period?(target_period = nil)
+    target_period = Fab.get_start_of_current_fab_period if target_period.nil?
+
+    fab_attrs = {period: target_period..target_period + 7.days}
+    self.fabs.where(fab_attrs).empty?
+  end
+
 end

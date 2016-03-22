@@ -47,7 +47,7 @@ feature 'users leetFilter' do
 
     # wraps around array in reverse direction
     4.times { page.evaluate_script("leetFilter.cyclePrevCategory(leetFilter);") }
-    expect(page).to have_select('nav-select', :selected => 'executive')
+    expect(page).to have_select('nav-select', :selected => 'Team Runner Up')
 
     # wraps around array in forward direction and can land on cleared filter option
     1.times { page.evaluate_script("leetFilter.cycleNextCategory(leetFilter);") }
