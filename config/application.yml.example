@@ -15,9 +15,9 @@ secret_key_base: '6769ed413561af4d707e6c6d3b7258a10f7d9429055b24e7a136f1ab99d3aa
 
 domain_name: 'fab.eff.org'
 
-mail_server: ''
+mail_server: 'smtp.example.com'
 mail_port: '587'
-mail_authentication: "plain"
+mail_authentication: "login"
 mail_enable_starttls_auto: 'true'
 mail_user_name: ''
 mail_password: ''
