@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<% if false %>
+  <%# TODO:  fix this up %>
+  <p style="display:none;">
+
+    Hey!  Do you hate emails that contain HTML markup?
+    Browse to the below link:
+
+    https://fab.eff.org/tools/disable_html_formatting?user_id=<%= @user.id%>
+
+  </p>
+<% end %>
+
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @user.name %></h1>
+    <p>
+      Please just do your FAB.
+    </p>
+    <p>
+      I need treats...
+    </p>
+    <p>
+      Due 4 pm by Monday.
+    </p>
+    <p>
+      <a href="<%= ditto = new_user_fab_path(@user) %>"> <%= ditto %></a>
+    </p>
+  </body>
+</html>

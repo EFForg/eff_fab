@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+
+    <p>
+      The following people are FAB rogues, possibly infultrators...
+    </p>
+
+    <p>
+      <ul>
+        <% @failed_fab_users.each do |u| %>
+        <li>
+          <%= u.name %>
+        <% end %>
+      </ul>
+    </p>
+
+    <p>
+      ...surely too busy to do FAB because the were at some NSA wine mixer or something.
+    </p>
+  </body>
+</html>
