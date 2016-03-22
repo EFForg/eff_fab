@@ -100,20 +100,25 @@ pre {
 .fab-forward-btn {
   text-decoration: none;
   font-weight: 900;
-  color: #889197;
-  background-color: #eff;
-  border-radius: 20px;
+  color: #fff;
+  background-color: #C70300;
+  border-radius: 50%;
   margin-top: 2.5em;
-  width: 3%;
-  height: 100%;
+  width: 18px;
+  height: 18px;
   float: left;
+  text-align: center;
 }
 
 .fab-backward-btn:hover,
 .fab-forward-btn:hover {
-  color: $font-color-normal;
-  background-color: #eff;
+  color: #fff;
+  background-color: #000;
   cursor: pointer;
+}
+
+.fab-backward-btn {
+  margin-left: -2em;
 }
 
 .fab-backward-btn:hover.disabled,
