@@ -3,7 +3,7 @@ $nav-height: 60px; //3.14159265358979323846264em
 $nav-letter-spacing: 0.1em;
 $nav-offset: 500px;
 $nav-bg-color: rgba(255,255,255,0.95);
-$nav-font: 'Rubik';
+$nav-font: 'Montserrat';
 
 // %nav-active {
 
@@ -76,8 +76,13 @@ nav {
           a {
             line-height: $nav-height / 1.5;
             height: $nav-height / 1.5;
+            width: 100%;
             font-size: 1.5em;
 
+          }
+
+          &:hover {
+            background-color: rgba(240,240,240,0.95);
           }
 
 
@@ -92,7 +97,7 @@ nav {
 
   ul ul {
     position: absolute;
-    left: 0;
+    left: -2em;
     top: 100%;
     display: none;
   }

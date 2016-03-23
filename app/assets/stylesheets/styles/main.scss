@@ -9,6 +9,8 @@
 @import "widgets/hero";
 @import "widgets/modal";
 
+@import "vendor/ionicons";
+
 div {
   text-align: center;
 }
@@ -90,24 +92,33 @@ div {
   }
   background-color: $content-bg-color;
   padding-top: 2em;
-  padding-bottom: 4em;
-  text-align: center;
+  padding-bottom: 1.5em;
+  //text-align: center;
   font-size: 24px;
   margin-bottom: 2em;
   figcaption {
+    text-align: center;
+    @include susy-breakpoint($md) {
+      text-align: left;
+      float: left;
+    }
     hgroup {
       h1 {
         font-size: 1.2em;
         margin-top: 0.5em;
         
         font-family: 'Montserrat';
-        font-weight: 400;
+        font-weight: 600;
         @include susy-breakpoint($md) {
           font-size: 1.3em;
         }
+        a {
+          color: rgba(78,116,139,1);
+          text-decoration: none;
+        }
       }
       h2 {
-        font-family: 'Rubik';
+        font-family: 'Montserrat';
         font-weight: 300;
         text-transform: uppercase;
         font-size: 0.5em;
@@ -124,13 +135,24 @@ div {
     height: 120px;
     width: 120px;
     border-radius: 50%;
-    background-size: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @include susy-breakpoint($md) {
+      margin-left: 60px;
+      margin-right: 30px;
+      float: left;
+    }
+    
+  }
+
+  div.back {
+    clear: left;
   }
   div.back,div.forward {
     h3 {
       font-family: 'Montserrat';
       font-size: 1.1em;
-      font-weight: 300;
+      font-weight: 400;
       padding: 0;
       margin: 1em 0 0;
     }
@@ -149,7 +171,7 @@ div {
     list-style-type: none;
     display:inline-block;
     text-align:left;
-    font-family: 'Rubik';
+    font-family: 'Crimson Text';
     font-weight: 300;
     li {
       font-size: 0.6em;
