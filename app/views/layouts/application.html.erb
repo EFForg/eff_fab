@@ -9,16 +9,26 @@
   <%= csrf_meta_tags %>
 </head>
 <body id="<%= page_identifier %>">
-  <div class="eff-banner"></div>
+  <div id="hero"><img id="logo" src="<%= asset_path('EFF-logo-plain.svg') %>" type="image/svg+xml">
+    <div id="front"><img id="title" src="<%= asset_path('forward-text-white.svg') %>" type="image/svg+xml">
+        
+      <h1>Where are your coworkers located on the time/space continuum, and what are they doing now? </h1>
+      </div>
+    <div id="hero-gradient"></div>
+    <div id="hero-bg" style="background-image: url('<%= asset_path('parker_dan_mohawk.jpg') %>');"></div>
+  </div>
   <%= render "/layouts/nav_links_for_auth" %>
+  <%= render "/layouts/nav_bar" %>
 
-  <div class="container">
-    <%= render "/layouts/banner_stuff" %>
+  <!-- <div class="container"> -->
+    <%# render "/layouts/banner_stuff" %>
+    <p id="notice"><%= notice %></p>
+    <p id="alert"><%= alert %></p>
 
     <%= yield %>
-  </div>
+  <!-- </div> -->
 
   <script>invokePageSpecificJavascript();</script>
-
+  <%= render "/layouts/navpara" %>
 </body>
 </html>

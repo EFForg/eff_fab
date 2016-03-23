@@ -5,20 +5,20 @@ $nav-offset: 500px;
 $nav-bg-color: rgba(255,255,255,0.95);
 $nav-font: 'Rubik';
 
-%nav-active {
+// %nav-active {
 
-  border-bottom: 2px solid black;
-  &:after { // hack to kill letter spacing extra width on border
-    position: absolute;
-    width: 1em;
-    margin-top: -2px;
-    margin-left: -($nav-letter-spacing + 0.1em);
-    content: "";
-    top: $nav-height;
-    background-color: $nav-bg-color;
-    border-top: 2px solid $nav-bg-color;
-  }
-}
+//   border-bottom: 2px solid black;
+//   &:after { // hack to kill letter spacing extra width on border
+//     position: absolute;
+//     width: 1em;
+//     margin-top: -2px;
+//     margin-left: -($nav-letter-spacing + 0.1em);
+//     content: "";
+//     top: $nav-height;
+//     background-color: $nav-bg-color;
+//     border-top: 2px solid $nav-bg-color;
+//   }
+// }
 
 nav {
   font-family: $nav-font;
@@ -36,22 +36,68 @@ nav {
   background-color: $nav-bg-color;
   display: block;
   ul {
+
+
     //max-width: 1200px
     list-style-type: none;
     padding: 0;
     margin: 0;
     li {
-      display: inline-block;
-      line-height: $nav-height;
-      height: $nav-height;
+      background-color: $nav-bg-color;
+      display: inline;
       z-index: 10;
-      &:first-of-type {
-        a {
-          text-decoration: underline;
-        }
+      position: relative;
+      // &:first-of-type {
+      //   a {
+      //     text-decoration: underline;
+      //   }
+      // }
+
+      a {
+        line-height: $nav-height;
+        height: $nav-height;
       }
+
+      &:hover ul {
+        display: inline;
+      }
+
+
+      ul {  // one level
+        padding: 0;
+        margin: 0;
+
+        li {
+          width: 160%;
+          text-align: left;
+          background-color: $nav-bg-color;
+          padding-left: 2em;
+
+          a {
+            line-height: $nav-height / 1.5;
+            height: $nav-height / 1.5;
+            font-size: 1.5em;
+
+          }
+
+
+        }
+     }
+
+
     }
+
+
   }
+
+  ul ul {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    display: none;
+  }
+
+
   img {
     display: inline;
 
@@ -103,14 +149,14 @@ nav {
       &:hover {
         cursor: pointer;
       }
-      &:nth-of-type(n+1):nth-of-type(-n+10) {
-        &:hover {
-          @extend %nav-active;
-        }
-        &.active {
-          @extend %nav-active;
-        }
-      }
+      // &:nth-of-type(n+1):nth-of-type(-n+10) {
+      //   &:hover {
+      //     @extend %nav-active;
+      //   }
+      //   &.active {
+      //     @extend %nav-active;
+      //   }
+      // }
       &:nth-of-type(1)  { // donate red
 
         display: inline-block;
