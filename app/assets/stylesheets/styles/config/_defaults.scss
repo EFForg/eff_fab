@@ -1,0 +1,17 @@
+html,body {
+  margin: 0;
+  padding: 0;
+}
+
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica', sans-serif;
+  font-size: $default-font-size;
+  position: relative;
+  background-color: $body-bg-color;
+}

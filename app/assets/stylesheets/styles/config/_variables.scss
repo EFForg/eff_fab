@@ -1,0 +1,26 @@
+// grid definition
+
+$susy: 12 1/4 fluid float inside;
+@include layout($susy);
+
+// breakpoints
+
+$default-font-size: 16px;
+
+$xs: min-width 12em;
+$sm: min-width 23em;
+$ph: min-width 34em;
+$md: min-width 48em;
+$lg: min-width 66em;
+$xl: min-width 80em;
+
+// nav
+
+
+
+// colors
+
+$blue: #007eff;
+$body-bg-color: #f6f6f6;
+$content-bg-color: #fcfcfc;
+$content-bg-color-mobile: $body-bg-color;
