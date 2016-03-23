@@ -43,7 +43,7 @@ nav {
     padding: 0;
     margin: 0;
     li {
-      background-color: $nav-bg-color;
+      // background-color: $nav-bg-color;
       display: inline;
       z-index: 10;
       position: relative;
@@ -58,8 +58,10 @@ nav {
         height: $nav-height;
       }
 
-      &:hover ul {
-        display: inline;
+      @include susy-breakpoint($md) {
+        &:hover ul {
+          display: inline;
+        }
       }
 
 
@@ -100,6 +102,11 @@ nav {
     left: -2em;
     top: 100%;
     display: none;
+    background-color: transparent;
+  }
+
+  ul li ul {
+    background-color: transparent;
   }
 
 
