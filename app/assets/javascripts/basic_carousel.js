@@ -39,7 +39,7 @@
     };
 
     function cycleFab_click(button_element, forward) {
-      var fab_encapsulator = $(button_element).parent();
+      var fab_encapsulator = $(button_element).parent().parent();
 
       var cycle_options = {
         user_id: fab_encapsulator.attr('data-user-id'),
@@ -48,6 +48,7 @@
       }
 
       var direction = forward ? 'forward' : 'backward';
+
 
       requestCycledFab(direction, cycle_options, function(markup) {
         var options = JSON.parse(markup.split(';')[0]);

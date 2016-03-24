@@ -3,14 +3,11 @@
 
 <% fab_reference = "data-fab-period=#{@fab.period.to_json}" %>
 
-<div class="user">
-  <div class="basic-carousel" data-user-id="<%= user.id %>" <%= fab_reference %>>
-
 
     <%# render partial: '/users/user_details', locals: {user: user}%>
 
 
-	<figure class="fab-user">
+	<figure class="fab-user basic-carousel" data-user-id="<%= user.id %>" <%= fab_reference %>>
 	  <div style="background-image: url(<%= user.avatar.url(:thumb) %>)" class="portrait"></div>
 	  <figcaption>
 	    <hgroup>
@@ -50,10 +47,4 @@
         <%= show_fab_notes forward: false %>
         <%= show_fab_notes forward: true %>
 
-      
 
-      <div class="clear"></div>
-  </div>
-
-  <div class="clear"></div>
-</div>
