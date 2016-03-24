@@ -9,37 +9,21 @@
     this.register = function(selector) {
 
       $(selector).each(function() {
-
         // Make it so when you click the child nav button, they look for the
         // parent's data and conduct the appropriate ajax/ view change action
-
-
-        $(selector + " " + '.fab-backward-btn').first().click(function() {
+        $(this).children('.fab-backward-btn').first().click(function() {
           cycleFab_click(this, false);
-          alert("lol 1");
         });
 
-        $(selector + " " + '.fab-forward-btn').first().click(function() {
+        $(this).children('.fab-forward-btn').first().click(function() {
           cycleFab_click(this, true);
-          alert("lol2");
         });
-        
-        
-        // $(this).children('.fab-backward-btn').first().click(function() {
-        //   cycleFab_click(this, false);
-        //   alert('lol');
-        // });
-
-        // $(this).children('.fab-forward-btn').first().click(function() {
-        //   cycleFab_click(this, true);
-        // });
-
       });
 
     };
 
     function cycleFab_click(button_element, forward) {
-      var fab_encapsulator = $(button_element).parent().parent();
+      var fab_encapsulator = $(button_element).parent();
 
       var cycle_options = {
         user_id: fab_encapsulator.attr('data-user-id'),
@@ -49,7 +33,6 @@
 
       var direction = forward ? 'forward' : 'backward';
 
-
       requestCycledFab(direction, cycle_options, function(markup) {
         var options = JSON.parse(markup.split(';')[0]);
         var new_fab_id = options.fab_id;
@@ -58,6 +41,7 @@
 
         disablePreviousOrNextBarsIfNeeded(fab_encapsulator, which_fabs_exist);
         markup = markup.split(";").slice(1).join(";");
+        
         populateFabInDisplay(markup, fab_encapsulator);
 
         fab_encapsulator.attr('data-fab-period', new_fab_period);
