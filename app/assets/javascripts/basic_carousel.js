@@ -12,13 +12,27 @@
 
         // Make it so when you click the child nav button, they look for the
         // parent's data and conduct the appropriate ajax/ view change action
-        $(this).children('.fab-backward-btn').first().click(function() {
+
+
+        $(selector + " " + '.fab-backward-btn').first().click(function() {
           cycleFab_click(this, false);
+          alert("lol 1");
         });
 
-        $(this).children('.fab-forward-btn').first().click(function() {
+        $(selector + " " + '.fab-forward-btn').first().click(function() {
           cycleFab_click(this, true);
+          alert("lol2");
         });
+        
+        
+        // $(this).children('.fab-backward-btn').first().click(function() {
+        //   cycleFab_click(this, false);
+        //   alert('lol');
+        // });
+
+        // $(this).children('.fab-forward-btn').first().click(function() {
+        //   cycleFab_click(this, true);
+        // });
 
       });
 

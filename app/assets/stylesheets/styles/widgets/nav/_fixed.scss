@@ -182,6 +182,7 @@ nav {
     li:first-of-type { // hamburger 
       position: relative;
       padding-right: 0.4em;
+      line-height: $nav-height;
       @include susy-breakpoint($md) {
         display: none;
       }

@@ -19,13 +19,13 @@
   </div>
   <%= render "/layouts/nav_bar" %>
 
-  <!-- <div class="container"> -->
+  <div id="container">
     <%# render "/layouts/banner_stuff" %>
     <p id="notice"><%= notice %></p>
     <p id="alert"><%= alert %></p>
 
     <%= yield %>
-  <!-- </div> -->
+  </div>
 
   <script>invokePageSpecificJavascript();</script>
   <%= render "/layouts/navpara" %>

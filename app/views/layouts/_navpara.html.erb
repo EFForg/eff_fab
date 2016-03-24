@@ -5,6 +5,7 @@ var ticking = false,
     bgElm = document.getElementById('hero-bg'),
     frontElm = document.getElementById('front'),
     scrollTop = window.pageYOffset,
+    translateValue = 0,
 
     nav = document.getElementsByTagName('nav')[0],
     navStyle = window.getComputedStyle(nav),
@@ -12,9 +13,10 @@ var ticking = false,
     navOffset = nav.getBoundingClientRect().top + scrollTop,
     navDistance = navOffset - scrollTop,
     navHeight = nav.offsetHeight,
-    afterNav = nav.nextElementSibling,
+    afterNav = document.getElementById("container"),
     navMargin = parseInt(window.getComputedStyle(afterNav,null).getPropertyValue('margin-top')),
     screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
 
 var hamburger = document.getElementById('hamburger');
 
@@ -58,22 +60,41 @@ var doResize = function() {
   currentPosition = navStyle.getPropertyValue('position');
 
 
-  console.log('resize');
-  console.log('currentPosition, navOffset, navDistance, scrollTop' + currentPosition + ' ' + navOffset
-  + ' ' + navDistance + ' ' + scrollTop);
+  // console.log('resize');
+  // console.log('currentPosition, navOffset, navDistance, scrollTop' + currentPosition + ' ' + navOffset
+  // + ' ' + navDistance + ' ' + scrollTop);
 
-  if(screenWidth < 768) {
-    console.log("fixed 1");
-    nav.style.position = 'fixed';
-  } else {
-    if(navDistance < 0) {
+  // if(screenWidth < 768) {
+  //   nav.style.position = 'fixed';
+  //   afterNav.style.marginTop = navMargin + 'px';
+  // } else {
+  //   if(navDistance <= 0) {
+  //     console.log(navDistance);
+  //     if(navPosition != 'fixed' && navDistance <= 0) {
+  //       nav.style.position = 'fixed';
+  //       afterNav.style.marginTop = navMargin + navHeight + 'px';
+  //     } else if (navPosition == 'fixed' && navDistance <= 0) {
+  //       nav.style.position = 'relative';
+  //       afterNav.style.marginTop = navMargin + 'px';
+  //     }
+  //   } else if (navDistance < 0 && navPosition == 'fixed') {
+  //     nav.style.position = 'relative';
+  //     afterNav.style.marginTop = navMargin + 'px';
+  //   }
+  // }
+
+  if(screenWidth >= 768) {
+    if(navDistance <= 0) {
       if(navPosition != 'fixed' && navDistance <= 0) {
-        console.log("fixed 2");
         nav.style.position = 'fixed';
-      }
+        afterNav.style.marginTop = navHeight + navMargin + 'px';
+      } 
     } else if (navDistance > 0 && navPosition == 'fixed') {
       nav.style.position = 'relative';
+      afterNav.style.marginTop = navMargin + 'px';
     }
+  } else {
+    nav.style.position = 'fixed';
   }
 
   requestTick();
@@ -97,16 +118,18 @@ var menuCheck = function() {
 
 
 
-    console.log('currentPosition, navOffset, navDistance, scrollTop' + currentPosition + ' ' + navOffset
-    + ' ' + navDistance + ' ' + scrollTop);
+    // console.log('currentPosition, navOffset, navDistance, scrollTop' + currentPosition + ' ' + navOffset
+    // + ' ' + navDistance + ' ' + scrollTop);
 
   if(screenWidth >= 768) {
-    if(navDistance < 0) {
+    if(navDistance <= 0) {
       if(navPosition != 'fixed' && navDistance <= 0) {
         nav.style.position = 'fixed';
+        afterNav.style.marginTop = navHeight + navMargin + 'px';
       }
     } else if (navDistance > 0 && navPosition == 'fixed') {
       nav.style.position = 'relative';
+      afterNav.style.marginTop = navMargin + 'px';
     }
   } else {
     nav.style.position = 'fixed';
@@ -125,7 +148,7 @@ var menuCheck = function() {
 };
 
 var updatePosition = function() {
-  translateValue = lastScrollY / speedDivider;
+
   translateY(frontElm, (translateValue * 0.8));
   translateY(bgElm, translateValue);
   dim(frontElm, translateValue);
