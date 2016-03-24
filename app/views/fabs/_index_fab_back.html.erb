@@ -1,4 +1,4 @@
-<% time_span = fab.period.strftime("%b %e") + "-" + (fab.period + 4.days).strftime("%e") %>
+<% time_span = fab.display_date_for_header %>
 
 <div>
   <h3><%= link_to time_span, [@user, fab] %> </h3>

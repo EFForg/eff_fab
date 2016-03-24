@@ -44,6 +44,10 @@ class Fab < ActiveRecord::Base
     display_time_span(period + 1.week)
   end
 
+  def display_date_for_header
+    self.period.strftime("%b %e") + "-" + (self.period + 4.days).strftime("%e")
+  end
+
   # this function can be used as a seek forward and will skip blank fabs
   def previous_fab
     self.user.fabs.where('period < ?', self.period).first

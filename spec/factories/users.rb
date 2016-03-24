@@ -3,11 +3,32 @@ FactoryGirl.define do
     name "Test User"
     sequence(:email) {|n| "person_#{n}@example.com" }
     password "please123"
+
+    # put user on a team
+    after(:create) do |user|
+      t = Team.find_or_create_by(name: "Activism")
+      user.team_id = t.id
+    end
+  end
+
+  factory :user_with_yesterweeks_fab, parent: :user_with_completed_fab do
+    after(:create) do |user|
+      user.fabs << FactoryGirl.create(:fab_from_last_week)
+    end
+  end
+
+  factory :user_admin, parent: :user do
+    role = :admin
   end
 
   factory :user_with_completed_fab, parent: :user do
     after(:create) do |user|
-      user.upcoming_fab.save
+      # setup fab and note
+      fab = user.fabs.find_or_build_this_periods_fab
+      n = fab.notes[4]
+      n.body = "I have a note"
+      n.save
+      fab.save
     end
   end
 
