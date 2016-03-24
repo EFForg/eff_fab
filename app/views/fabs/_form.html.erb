@@ -1,21 +1,23 @@
-<%= simple_form_for([@user, @fab]) do |f| %>
-  <%= f.error_notification %>
+<% unless @fab.nil? %>
+  <%= simple_form_for([@user, @fab]) do |f| %>
+    <%= f.error_notification %>
 
-  <div class="form-inputs">
-
-
-    <%= display_fab_note_inputs form: f, forward: false %>
-    <%= display_fab_note_inputs form: f, forward: true %>
-    <div class="clear"></div>
+    <div class="form-inputs">
 
 
-    <div>Gif Tag:
-      <%= f.file_field :gif_tag %>
+      <%= display_fab_note_inputs form: f, forward: false %>
+      <%= display_fab_note_inputs form: f, forward: true %>
+      <div class="clear"></div>
+
+
+      <div>Gif Tag:
+        <%= f.file_field :gif_tag %>
+      </div>
     </div>
-  </div>
 
-  <br>
-  <div class="form-actions">
-    <%= f.button :submit, "SUBMIT FAB" %>
-  </div>
+    <br>
+    <div class="form-actions">
+      <%= f.button :submit, "SUBMIT FAB" %>
+    </div>
+  <% end %>
 <% end %>

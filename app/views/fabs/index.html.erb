@@ -6,7 +6,7 @@
 <br>
 
 <div class="fabs-back">
-  <% @fabs.drop(1).each do |fab| %>
+  <% @fabs.each do |fab| %>
     <div class="fab">
       <%= render partial: 'index_fab_back', locals: {fab: fab} %>
     </div>

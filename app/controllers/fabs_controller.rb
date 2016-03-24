@@ -1,12 +1,19 @@
 class FabsController < ApplicationController
   before_action :set_user
   before_action :set_fab, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:update, :create]
+  before_action :author_access_only, only: [:update, :create]
+
 
   # GET /fabs
   # GET /fabs.json
   def index
-    @fabs = @user.fabs.includes(:forward).includes(:backward)
-    @fab = @user.fabs.find_or_build_this_periods_fab
+    @fabs = @user.fabs.includes(:forward).includes(:backward).to_a
+
+    if current_user == @user
+      @fab = @user.fabs.find_or_build_this_periods_fab
+      @editable_fab = @fabs.shift # shirnks @fabs by 1 mind you...
+    end
   end
 
   # GET /fabs/1
@@ -26,7 +33,9 @@ class FabsController < ApplicationController
   # POST /fabs
   # POST /fabs.json
   def create
-    @fab = @user.fabs.new(fab_params.merge(period: DateTime.now))
+    redirect_to '/', :alert => "Access denied." if current_user != @user
+
+    @fab = current_user.fabs.new(fab_params.merge(period: DateTime.now))
 
     respond_to do |format|
       if @fab.save

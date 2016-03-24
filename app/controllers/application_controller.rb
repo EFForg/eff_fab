@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def author_access_only
+    redirect_to '/', :alert => "Access denied." if current_user != @user
+  end
+
   def login_by_basic_auth
     if ActionController::HttpAuthentication::Basic::has_basic_credentials?(request)
       name = ActionController::HttpAuthentication::Basic::user_name_and_password(request)[0]
