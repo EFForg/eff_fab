@@ -46,6 +46,7 @@ var dim = function(elm, value) {
 }
 
 var doScroll = function() {
+
   lastScrollY = window.pageYOffset;
   currentPosition = navStyle.getPropertyValue('position');
   requestTick();
@@ -148,7 +149,7 @@ var menuCheck = function() {
 };
 
 var updatePosition = function() {
-
+  translateValue = lastScrollY / speedDivider;
   translateY(frontElm, (translateValue * 0.8));
   translateY(bgElm, translateValue);
   dim(frontElm, translateValue);
