@@ -1,0 +1,69 @@
+<nav><img src="<%= asset_path('EFF-logo-plain.svg') %>" type="image/svg+xml">
+  <ul>
+    <li>Team: <a>All teams</a>
+      <ul>
+        <li><a>Activism</a></li>
+        <li><a>International</a></li>
+        <li><a>Finance/HR</a></li>
+        <li><a>Web Development</a></li>
+        <li><a>Tech Projects</a></li>
+        <li><a>Tech Ops</a></li>
+        <li><a>Administer</a></li>
+        <li><a>Other</a></li>
+        <li><a>Executive</a></li>
+        <li><a>Operations</a></li>
+        <li><a>Press/Graphics</a></li>
+      </ul>
+    </li>
+    <% if user_signed_in? %>
+      <!-- <li><%# link_to 'Edit account', edit_user_registration_path %></li> -->
+      <li>
+        <%= link_to destroy_user_session_path, :method=>'delete' do %>
+          <span class="icon-eject"></span>
+          Sign out
+        <% end %>
+      </li>
+    <% else %>
+      <li><%= link_to 'Sign in', new_user_session_path %></li>
+      <li><%= link_to 'Sign up', new_user_registration_path %></li>
+    <% end %>
+    <% if user_signed_in? %>
+      <% if current_user.try(:admin?) %>
+        <li>
+          <%= link_to users_path do %>
+            <span class="icon-book-open"></span>
+            View Fab
+          <% end %>
+        </li>
+        <li>
+          <%= link_to '/admin' do %>
+            <span class="icon-cog"></span>
+            Administer
+          <% end %>
+        </li>
+        <li>
+          
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+  <ul>
+    <li id="hamburger"><i class="icon ion-navicon"></i></li>
+  </ul>
+</nav>
+<div id="drawer">
+  <ul>
+    <li><a>All teams</a></li>
+    <li><a>Activism</a></li>
+    <li><a>International</a></li>
+    <li><a>Finance/HR</a></li>
+    <li><a>Web Development</a></li>
+    <li><a>Tech Projects</a></li>
+    <li><a>Tech Ops</a></li>
+    <li><a>Administer</a></li>
+    <li><a>Other</a></li>
+    <li><a>Executive</a></li>
+    <li><a>Operations</a></li>
+    <li><a>Press/Graphics</a></li>
+  </ul>
+</div>

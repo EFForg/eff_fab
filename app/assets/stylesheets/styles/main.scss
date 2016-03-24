@@ -1,0 +1,193 @@
+@import "config/variables";
+@import "config/defaults";
+
+@import "config/fonts";
+@import "config/typography";
+
+@import "widgets/nav/hamburger";
+@import "widgets/nav/fixed";
+@import "widgets/hero";
+@import "widgets/modal";
+
+@import "vendor/ionicons";
+
+$link-color: rgba(78,116,139,1);
+
+a {
+  color: $link-color;
+  &:visited {
+    color: $link-color;
+  }
+  text-decoration: none;
+}
+
+div {
+  text-align: center;
+}
+
+#logo { // logo
+  z-index: 5;
+  position: relative;
+  display: none;
+  width: 200px;
+  margin-bottom: -100px;
+  @include susy-breakpoint($md) {
+    display: inline-block;
+    margin-bottom: 0px;
+    width: 90px;
+    height: auto;
+    margin-left: 2em;
+    left: 0;
+    top: 1em;
+    position: absolute;
+  }
+}
+
+
+#front {
+  z-index: 5;
+  @include container(70%);
+  @include susy-breakpoint($md) {
+    @include container(95%);
+  }
+  h1 {
+    color: #fff;
+    line-height: 1em;
+    margin-top: 2em;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 1.2em;
+
+    @include susy-breakpoint($md) {
+      @include container(70%);
+      margin-top: 1em;
+    }
+
+
+  }
+
+  #title {
+    position: relative;
+    display: inline;
+    width: 100%;
+    @include susy-breakpoint($md) {
+      width:75%;
+      min-width: 75%;
+    }
+  }
+}
+
+
+#content {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  @include container(95%);
+  margin-top: 10px;
+  background-color: $content-bg-color-mobile;
+  @include susy-breakpoint($md) {
+    background-color: $content-bg-color;
+    margin-top: 30px;
+  }
+
+  section {
+  }
+}
+
+.fab-user {
+  display: block;
+  @include container(95%);
+  @include susy-breakpoint($md) {
+    @include container(70%);
+  }
+  background-color: $content-bg-color;
+  padding-top: 2em;
+  padding-bottom: 1.5em;
+  //text-align: center;
+  font-size: 24px;
+  margin-bottom: 2em;
+  figcaption {
+    text-align: center;
+    @include susy-breakpoint($md) {
+      text-align: left;
+      float: left;
+    }
+    hgroup {
+      h1 {
+        font-size: 1.2em;
+        margin-top: 0.5em;
+        
+        font-family: 'Montserrat';
+        font-weight: 600;
+        @include susy-breakpoint($md) {
+          font-size: 1.3em;
+        }
+        a {
+          color: $link-color;
+          text-decoration: none;
+        }
+      }
+      h2 {
+        font-family: 'Montserrat';
+        font-weight: 300;
+        text-transform: uppercase;
+        font-size: 0.48em;
+        margin-top: 0.25em;
+        letter-spacing: 0.07em;
+      }
+    }
+  }
+  div.portrait {
+    margin: 0 auto;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @include susy-breakpoint($md) {
+      margin-left: 60px;
+      margin-right: 30px;
+      float: left;
+    }
+    
+  }
+
+  div.back {
+    clear: left;
+  }
+  div.back,div.forward {
+    h3 {
+      font-family: 'Montserrat';
+      font-size: 1.1em;
+      font-weight: 400;
+      padding: 0;
+      margin: 1em 0 0;
+    }
+
+    text-align: center;
+    @include span(12);
+    @include susy-breakpoint($md) {
+      @include span(6);
+    }
+  }
+
+  // div.back {
+  //   margin-top: 1em;
+  // }
+  ul {
+    list-style-type: none;
+    display:inline-block;
+    text-align:left;
+    font-family: 'Source Sans';
+    font-weight: 300;
+    letter-spacing: 0.15px;
+    li {
+      font-size: 0.6em;
+      padding-right: 2em;
+    }
+  }
+}
+
+#container {
+  margin-top: 20px;
+}

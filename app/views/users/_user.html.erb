@@ -5,14 +5,52 @@
 
 <div class="user">
   <div class="basic-carousel" data-user-id="<%= user.id %>" <%= fab_reference %>>
-    <%= render partial: '/users/user_details', locals: {user: user}%>
 
-      <a class="fab-backward-btn unselectable">&lt;</a>
+
+    <%# render partial: '/users/user_details', locals: {user: user}%>
+
+
+	<figure class="fab-user">
+	  <div style="background-image: url(<%= user.avatar.url(:thumb) %>)" class="portrait"></div>
+	  <figcaption>
+	    <hgroup>
+	      <h1><%= link_to(user.name, user_fabs_path(user)) %></h1>
+	      <h2><%= user.title %></h2>
+	    </hgroup>
+	  </figcaption>
+	  <div class="back">
+	    <h3>Back</h3>
+	    <a class="fab-backward-btn unselectable">&lt;</a>
+	    <ul>
+	      <li>I went brought a knife to a fab fight</li>
+	      <li>What does that even mean</li>
+	      <li>Who am I</li>
+	    </ul>
+	  </div>
+	  <div class="forward">
+	    <h3>Forward</h3>
+	    <a class="fab-forward-btn unselectable disabled">&gt;</a>
+	    <ul>
+	      <li>I shot a bear with a cop</li>
+	      <li>I copped a bear</li>
+	      <li>What is this</li>
+	    </ul>
+	  </div>
+	</figure>
+
+  <% if adminy? %>
+    <div class="profile-edit">
+      <%= link_to("Edit", edit_user_path(user)) %>
+    </div>
+  <% end %>
+
+
+      
 
         <%= show_fab_notes forward: false %>
         <%= show_fab_notes forward: true %>
 
-      <a class="fab-forward-btn unselectable disabled">&gt;</a>
+      
 
       <div class="clear"></div>
   </div>
