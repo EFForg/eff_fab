@@ -9,6 +9,7 @@
     this.register = function(selector) {
 
       $(selector).each(function() {
+
         // Make it so when you click the child nav button, they look for the
         // parent's data and conduct the appropriate ajax/ view change action
         $(this).children('.fab-backward-btn').first().click(function() {
@@ -18,6 +19,7 @@
         $(this).children('.fab-forward-btn').first().click(function() {
           cycleFab_click(this, true);
         });
+
       });
 
     };
@@ -41,7 +43,6 @@
 
         disablePreviousOrNextBarsIfNeeded(fab_encapsulator, which_fabs_exist);
         markup = markup.split(";").slice(1).join(";");
-        
         populateFabInDisplay(markup, fab_encapsulator);
 
         fab_encapsulator.attr('data-fab-period', new_fab_period);
@@ -97,14 +98,27 @@
 
     // removes the old forward notes, and overwrites the backward notes with
     // the backward AND forward... kinda odd... javascript...
-    function populateFabInDisplay(markup, fab_element) {
-      var backward_notes = fab_element.children('.forward-back').first();
-      var forward_notes = fab_element.children('.forward-back').last();
+    function populateFabInDisplay(markup, fab_encapsulator) {
+      var ulElements = parseTheUlElementsFromServerResponse(markup);
 
-      forward_notes.remove();
-      // TODO:  research how to do this with Tribby's templates and json?
-      backward_notes[0].outerHTML = markup;
+      var backward_notes = fab_encapsulator.children('.back').first().children('ul').first();
+      var forward_notes = fab_encapsulator.children('.forward').first().children('ul').first();
 
+      backward_notes[0].outerHTML = ulElements[0];
+      forward_notes[0].outerHTML = ulElements[1];
+    }
+
+    // Parse the two <ul> sections out of the html response from the server
+    // Those represent the FAB notes of both back and forward
+    function parseTheUlElementsFromServerResponse(markup) {
+      // Make an element to facilitate DOM manipulation
+      var parsingDiv = document.createElement('div');
+
+      parsingDiv.innerHTML = markup;
+
+      var back_markup = parsingDiv.children[0].outerHTML;
+      var forward_markup = parsingDiv.children[1].outerHTML;
+      return [back_markup, forward_markup];
     }
 
   };
