@@ -13,10 +13,12 @@
       </span>
 
     <li>
+      <div style="margin-left:auto; margin-right:auto;width:15%;">
       <%= form_for(@user, remote: true, format: :json, ) do |f| %>
         <%= f.select :role, User.roles.collect{ |k,v| [ k,k ] }, {}, class: "clean-picker" %>
         <%= f.submit class: "clean-picker-submit" %>
       <% end %>
+      </div>
       <div class="clear"></div>
   </ul>
 

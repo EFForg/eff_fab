@@ -40,20 +40,20 @@
 //   border: 0;
 // }
 
-// .app-nav {
+.app-nav {
 
-//   li {
-//     list-style: none;
-//   }
+  li {
+    list-style: none;
+  }
 
-//   a, a:visited {
-//     text-decoration: none;
-//     color: $font-color-normal;
-//   }
-//   a:hover {
-//     color: blue;
-//   }
-// }
+  a, a:visited {
+    text-decoration: none;
+    color: $font-color-normal;
+  }
+  a:hover {
+    color: blue;
+  }
+}
 
 
 //  body {
@@ -73,6 +73,10 @@
 //    line-height: 18px;
 //    list-style: none;
 //  }
+
+ul {
+  list-style: none;
+}
 
 // pre {
 //   background-color: #eee;
@@ -151,9 +155,9 @@
 //    user-select: none;
 // }
 
-// .clear {
-//   clear:both;
-// }
+.clear {
+  clear:both;
+}
 
 // ///////////
 // // LINKS //
@@ -173,38 +177,38 @@
 // }
 
 
-// .elegant a, .elegant a:visited {
-//   text-decoration: none;
-//   color: $font-color-normal;
-// }
-// .elegant a:hover {
-//   color: blue;
-//   background-color: $link-bg-color-hover;
-// }
+.elegant a, .elegant a:visited {
+  text-decoration: none;
+  color: $font-color-normal;
+}
+.elegant a:hover {
+  color: blue;
+  background-color: $link-bg-color-hover;
+}
 
 
-// .faked-link {
-//   color: $font-color-normal;
-//   cursor: pointer;
+.faked-link {
+  color: $font-color-normal;
+  cursor: pointer;
 
-//   & > form > span {
-//     margin-left: -1px;
-//   }
+  & > form > span {
+    margin-left: -1px;
+  }
 
-//   button, input[type=submit], input[type=button] {
-//     color:inherit;
-//     margin-left: -2px;
-//     background:none!important;
-//     border:none;
-//     padding:0!important;
-//     font: inherit;
-//     /*border is optional*/
-//     cursor: inherit;
-//   }
+  button, input[type=submit], input[type=button] {
+    color:inherit;
+    margin-left: -2px;
+    background:none!important;
+    border:none;
+    padding:0!important;
+    font: inherit;
+    /*border is optional*/
+    cursor: inherit;
+  }
 
-//   &:hover {
-//     color: blue;
-//     background-color: $link-bg-color-hover;
-//   }
+  &:hover {
+    color: blue;
+    background-color: $link-bg-color-hover;
+  }
 
-// }
+}
