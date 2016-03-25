@@ -17,8 +17,7 @@ var LeetFilter = function(choiceWidget) {
         self.cycleNextCategory(self);
     };
 
-    // initialize the page with the filters cleared... is this good?
-    // document.getElementById("nav-select").options.selectedIndex = 0;
+    _choiceWidget.initialize();
   };
 
   this.selectCategoryByName = function(categoryName) {
@@ -39,20 +38,20 @@ var LeetFilter = function(choiceWidget) {
   // Pass in a category name (the valid css class form)
   // and this function will show that category exclusively, hiding others
   this.refreshDisplayedCategory = function(categoryName) {
-    categoryName = classifyTeamName(categoryName);
+    var categoryNameClassy = classifyTeamName(categoryName);
 
     // Clear the filters
-    if (categoryName == clearFiltersName) {
+    if (categoryNameClassy == clearFiltersName) {
       clearMarksOnFilterButtons();
       $(".leet-filter-candidate").show();
     } else { // apply a filter
-      var element = $(".leet-filter-candidate." + categoryName);
+      var element = $(".leet-filter-candidate." + categoryNameClassy);
 
       clearMarksOnFilterButtons();
       markFilterButtonAsSelected(element);
 
       hideAllFilterCandidates();
-      showSelectionTarget(categoryName);
+      showSelectionTarget(categoryNameClassy);
     }
 
   };
@@ -84,8 +83,9 @@ var LeetFilter = function(choiceWidget) {
   }
 
   // converts "Web Development" to "Web-Development"
+  // converts "/" to "-"
   function classifyTeamName(teamString) {
-    return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "_");
+    return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "-");
   }
 
 };
@@ -104,23 +104,39 @@ var LeetFilter = function(choiceWidget) {
 // to filter teams, be it a dropdown select box or a series of buttons.
 // This object is responsible for currency management
 var ChoiceWidget = function() {
-  var clearFiltersName = "All-teams";
-  var _currentCategory = clearFiltersName;
+  var selectorForCategorySections = "leet-filter-candidate";
+  var clearFiltersName = "All teams";
 
+  var _currentCategory = clearFiltersName;
   var filterCategories = [];
+  var filterCategoriesDisplayName = [];
+
+
+  // for instance, a dropbox would set an int here
+  function setSelectedCategoryInDomUnitByIndex(val) {
+    // Do the input box
+    // document.getElementById("nav-select").options.selectedIndex = val;
+
+    // Do the new layout UL thing
+    document.getElementById("leetFilterSelectedDisplay").text = filterCategoriesDisplayName[val];
+  }
+
+
 
   this.initialize = function() {
-    if (filterCategories.length <= 0)
+    if (filterCategories.length <= 0){
       filterCategories = this.getChoicesArray();
+      filterCategoriesDisplayName = this.getChoicesDisplayname();
+    }
   };
 
   this.getClearFiltersName = function() {
-    return clearFiltersName;
+    return classifyTeamName(clearFiltersName);
   };
 
 
   this.getChoicesArray = function() {
-    var leetFilterCandidates = document.getElementsByClassName("leet-filter-candidate");
+    var leetFilterCandidates = document.getElementsByClassName(selectorForCategorySections);
 
     var arrayOfLeetness = [].slice.call(leetFilterCandidates);
     var categories = arrayOfLeetness.map(function(elements) {
@@ -128,15 +144,29 @@ var ChoiceWidget = function() {
     });
 
     // Assume the dropdown starts with the clear filters thing selected
-    categories.unshift(clearFiltersName);
+    categories.unshift(classifyTeamName(clearFiltersName));
 
+    return categories;
+  };
+
+  this.getChoicesDisplayname = function() {
+    var leetFilterCandidates = document.getElementsByClassName(selectorForCategorySections);
+
+    var arrayOfLeetness = [].slice.call(leetFilterCandidates);
+    var categories = arrayOfLeetness.map(function(elements) {
+      return elements.dataset.filterName;
+    });
+
+    categories.unshift(clearFiltersName);
     return categories;
   };
 
 
   this.setChoiceByName = function(categoryName) {
-    var targetCategoryName = classifyTeamName(categoryName);
-    _currentCategory = targetCategoryName;
+    _currentCategory = classifyTeamName(categoryName);
+    var i = filterCategories.indexOf(_currentCategory);
+
+    setSelectedCategoryInDomUnitByIndex(i);
   };
 
 
@@ -144,7 +174,7 @@ var ChoiceWidget = function() {
     this.initialize();
 
     var targetCategoryName = classifyTeamName(getNextCatName(getCurrentIndex()));
-    document.getElementById("nav-select").options.selectedIndex = getNextIndex();
+    setSelectedCategoryInDomUnitByIndex(getNextIndex());
 
     _currentCategory = targetCategoryName;
     return _currentCategory;
@@ -154,7 +184,7 @@ var ChoiceWidget = function() {
     this.initialize();
 
     var targetCategoryName = classifyTeamName(getPrevCatName(getCurrentIndex()));
-    document.getElementById("nav-select").options.selectedIndex = getPrevIndex();
+    setSelectedCategoryInDomUnitByIndex(getPrevIndex());
 
     _currentCategory = targetCategoryName;
     return _currentCategory;
@@ -192,7 +222,7 @@ var ChoiceWidget = function() {
 
   // TODO: Make dry via mixin
   function classifyTeamName(teamString) {
-    return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "_");
+    return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "-");
   }
 
 }

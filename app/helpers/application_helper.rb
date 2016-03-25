@@ -4,8 +4,9 @@ module ApplicationHelper
     current_user.try(:role) == "admin" || current_user.try(:admin_user_mode) == "admin_user_mode"
   end
 
+
   def string_to_class_name(s)
-    s.strip.tr(' ', '-').gsub(/[^0-9A-z.\-]/, '_')
+    s.strip.tr(' ', '-').gsub(/[^0-9A-z.\-]/, '-')
   end
 
   # TODO: this is now dead code
