@@ -30,6 +30,14 @@ class User < ActiveRecord::Base
     fabs.find_or_build_this_periods_fab
   end
 
+  def upcoming_fab_still_missing?
+    upcoming_fab.new_record?
+  end
+
+  def previous_fab_still_missing?
+    upcoming_fab.exactly_previous_fab.new_record?
+  end
+
   def team_name
     return team.name if team
     "No Team"

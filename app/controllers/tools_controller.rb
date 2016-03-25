@@ -1,11 +1,16 @@
 class ToolsController < ApplicationController
+  require File.expand_path('../../../lib/mailers', __FILE__)
+
   before_action :admin_only, except: [:next_fab, :previous_fab]
 
   # POST /tools/send_reminders
   def send_reminders
-    User.all.each do |user|
-      FabMailer.remind(user).deliver_now
-    end
+    turbo_remind
+  end
+
+  # POST /tools/send_shamings
+  def send_shamings
+    turbo_shame
   end
 
   def populate_users
