@@ -3,37 +3,28 @@
 
 <% fab_reference = "#{@fab.period.to_json}" %>
 
-	<figure class="fab-user basic-carousel"
-		data-user-id="<%= user.id %>"
-		data-fab-period="<%= fab_reference %>">
+<figure class="fab-user basic-carousel"
+	data-user-id="<%= user.id %>"
+	data-fab-period="<%= fab_reference %>">
 
-	  <div style="background-image: url(<%= user.avatar.url(:thumb) %>)" class="portrait"></div>
-	  <figcaption>
-	    <hgroup>
-	      <h1><%= link_to(user.name, user_fabs_path(user)) %></h1>
-	      <h2><%= user.title %></h2>
-	    </hgroup>
-	  </figcaption>
+  <div style="background-image: url(<%= user.avatar.url(:thumb) %>)" class="portrait"></div>
+  <figcaption>
+    <hgroup>
+      <h1><%= link_to(user.name, user_fabs_path(user)) %></h1>
+      <h2><%= user.title %></h2>
+    </hgroup>
+		<%= @fab.gif_tag %>
+  </figcaption>
 
-    <a class="fab-backward-btn unselectable">&lt;</a>
-	  <div class="back">
-			<h3>Back</h3>
+	<% if defined?(editable) and editable %>
+		<%= render '/fabs/form' %>
+	<% else %>
+		<%= render "users/show_in_figure_fab" %>
+	<% end %>
+</figure>
 
-			<%= render partial: "fabs/show_fab_notes_tribby",
-						locals: { :forward => false } %>
-	  </div>
-
-	  <div class="forward">
-	    <h3>Forward</h3>
-			<%= render partial: "fabs/show_fab_notes_tribby",
-						locals: { :forward => true } %>
-	  </div>
-
-    <a class="fab-forward-btn unselectable disabled">&gt;</a>
-	</figure>
-
-  <% if adminy? %>
-    <div class="profile-edit">
-      <%= link_to("Edit", edit_user_path(user)) %>
-    </div>
-  <% end %>
+<% if adminy? %>
+  <div class="profile-edit">
+    <%= link_to("Edit", edit_user_path(user)) %>
+  </div>
+<% end %>

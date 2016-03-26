@@ -1,8 +1,7 @@
 <h2 class="team-name-header"><%= @user.team_name %></h2>
-<%= render partial: '/users/user_details', locals: {user: @user}%>
+<%= render partial: '/users/user', locals: {user: @user, editable: true}%>
 
-<!-- Fab Entry -->
-<%= render 'form' %>
+
 <br>
 
 <div class="fabs-back">
