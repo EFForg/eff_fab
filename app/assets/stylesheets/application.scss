@@ -118,22 +118,29 @@ ul {
 //   text-align: center;
 // }
 
-// .fab-backward-btn:hover,
-// .fab-forward-btn:hover {
-//   color: #fff;
-//   background-color: #000;
-//   cursor: pointer;
-// }
+.fab-backward-btn:hover,
+.fab-forward-btn:hover {
+  cursor: pointer;
+}
+
+.fab-backward-btn.disabled,
+.fab-forward-btn.disabled {
+  cursor: default;
+  color: #4e748b;
+}
+
+
 
 // .fab-backward-btn {
 //   margin-left: -2em;
 // }
 
-// .fab-backward-btn:hover.disabled,
-// .fab-forward-btn:hover.disabled {
-//   background-color: #fff;
+// .fab-backward-btn.disabled:hover,
+// .fab-forward-btn.disabled:hover {
 //   cursor: default;
 // }
+
+
 
 // .fab-backward-btn.disabled,
 // .fab-forward-btn.disabled {
