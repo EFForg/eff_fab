@@ -57,6 +57,7 @@ var LeetFilter = function(choiceWidget) {
   };
 
   this.clearFilters = function() {
+    _choiceWidget.setChoiceByName(clearFiltersName);
     $(".leet-filter-candidate").show();
     clearMarksOnFilterButtons();
   };
@@ -107,7 +108,7 @@ var ChoiceWidget = function() {
   var selectorForCategorySections = "leet-filter-candidate";
   var clearFiltersName = "All teams";
 
-  var _currentCategory = clearFiltersName;
+  var _currentCategory = classifyTeamName(clearFiltersName);
   var filterCategories = [];
   var filterCategoriesDisplayName = [];
 
@@ -171,8 +172,6 @@ var ChoiceWidget = function() {
 
 
   this.chooseNextCategory = function() {
-    this.initialize();
-
     var targetCategoryName = classifyTeamName(getNextCatName(getCurrentIndex()));
     setSelectedCategoryInDomUnitByIndex(getNextIndex());
 
@@ -181,8 +180,6 @@ var ChoiceWidget = function() {
   };
 
   this.choosePrevCategory = function() {
-    this.initialize();
-
     var targetCategoryName = classifyTeamName(getPrevCatName(getCurrentIndex()));
     setSelectedCategoryInDomUnitByIndex(getPrevIndex());
 

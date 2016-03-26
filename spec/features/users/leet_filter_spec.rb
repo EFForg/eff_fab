@@ -26,40 +26,47 @@ feature 'users leetFilter' do
     visit '/users'
 
     # starts on cleared filter option
-    expect(page).to have_select('nav-select', :selected => 'All teams')
+    expect_leet_filter_selected_to_display("All teams")
 
     # steps off filter forwards
     page.evaluate_script("leetFilter.cycleNextCategory(leetFilter);")
-    expect(page).to have_select('nav-select', :selected => 'activism')
+
+    expect_leet_filter_selected_to_display("activism")
 
     page.evaluate_script("leetFilter.cycleNextCategory(leetFilter);")
-    expect(page).to have_select('nav-select', :selected => 'international')
+    expect_leet_filter_selected_to_display("international")
 
     page.evaluate_script("leetFilter.cycleNextCategory(leetFilter);")
-    expect(page).to have_select('nav-select', :selected => 'web development')
+    expect_leet_filter_selected_to_display("web development")
 
     3.times { page.evaluate_script("leetFilter.cycleNextCategory(leetFilter);") }
-    expect(page).to have_select('nav-select', :selected => 'press/graphics')
+    expect_leet_filter_selected_to_display("press/graphics")
 
     # can go back
     3.times { page.evaluate_script("leetFilter.cyclePrevCategory(leetFilter);") }
-    expect(page).to have_select('nav-select', :selected => 'web development')
+    expect_leet_filter_selected_to_display("web development")
 
     # wraps around array in reverse direction
     4.times { page.evaluate_script("leetFilter.cyclePrevCategory(leetFilter);") }
-    expect(page).to have_select('nav-select', :selected => 'Team Runner Up')
+    expect_leet_filter_selected_to_display("Team Runner Up")
 
     # wraps around array in forward direction and can land on cleared filter option
     1.times { page.evaluate_script("leetFilter.cycleNextCategory(leetFilter);") }
-    expect(page).to have_select('nav-select', :selected => 'All teams')
+    expect_leet_filter_selected_to_display("All teams")
   end
 
   scenario 'Nitty Gritty stuff works on starting position...', js: true do
     visit '/users'
 
-    expect(page).to have_select('nav-select', :selected => 'All teams')
+    expect_leet_filter_selected_to_display("All teams")
 
     # I don't know how to test this deep stuff
   end
 
+end
+
+def expect_leet_filter_selected_to_display(team_name)
+  display_text = first_fab_header_text = find('#leetFilterSelectedDisplay').text
+  expect(display_text).to eq team_name.upcase
+  # expect(page).to have_select('nav-select', :selected => team_name)
 end

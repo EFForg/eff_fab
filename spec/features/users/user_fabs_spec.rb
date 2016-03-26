@@ -16,9 +16,9 @@ feature 'User fabs page', :devise do
   #   When I visit the user profile page
   #   Then I see my own email address
   scenario 'user sees own fab history', js: true do
-    user = FactoryGirl.create(:user_with_yesterweeks_fab)
-    login_as(user, :scope => :user)
-    visit user_fabs_path(user)
+    log_me_in
+
+    visit user_fabs_path(@me)
 
     # Should have an input that contains 'I have a note'
     expect(page).to have_xpath("//input[@value='I have a note']")
@@ -26,7 +26,7 @@ feature 'User fabs page', :devise do
 
     # The current period's fab shouldn't have an h3 since it's in the
     # input boxes
-    expect(first_fab_header_text).not_to eq user.fabs.first.display_date_for_header
+    expect(first_fab_header_text).not_to eq @me.fabs.first.display_date_for_header
     expect(page).not_to have_content 'I have a note'
   end
 
@@ -36,10 +36,10 @@ feature 'User fabs page', :devise do
   #   When I visit another user's profile
   #   Then I see an 'access denied' message
   scenario "user can edit own current fab" do
-    me = FactoryGirl.create(:user)
-    login_as(me, :scope => :user)
+    log_me_in
+    
     Capybara.current_session.driver.header 'Referer', root_path
-    visit user_fabs_path(me)
+    visit user_fabs_path(@me)
 
     fill_in 'fab_notes_attributes_0_body', :with => 'I did blah in the past'
     fill_in 'fab_notes_attributes_3_body', :with => 'I plan to do blah'
@@ -49,19 +49,34 @@ feature 'User fabs page', :devise do
   end
 
   scenario "user cannot edit the fabs of others" do
-    me = FactoryGirl.create(:user)
-    other = FactoryGirl.create(:user_with_yesterweeks_fab, email: 'other@example.com')
-    login_as(me, :scope => :user)
-    Capybara.current_session.driver.header 'Referer', root_path
-    visit user_fabs_path(other)
+    bring_up_anothers_fab_edit
 
     # expect the page to not have any inputs for editing fab
     expect(page).to_not have_xpath("//input[@value='I have a note']")
 
+    # FIXME:
+    # Tribby removed the date of the fab showing here
+
     # expect the page to have content of the user's last fab
-    first_fab_header_text = find_all('h3').first.text
-    expect(first_fab_header_text).to eq other.fabs.first.display_date_for_header
+    # first_fab_header_text = find_all('h3').first.text
+
+    first_fab_note_text = find_all('div.back').first.find_all('ul li').first.text
+    expect(first_fab_note_text).to eq @other.fabs.first.backward.first.body
   end
 
+end
 
+
+def log_me_in
+  @me = FactoryGirl.create(:user)
+  login_as(@me, :scope => :user)
+end
+
+def bring_up_anothers_fab_edit
+  log_me_in
+
+  @other = FactoryGirl.create(:user_with_yesterweeks_fab, email: 'other@example.com')
+
+  Capybara.current_session.driver.header 'Referer', root_path
+  visit user_fabs_path(@other)
 end
