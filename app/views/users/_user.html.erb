@@ -1,5 +1,5 @@
 <% fab = user.current_period_fab %>
-<% @fab = fab.nil? ? user.fabs.build(period: @fab_period) : fab %>
+<% @fab = fab.nil? ? user.upcoming_fab : fab %>
 
 <% fab_reference = "#{@fab.period.to_json}" %>
 
@@ -13,7 +13,10 @@
       <h1><%= link_to(user.name, user_fabs_path(user)) %></h1>
       <h2><%= user.title %></h2>
     </hgroup>
-		<%= @fab.gif_tag %>
+
+		<% if @fab.gif_tag.present? %>
+			<div style="background-image: url(<%= @fab.gif_tag.url(:thumb) %>)" class="portrait"></div>
+		<% end %>
   </figcaption>
 
 	<% if defined?(editable) and editable %>

@@ -1,4 +1,18 @@
 #######################
+#   FAB Preferences   #
+#######################
+
+fab_starting_day: "Monday"
+fab_due_day: "Monday"
+
+# If the Fab isn't due until Monday, say 8 days
+# If the FAB is due on the Satarday, say 6
+fab_days_due_within: "7"
+fab_due_time: "5:00pm"   # Minutes are ignored
+time_zone: 'Pacific Time (US & Canada)'
+
+
+#######################
 # Typical Rails Stuff #
 #######################
 

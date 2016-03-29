@@ -17,14 +17,27 @@ class Fab < ActiveRecord::Base
 
   after_initialize :setup_children
 
+
   def self.find_or_build_this_periods_fab
-    start = get_start_of_current_fab_period
-    fab_attrs = {period: start..start + 7.days}
-    self.where(fab_attrs).first || self.new(period: start)
+    fab_attrs = {period: get_start_of_current_fab_period..get_start_of_current_fab_period+6.days}
+    self.where(fab_attrs).first || self.new(period: get_start_of_current_fab_period)
   end
 
+  # If it's tuesday now, will return yesterday's monday
+  # if it's monday at 1PM, will return the monday of the prior week!!!
   def self.get_start_of_current_fab_period
-    p_start = (DateTime.now - DateTime.now.wday + 1).midnight
+    # should we show the old fab or a new one
+    start_day = if within_grace_period?
+      # return the date for the prior week's fab entry so...
+      # (go back 7 days, then go forward until the first Monday) (potentially jumping back more than 7 days!)
+      (DateTime.now.midnight - 1.week - 1.day)
+    else
+      # return the date for the current weeks fab entry so...
+      # (go back 7 days from now, then go forward until the first Monday)
+      (DateTime.now.midnight - 1.week + 1.day)
+    end
+
+    start_day = advance_to_the_next_period_beginning(start_day)
   end
 
   def setup_children
@@ -80,6 +93,35 @@ class Fab < ActiveRecord::Base
   end
 
   private
+
+    # If Fab start day in Monday, and the fab due day is Monday, with a due time of 5PM...
+    # the grace period shall be defined to Mondays from 0:00 - 16:59
+    def self.within_grace_period?
+      we_are_within_the_grace_period_of_days? and we_are_within_the_grace_period_of_hours?
+    end
+
+    def self.we_are_within_the_grace_period_of_days?
+      starting_day_of_week = DateTime.parse(ENV['fab_starting_day']).wday
+      grace_period_days = DateTime.parse(ENV['fab_due_day']).wday - starting_day_of_week
+
+      (DateTime.now.wday - starting_day_of_week) <= grace_period_days and DateTime.now.wday >= starting_day_of_week
+    end
+
+    def self.we_are_within_the_grace_period_of_hours?
+      grace_period_hours = DateTime.parse(ENV['fab_due_time']).hour
+      DateTime.now.hour < grace_period_hours
+    end
+
+    def self.advance_to_the_next_period_beginning(given_day)
+      desired_wday = DateTime.parse(ENV['fab_starting_day']).wday
+      current_date_progress = given_day
+
+      until current_date_progress.wday == desired_wday do
+        current_date_progress = current_date_progress.advance days: 1
+      end
+
+      current_date_progress
+    end
 
     def display_time_span(p_start)
       p_end = p_start + 4.days

@@ -37,11 +37,103 @@ RSpec.describe Fab, type: :model do
 
   end
 
-  # it "should pull up a FAB within 24 hours of now if find_or_build_this_periods_fab is run Monday after 5PM" do
-  #   fab = @user.fabs.find_or_build_this_periods_fab
-  #
-  #
-  # end
+  it "should be able to create a new fab the first time and query it the second time" do
+    @user = FactoryGirl.create(:user)
+
+    fab = @user.fabs.find_or_build_this_periods_fab
+
+    fab.save
+    fab.reload
+
+    second_fab = @user.fabs.find_or_build_this_periods_fab
+
+    expect(fab).to eq second_fab
+  end
+
+  it "should pull up a FAB within 24 hours of now if find_or_build_this_periods_fab is run Monday after 5PM" do
+    allow(DateTime).to receive(:now) { DateTime.parse("Monday 4:59PM 2001-10-22") }
+
+    @user = FactoryGirl.create(:user)
+    fab = @user.fabs.find_or_build_this_periods_fab
+
+    expect(fab.id).to be_nil
+    fab.save
+
+    fab = @user.fabs.find_or_build_this_periods_fab
+    expect(fab.id).to be_truthy
+
+    # roll forward past the due date
+    allow(DateTime).to receive(:now) { DateTime.parse("Monday 5:01PM 2001-10-22") }
+    fab = @user.fabs.find_or_build_this_periods_fab
+    expect(fab.id).to be_nil
+  end
+
+
+  describe "advance_to_the_next_period_beginning" do
+
+    it "should be able to find a Monday following a given Tuesday" do
+      expected_difference_in_days = 6
+      base_tuesday = DateTime.parse("Tuesday 5:01PM 2001-10-23")
+      following_monday = nil
+
+      Fab.instance_eval do
+        following_monday = self.advance_to_the_next_period_beginning(base_tuesday)
+      end
+
+      expect((following_monday - base_tuesday).to_i).to eq expected_difference_in_days
+    end
+
+    it "should be able to find a Monday following a given Sunday" do
+      expected_difference_in_days = 1
+      base_day = DateTime.parse("Sunday 5:01PM 2001-10-21")
+      following_monday = nil
+
+      Fab.instance_eval do
+        following_monday = self.advance_to_the_next_period_beginning(base_day)
+      end
+
+      expect((following_monday - base_day).to_i).to eq expected_difference_in_days
+    end
+
+  end
+
+  describe "within_grace_period?" do
+
+    it "should be within the grace period if it's after the fab_starting_day but before the fab_due_time" do
+      allow(DateTime).to receive(:now) { DateTime.parse("Monday 4:59PM 2001-10-22") }
+      are_we_within_grace_period = nil
+
+      Fab.instance_eval do
+        are_we_within_grace_period = self.within_grace_period?
+      end
+
+      expect(are_we_within_grace_period).to be_truthy
+    end
+
+    it "should not be in the grace period if it's just some random ass Sunday" do
+      # allow(DateTime).to receive(:now) { DateTime.parse("Tuesday 4:59PM 2001-10-23") }
+      allow(DateTime).to receive(:now) { DateTime.parse("Sunday 4:59PM 2001-10-21") }
+      are_we_within_grace_period = nil
+
+      Fab.instance_eval do
+        are_we_within_grace_period = self.within_grace_period?
+      end
+
+      expect(are_we_within_grace_period).to be_falsy
+    end
+
+    it "should not be in the grace period if it's just some random ass Tuesday" do
+      allow(DateTime).to receive(:now) { DateTime.parse("Tuesday 4:59PM 2001-10-23") }
+      are_we_within_grace_period = nil
+
+      Fab.instance_eval do
+        are_we_within_grace_period = self.within_grace_period?
+      end
+
+      expect(are_we_within_grace_period).to be_falsy
+    end
+
+  end
 
 end
 

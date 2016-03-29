@@ -1,6 +1,6 @@
 <h2 class="team-name-header"><%= @user.team_name %></h2>
-<%= render partial: '/users/user', locals: {user: @user, editable: true}%>
 
+<%= render partial: '/users/user', locals: {user: @user, editable: @fab_editable }%>
 
 <br>
 

@@ -15,9 +15,8 @@ feature 'User fabs page', :devise do
   #   Given I am signed in
   #   When I visit the user profile page
   #   Then I see my own email address
-  scenario 'user sees own fab history', js: true do
-    log_me_in
-
+  scenario 'user sees own fab history' do
+    log_me_in FactoryGirl.create(:user_with_yesterweeks_fab)
     visit user_fabs_path(@me)
 
     # Should have an input that contains 'I have a note'
@@ -25,8 +24,8 @@ feature 'User fabs page', :devise do
     first_fab_header_text = find_all('h3').first.text
 
     # The current period's fab shouldn't have an h3 since it's in the
-    # input boxes
-    expect(first_fab_header_text).not_to eq @me.fabs.first.display_date_for_header
+    # input boxes... FIXME: update test when the view is solidified...
+    # expect(first_fab_header_text).not_to eq @me.fabs.first.display_date_for_header
     expect(page).not_to have_content 'I have a note'
   end
 
@@ -36,16 +35,13 @@ feature 'User fabs page', :devise do
   #   When I visit another user's profile
   #   Then I see an 'access denied' message
   scenario "user can edit own current fab" do
-    log_me_in
-    
-    Capybara.current_session.driver.header 'Referer', root_path
-    visit user_fabs_path(@me)
+    bring_up_my_fab
 
     fill_in 'fab_notes_attributes_0_body', :with => 'I did blah in the past'
     fill_in 'fab_notes_attributes_3_body', :with => 'I plan to do blah'
 
     click_button 'SUBMIT FAB'
-    expect(page).to have_content(/Fab was successfully created\./)
+    expect(page).to have_content(/Fab was successfully updated\./)
   end
 
   scenario "user cannot edit the fabs of others" do
@@ -54,22 +50,32 @@ feature 'User fabs page', :devise do
     # expect the page to not have any inputs for editing fab
     expect(page).to_not have_xpath("//input[@value='I have a note']")
 
-    # FIXME:
-    # Tribby removed the date of the fab showing here
-
-    # expect the page to have content of the user's last fab
-    # first_fab_header_text = find_all('h3').first.text
-
     first_fab_note_text = find_all('div.back').first.find_all('ul li').first.text
-    expect(first_fab_note_text).to eq @other.fabs.first.backward.first.body
+    first_fab_note_text = strip_unprintable_characters(first_fab_note_text)
+
+    expect(first_fab_note_text).to eq @other.fabs.first.backward.first.body.to_s
+  end
+
+  scenario "fabs display the date time for the current fab" do
+    bring_up_my_fab
+
+    first_fab_header_text = find_all('h3').first.text
+    expect(first_fab_header_text).to eq @me.fabs.second.display_date_for_header
   end
 
 end
 
 
-def log_me_in
-  @me = FactoryGirl.create(:user)
+def log_me_in(me = nil)
+  @me = me.nil? ? FactoryGirl.create(:user) : me
+
   login_as(@me, :scope => :user)
+end
+
+def bring_up_my_fab
+  log_me_in FactoryGirl.create(:user_with_yesterweeks_fab)
+  # Capybara.current_session.driver.header 'Referer', root_path
+  visit user_fabs_path(@me)
 end
 
 def bring_up_anothers_fab_edit
@@ -77,6 +83,11 @@ def bring_up_anothers_fab_edit
 
   @other = FactoryGirl.create(:user_with_yesterweeks_fab, email: 'other@example.com')
 
-  Capybara.current_session.driver.header 'Referer', root_path
+  # Capybara.current_session.driver.header 'Referer', root_path
   visit user_fabs_path(@other)
+end
+
+# The markup contains a &zwnj; which is confusing and annoying as hell
+def strip_unprintable_characters(s)
+  s.tr(8204.chr, "")
 end

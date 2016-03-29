@@ -22,4 +22,6 @@ feature 'User index page', :devise do
     expect(page).to have_content user.name
   end
 
+  
+
 end
