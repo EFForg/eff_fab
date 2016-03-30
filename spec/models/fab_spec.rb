@@ -135,6 +135,15 @@ RSpec.describe Fab, type: :model do
 
   end
 
+  describe "which_neighbor_fabs_exist" do
+    it "should be one previous fab and no next fab" do
+      user = FactoryGirl.create(:user_with_yesterweeks_fab)
+      fab = user.fabs.first
+      a = fab.which_neighbor_fabs_exist?
+      expect(a).to eq [true, false]
+    end
+  end
+
 end
 
 def stub_time!(t = DateTime.new(2001,10,26))
