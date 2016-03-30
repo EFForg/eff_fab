@@ -17,7 +17,7 @@
 #
 
 require 'capybara/poltergeist'
-# Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
