@@ -119,7 +119,7 @@ var ChoiceWidget = function() {
     // document.getElementById("nav-select").options.selectedIndex = val;
 
     // Do the new layout UL thing
-    document.getElementById("leetFilterSelectedDisplay").text = filterCategoriesDisplayName[val];
+    document.getElementById("leetFilterSelectedDisplay").innerHTML = filterCategoriesDisplayName[val];
   }
 
 
