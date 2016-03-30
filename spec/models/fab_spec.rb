@@ -99,6 +99,14 @@ RSpec.describe Fab, type: :model do
 
   describe "within_grace_period?" do
 
+    it "should show the fab for two mondays back if you navigate to /users on Thursday at 23:59" do
+      pending
+    end
+
+    it "should show the fab for one Monday back if you navigate to the fabs after on Friday at 00:01" do
+      pending
+    end
+
     it "should be within the grace period if it's after the fab_starting_day but before the fab_due_time" do
       allow(DateTime).to receive(:now) { DateTime.parse("Monday 4:59PM 2001-10-22") }
       are_we_within_grace_period = nil
