@@ -26,6 +26,9 @@ Install dependencies, or use [mah vagrant box](https://github.com/TheNotary/ruby
 $  sudo apt-get install mysql-server libmysqlclient-dev imagemagic
 ```
 
+If you want to run the unit tests you need to install PhantomJS directly from this link:
+http://phantomjs.org/download.html
+
 Setup the app as with most rails apps
 ```
 $  cp config/application.yml.example config/application.yml
