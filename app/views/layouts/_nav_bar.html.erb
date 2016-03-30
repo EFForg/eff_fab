@@ -1,16 +1,18 @@
 <nav><img src="<%= asset_path('EFF-logo-plain.svg') %>" type="image/svg+xml">
 
   <ul>
-    <li>Team: <a id="leetFilterSelectedDisplay">All teams</a>
-      <ul>
-        <li><a onclick="leetFilter.clearFilters();">All teams</a></li>
+    <% if params[:controller] == "users" and params[:action] == "index" %>
+      <li>
+        Team: <a id="leetFilterSelectedDisplay">All teams</a>
+        <ul>
+          <li><a onclick="leetFilter.clearFilters();">All teams</a></li>
 
-        <% Team.all.each do |team| %>
-          <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
-        <% end %>
-
-      </ul>
-    </li>
+          <% Team.all.each do |team| %>
+            <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
 
     <% if user_signed_in? %>
       <!-- <li><%# link_to 'Edit account', edit_user_registration_path %></li> -->
@@ -20,13 +22,8 @@
           Sign out
         <% end %>
       </li>
-    <% else %>
-      <li><%= link_to 'Sign in', new_user_session_path %></li>
-      <li><%= link_to 'Sign up', new_user_registration_path %></li>
-    <% end %>
 
-    <% if user_signed_in? %>
-      <% if current_user.try(:admin?) %>
+      <% if current_user.try(:admin?)%>
         <li>
           <%= link_to users_path do %>
             <span class="icon-book-open"></span>
@@ -39,8 +36,10 @@
             Administer
           <% end %>
         </li>
-
       <% end %>
+    <% else %>
+      <li><%= link_to 'Sign in', new_user_session_path %></li>
+      <li><%= link_to 'Sign up', new_user_registration_path %></li>
     <% end %>
   </ul>
 
