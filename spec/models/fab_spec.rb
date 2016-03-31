@@ -50,20 +50,23 @@ RSpec.describe Fab, type: :model do
     expect(fab).to eq second_fab
   end
 
-  it "should pull up a FAB within 24 hours of now if find_or_build_this_periods_fab is run Monday after 5PM" do
-    allow(DateTime).to receive(:now) { DateTime.parse("Monday 4:59PM 2001-10-22") }
+  it "should pull up fabs logically via Fab#find_or_build_this_periods_fab" do
+    allow(DateTime).to receive(:now) { DateTime.parse("Thursday 4:59PM 2001-10-18") }
 
     @user = FactoryGirl.create(:user)
     fab = @user.fabs.find_or_build_this_periods_fab
 
     expect(fab.id).to be_nil
+    # we're now going to save a FAB for the 8th
     fab.save
 
+    # this will of course pull up that same fab
     fab = @user.fabs.find_or_build_this_periods_fab
     expect(fab.id).to be_truthy
 
-    # roll forward past the due date
-    allow(DateTime).to receive(:now) { DateTime.parse("Monday 5:01PM 2001-10-22") }
+    # roll forward into the following Friday
+    allow(DateTime).to receive(:now) { DateTime.parse("Friday 1:01AM 2001-10-19") }
+    # this shouldn't pull up the prior fab, this should be a new fab
     fab = @user.fabs.find_or_build_this_periods_fab
     expect(fab.id).to be_nil
   end
@@ -97,14 +100,36 @@ RSpec.describe Fab, type: :model do
 
   end
 
-  describe "within_grace_period?" do
+  describe "within_edit_period_of_old_fab?" do
 
     it "should show the fab for two mondays back if you navigate to /users on Thursday at 23:59" do
-      pending
+      reference_thursday_now = DateTime.parse("Thursday 11:59PM 2001-10-25")
+
+      # generates a fab for two_mondays_back from reference
+      two_mondays_back = DateTime.parse("Monday 4:59PM 2001-10-15")
+      build_fab_for_specified_monday(two_mondays_back)
+
+      fab_built_two_mondays_ago = @user.fabs.first
+
+      allow(DateTime).to receive(:now) { reference_thursday_now }
+
+      fab = @user.fabs.find_or_build_this_periods_fab
+      expect(fab.period).to eq fab_built_two_mondays_ago.period
     end
 
+
+
     it "should show the fab for one Monday back if you navigate to the fabs after on Friday at 00:01" do
-      pending
+      one_monday_back = DateTime.parse("Monday 4:59PM 2001-10-22")
+      reference_friday_now = DateTime.parse("Friday 1:01AM 2001-10-26")
+
+      build_fab_for_specified_monday(one_monday_back)
+      fab_for_one_monday_back = @user.fabs.first
+
+      allow(DateTime).to receive(:now) { reference_friday_now }
+
+      fab = @user.fabs.find_or_build_this_periods_fab
+      expect(fab.period).to eq fab_for_one_monday_back.period
     end
 
     it "should be within the grace period if it's after the fab_starting_day but before the fab_due_time" do
@@ -157,4 +182,9 @@ end
 def stub_time!(t = DateTime.new(2001,10,26))
   allow(DateTime).to receive(:now) { t }
   @expected_period_beginning = YAML.load "--- !ruby/object:DateTime 2001-10-22 00:00:00.000000000 Z\n...\n"
+end
+
+def build_fab_for_specified_monday(monday)
+  @user = FactoryGirl.create(:user)
+  @user.fabs << FactoryGirl.create(:fab, period: monday)
 end

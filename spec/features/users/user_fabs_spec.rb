@@ -16,17 +16,25 @@ feature 'User fabs page', :devise do
   #   When I visit the user profile page
   #   Then I see my own email address
   scenario 'user sees own fab history' do
-    log_me_in FactoryGirl.create(:user_with_yesterweeks_fab)
+    log_me_in FactoryGirl.create(:user)
+    # below code makes yesterweek's fab
+    @me.fabs << FactoryGirl.create(:fab, period: DateTime.now.beginning_of_week(:monday).advance(weeks: -1))
+    # below code makes this week's fab
+    @me.fabs << FactoryGirl.create(:fab, period: DateTime.now.beginning_of_week(:monday))
+
+    @me.fabs.first.backward.first.update_attributes(body: "I have a note")
+    @me.fabs.last.backward.first.update_attributes(body: "I have an old note")
+
     visit user_fabs_path(@me)
 
     # Should have an input that contains 'I have a note'
     expect(page).to have_xpath("//input[@value='I have a note']")
-    first_fab_header_text = find_all('h3').first.text
 
-    # The current period's fab shouldn't have an h3 since it's in the
-    # input boxes... FIXME: update test when the view is solidified...
-    # expect(first_fab_header_text).not_to eq @me.fabs.first.display_date_for_header
+    first_fab_header_text = find_all('h4').first.text
+
+    expect(first_fab_header_text).not_to eq @me.fabs.first.display_date_for_header
     expect(page).not_to have_content 'I have a note'
+    expect(page).to have_content 'I have an old note'
   end
 
 
@@ -56,11 +64,18 @@ feature 'User fabs page', :devise do
     expect(first_fab_note_text).to eq @other.fabs.first.backward.first.body.to_s
   end
 
-  scenario "fabs display the date time for the current fab" do
+  scenario "fabs display the date of the starting day of the current fab" do
     bring_up_my_fab
 
-    first_fab_header_text = find_all('h3').first.text
+    # historic fabs display
+    first_fab_header_text = find_all('h3').last.text
     expect(first_fab_header_text).to eq @me.fabs.second.display_date_for_header
+
+    # currently editable fabs display
+    editable_fab_header_text = find_all('h4').first.text
+    editable_fab_header_text_forward = find_all('h4').last.text
+    expect(editable_fab_header_text).to eq @me.fabs.first.display_back_start_day
+    expect(editable_fab_header_text_forward).to eq @me.fabs.first.display_forward_start_day
   end
 
 end
