@@ -26,7 +26,15 @@ module ApplicationHelper
 
   def pick_a_banner_image
     array = Dir.entries("app/assets/images/banner_pool").reject {|f| File.directory? f}
-    "banner_pool/#{array.sample}"
+
+    w = DateTime.now.cweek
+    array.shuffle!(random: Random.new(w))
+
+    d = DateTime.now.yday
+    i = d % array.length
+
+    choice = array[i]
+    "banner_pool/#{choice}"
   end
 
   def banner_image_path
