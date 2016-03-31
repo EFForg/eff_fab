@@ -38,6 +38,11 @@ class User < ActiveRecord::Base
     upcoming_fab.exactly_previous_fab.new_record?
   end
 
+  def upcoming_fab_still_missing_for_team_mate?
+    return false if self.team.nil?
+    self.team.users.any? { |u| u.upcoming_fab_still_missing? unless u.id == self.id }
+  end
+
   def team_name
     return team.name if team
     "No Team"
@@ -48,28 +53,31 @@ class User < ActiveRecord::Base
     (0...50).map { o[rand(o.length)] }.join
   end
 
-  # FIXME: I'm a stub
   def self.unfinished_fabs(target_period = nil)
-    target_period = Fab.get_start_of_current_fab_period if target_period.nil?
-    3
+    find_users_with_missing_fabs_last_period.count
   end
 
   def self.find_users_with_missing_fabs_last_period(target_period = nil)
     target_period = Fab.get_start_of_current_fab_period if target_period.nil?
     rogue_users = []
 
-    User.all.each do |u|
+    self.all.each do |u|
       rogue_users << u if u.missed_fab_for_period?(target_period)
     end
 
     rogue_users
   end
 
+  # FIXME: is this equivenant to upcoming_fab_still_missing? which is way cleaner?
   def missed_fab_for_period?(target_period = nil)
     target_period = Fab.get_start_of_current_fab_period if target_period.nil?
 
     fab_attrs = {period: target_period..target_period + 7.days}
     self.fabs.where(fab_attrs).empty?
+  end
+
+  def only_person_of_team_missing_fab?
+    upcoming_fab_still_missing? and !upcoming_fab_still_missing_for_team_mate?
   end
 
 end

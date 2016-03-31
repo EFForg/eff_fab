@@ -8,8 +8,15 @@ namespace :mail do
   end
 
   desc "Send a notice that shames members who failed to fill out their fab"
-  task send_reminder: :environment do
+  task send_shame: :environment do
     turbo_shame
   end
+
+
+  desc "Send Reminder for people to fill out their fab"
+  task send_last_minute_reminder: :environment do
+    turbo_last_minute_remind
+  end
+
 
 end

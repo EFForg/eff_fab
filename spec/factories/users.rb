@@ -5,7 +5,7 @@ FactoryGirl.define do
     password "please123"
 
     # put user on a team
-    after(:create) do |user|
+    before(:create) do |user|
       t = Team.find_or_create_by(name: "Activism")
       user.team_id = t.id
     end

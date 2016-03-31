@@ -10,7 +10,7 @@ RSpec.describe Fab, type: :model do
       @user = FactoryGirl.create(:user)
     end
 
-    it "should find our build fabs for the current period" do
+    it "should find or build fabs for the current period" do
       fab = @user.fabs.find_or_build_this_periods_fab
 
       expect(fab.period).to eq @expected_period_beginning
