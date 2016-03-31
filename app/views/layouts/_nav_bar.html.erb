@@ -7,9 +7,11 @@
         <ul>
           <li><a onclick="leetFilter.clearFilters();">All teams</a></li>
 
-          <% Team.all.each do |team| %>
+          <% @teams.each do |team| %>
             <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
           <% end %>
+
+          <li><a onclick="leetFilter.selectCategoryByName('Team Runner Up');"></a></li>
         </ul>
       </li>
     <% end %>
@@ -50,7 +52,7 @@
 
 <div id="drawer">
   <ul>
-    <% Team.all.each do |team| %>
+    <% @teams.each do |team| %>
       <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
     <% end %>
   </ul>
