@@ -50,10 +50,14 @@
   </ul>
 </nav>
 
-<div id="drawer">
-  <ul>
-    <% @teams.each do |team| %>
-      <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
-    <% end %>
-  </ul>
-</div>
+<% if params[:controller] == "users" and params[:action] == "index" %>
+
+  <div id="drawer">
+    <ul>
+      <% @teams.each do |team| %>
+        <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
+      <% end %>
+    </ul>
+  </div>
+
+<% end %>
