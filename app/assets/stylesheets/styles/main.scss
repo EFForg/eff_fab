@@ -122,7 +122,7 @@ div {
       h1 {
         font-size: 1.2em;
         margin-top: 0.5em;
-        
+
         font-family: 'Montserrat';
         font-weight: 600;
         @include susy-breakpoint($md) {
@@ -155,7 +155,7 @@ div {
       margin-right: 30px;
       float: left;
     }
-    
+
   }
 
   div.back {
@@ -168,6 +168,11 @@ div {
       font-weight: 400;
       padding: 0;
       margin: 1em 0 0;
+    }
+
+    h4 {
+      color: #ccc;
+      font-size: 14px;
     }
 
     text-align: center;

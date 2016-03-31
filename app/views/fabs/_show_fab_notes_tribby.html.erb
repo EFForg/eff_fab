@@ -1,5 +1,5 @@
 <% title = forward ? 'forward' : 'back' %>
-<% time_span = @fab.send("display_#{title}_time_span") %>
+<% start_day = @fab.send("display_#{title}_start_day") %>
 
 <% if @fab.id.nil? %>
   <% notes = [
@@ -11,8 +11,15 @@
   <% notes = forward ? @fab.forward : @fab.backward %>
 <% end %>
 
-<ul>
-  <% notes.each do |note| %>
-    <li><%= note.body %><%= "&zwnj;".html_safe %>
-  <% end %>
-</ul>
+<div class="<%= title %>">
+  <h3><%= title.capitalize %></h3>
+  <h4>
+    <%= start_day %>
+  </h4>
+
+  <ul>
+    <% notes.each do |note| %>
+      <li><%= note.body %><%= "&zwnj;".html_safe %>
+    <% end %>
+  </ul>
+</div>

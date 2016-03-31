@@ -101,8 +101,8 @@
     function populateFabInDisplay(markup, fab_encapsulator) {
       var ulElements = parseTheUlElementsFromServerResponse(markup);
 
-      var backward_notes = fab_encapsulator.children('.back').first().children('ul').first();
-      var forward_notes = fab_encapsulator.children('.forward').first().children('ul').first();
+      var backward_notes = fab_encapsulator.children('.back').first();
+      var forward_notes = fab_encapsulator.children('.forward').first();
 
       backward_notes[0].outerHTML = ulElements[0];
       forward_notes[0].outerHTML = ulElements[1];

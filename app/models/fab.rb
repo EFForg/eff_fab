@@ -47,14 +47,24 @@ class Fab < ActiveRecord::Base
     end
   end
 
+  # depricated
   # This method presents to the view what period this FAB is for
   # Returns something like "February 8, 2016 - February 12, 2016"
   def display_back_time_span
     display_time_span(period)
   end
-
+  # depricated
   def display_forward_time_span
     display_time_span(period + 1.week)
+  end
+
+  # Returns "Week of March 28th, 2016"
+  def display_back_start_day
+    display_start_day_of_week(period)
+  end
+
+  def display_forward_start_day
+    display_start_day_of_week(period + 1.week)
   end
 
   def display_date_for_header
@@ -123,11 +133,18 @@ class Fab < ActiveRecord::Base
       current_date_progress
     end
 
+    # depricated due to design decision
     def display_time_span(p_start)
       p_end = p_start + 4.days
       s = p_start.strftime("'%y: %b %e - ")
       s += p_end.strftime("%b %e")
       s
+
+    end
+
+    def display_start_day_of_week(p_start)
+      ist_of_month = p_start.strftime("%e").to_i.ordinalize
+      p_start.strftime("Week of %B #{ist_of_month}, %Y")
     end
 
 end

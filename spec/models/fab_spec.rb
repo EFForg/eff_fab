@@ -29,10 +29,10 @@ RSpec.describe Fab, type: :model do
     it "should display time spans well" do
       fab = @user.fabs.find_or_build_this_periods_fab
 
-      expected_forward = "'01: Oct 29 - Nov  2"
-      expected_backward = "'01: Oct 22 - Oct 26"
-      expect(fab.display_forward_time_span).to eq expected_forward
-      expect(fab.display_back_time_span).to eq expected_backward
+      expected_forward = "Week of October 29th, 2001"
+      expected_backward = "Week of October 22nd, 2001"
+      expect(fab.display_forward_start_day).to eq expected_forward
+      expect(fab.display_back_start_day).to eq expected_backward
     end
 
   end
