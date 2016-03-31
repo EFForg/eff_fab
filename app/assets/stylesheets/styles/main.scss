@@ -52,11 +52,11 @@ div {
   }
   h1 {
     color: #fff;
-    line-height: 1em;
+    line-height: 1.25em;
     margin-top: 2em;
     font-family: 'Montserrat';
     font-weight: 400;
-    font-size: 1.2em;
+    font-size: 1.25em;
 
     @include susy-breakpoint($md) {
       @include container(70%);
@@ -160,7 +160,18 @@ div {
 
   div.back {
     clear: left;
+    @include susy-breakpoint($md) {
+      margin-left: 60px;
+    }
   }
+
+  div.forward {
+    @include susy-breakpoint($md) {
+      margin-left: -60px;
+    }
+  }
+
+
   div.back,div.forward {
     h3 {
       font-family: 'Montserrat';
@@ -168,17 +179,23 @@ div {
       font-weight: 400;
       padding: 0;
       margin: 1em 0 0;
+
     }
 
     h4 {
-      color: #ccc;
-      font-size: 14px;
+      color: #bbb;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-family: 'Montserrat';
+      font-weight: 300;
     }
+
 
     text-align: center;
     @include span(12);
     @include susy-breakpoint($md) {
       @include span(6);
+      text-align: left;
     }
   }
 
@@ -191,10 +208,13 @@ div {
     text-align:left;
     font-family: 'Lato';
     font-weight: 300;
+    margin-left: 0;
+    padding-left: 0;
     letter-spacing: 0.15px;
     li {
       font-size: 0.6em;
       padding-right: 2em;
+      margin-top: 0.5em;
     }
   }
 }
