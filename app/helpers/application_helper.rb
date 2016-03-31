@@ -24,4 +24,13 @@ module ApplicationHelper
     "#{controller.controller_name}-#{action_name}"
   end
 
+  def pick_a_banner_image
+    array = Dir.entries("app/assets/images/banner_pool").reject {|f| File.directory? f}
+    "banner_pool/#{array.sample}"
+  end
+
+  def banner_image_path
+    asset_path(pick_a_banner_image)
+  end
+
 end
