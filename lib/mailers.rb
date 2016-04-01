@@ -14,8 +14,8 @@ def turbo_last_minute_remind
   end
 end
 
-def turbo_shame
+def turbo_report_on_aftermath
   User.all.each do |user|
-    FabMailer.shame(user).deliver_now if user.previous_fab_still_missing?
+    FabMailer.report_on_aftermath(user).deliver_now if user.previous_fab_still_missing?
   end
 end

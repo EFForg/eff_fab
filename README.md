@@ -52,7 +52,7 @@ Setup
 To prime up the database with a basic admin user, run `rake db:seed`.  To populate the app for EFF usage, login as the admin user (see application.yml for credentials) and navigate to `/admin` and click the button for `Populate Users`, this will scrape https://www.eff.org/about/staff for user names, emails, and pictures and plug them into the database.  It takes a while...
 
 ##### Setup Reminder Mailings
-Reminders and shame notifications are sent over email via `rake mail:send_reminder` and `rake mail:send_shame` respectively.  It's clever to have these commands executed via cron.  An example crontab follows:
+Reminders and report_on_aftermath notifications are sent over email via `rake mail:send_reminder` and `rake mail:send_report_on_aftermath` respectively.  It's clever to have these commands executed via cron.  An example crontab follows:
 
 ```
 0 12 * * 5 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_reminder
@@ -61,7 +61,7 @@ Reminders and shame notifications are sent over email via `rake mail:send_remind
 0 15 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_reminder
 15 15 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_last_minute_reminder
 
-0 16 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_shame
+0 16 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_report_on_aftermath
 ```
 
 Credits

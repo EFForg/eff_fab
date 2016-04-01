@@ -38,6 +38,10 @@ class User < ActiveRecord::Base
     upcoming_fab.exactly_previous_fab.new_record?
   end
 
+  def self.upcoming_fab_still_missing_for_someone?
+    self.all.any? { |u| u.upcoming_fab_still_missing? }
+  end
+
   def upcoming_fab_still_missing_for_team_mate?
     return false if self.team.nil?
     self.team.users.any? { |u| u.upcoming_fab_still_missing? unless u.id == self.id }
@@ -46,6 +50,14 @@ class User < ActiveRecord::Base
   def team_name
     return team.name if team
     "No Team"
+  end
+
+  # this function checks off the fab status for a given fab period
+  def get_fab_state
+    return :i_missed_fab if upcoming_fab_still_missing?
+    return :a_team_mate_missed_fab if upcoming_fab_still_missing_for_team_mate?
+    return :someone_on_staff_missed_fab if User.upcoming_fab_still_missing_for_someone?
+    return :happy_fab_cake_time
   end
 
   def self.generate_password

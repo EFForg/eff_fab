@@ -7,25 +7,36 @@
   <body>
     <h1><%= @user.name %></h1>
 
-      <% if @user.upcoming_fab_still_missing? %>
-        <p>
-          You still haven't done your FAB!!!  Plz plz plz, just do that thing!
-        </p>
-        <p><a href="<%= ditto = new_user_fab_url(@user, host: ENV['domain_name'], protocol: 'https') %>"> <%= ditto %></a></p>
-      <% else %>
-        <p>You did your FAB, that's great!!!!</p>
-      <% end %>
+    <% if @user.upcoming_fab_still_missing? %>
+      <p>
+        You still haven't done your FAB!!!  Plz plz plz, just do that thing!
+      </p>
+      <p><a href="<%= ditto = new_user_fab_url(@user, host: ENV['domain_name'], protocol: 'https') %>"> <%= ditto %></a></p>
+    <% else %>
+      <p>You did your FAB, that's great!!!!</p>
+    <% end %>
 
     <% if @user.only_person_of_team_missing_fab? %>
       <p>
         You're the only one on your team who hasn't done this thing even!
       </p>
     <% elsif @user.upcoming_fab_still_missing_for_team_mate? %>
+      <% subtraction_of_self = @user.upcoming_fab_still_missing? ? 1 : 0 %>
+      <%# describing count of team mates missing fab %>
+      <% c = @user.team.users.find_users_with_missing_fabs_last_period.count - subtraction_of_self %>
+
       <p>
-        You have some team mates who haven't finished their FAB!  Are they near you right now???
+        You have
+        <%= c > 1 ? "some team mates" : "a team mate" %>
+        who
+        <%= c > 1 ? "haven't" : "hasn't" %>
+        completed FAB!
+        <%= c > 1 ? "Are they" : "Is this individual" %>
+        near you right now???  Ask that person to help you get cake treats now!!!!
       </p>
+
       <ul>
-        <% @user.team.users.find_users_with_missing_fabs_last_period do |u| %>
+        <% @user.team.users.find_users_with_missing_fabs_last_period.each do |u| %>
           <li><%= u.name %></li>
         <% end %>
       </ul>

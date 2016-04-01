@@ -10,7 +10,7 @@ class ToolsController < ApplicationController
 
   # POST /tools/send_shamings
   def send_shamings
-    turbo_shame
+    turbo_report_on_aftermath
   end
 
   def populate_users

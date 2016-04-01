@@ -6,8 +6,10 @@ FactoryGirl.define do
 
     # put user on a team
     before(:create) do |user|
-      t = Team.find_or_create_by(name: "Activism")
-      user.team_id = t.id
+      if user.team_id.nil?
+        t = Team.find_or_create_by(name: "Activism")
+        user.team_id = t.id
+      end
     end
   end
 

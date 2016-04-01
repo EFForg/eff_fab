@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+
+    <% if @fab_state == :happy_fab_cake_time %>
+      <pre>
+        <%= render partial: "fab_cake" %>
+      </pre>
+    <% else %>
+      <p>
+        The following people...... THESE PPEPLLL! They're why-we-can't-have-cupcakes.ORG/truth!
+      </p>
+
+      <p>
+        <ul>
+          <% @failed_fab_users.each do |u| %>
+            <li>
+              <%= u.name %>
+          <% end %>
+        </ul>
+      </p>
+    <% end %>
+
+    <p>
+      We need to get better at this if we want to save the Internet for realzies, people...
+    </p>
+
+  </body>
+</html>

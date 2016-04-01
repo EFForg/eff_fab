@@ -25,17 +25,17 @@ RSpec.describe FabMailer, type: :mailer do
       other2 = FactoryGirl.create(:user)
       user.fabs.find_or_build_this_periods_fab.save
 
-      expect(mail.subject).to match("Some members of your team are fab failing!")
+      expect(mail.subject).to match("[FAB] Some members of your team are fab flunking!")
       expect(mail.body.encoded).to match(other1.name)
       expect(mail.body.encoded).to match(other2.name)
     end
   end
 
-  describe 'shame' do
+  describe 'report_on_aftermath' do
     it 'sends a shaming' do
       user = FactoryGirl.create(:user)
 
-      expect { FabMailer.shame(user).deliver_now }
+      expect { FabMailer.report_on_aftermath(user).deliver_now }
         .to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end

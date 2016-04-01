@@ -53,4 +53,20 @@ describe User do
     expect(@user.only_person_of_team_missing_fab?).to be false
   end
 
+  it "should have tested logic for user#get_fab_state" do
+    @team_mate = FactoryGirl.create(:user)
+    @outsider = FactoryGirl.create(:user, team_id: FactoryGirl.create(:team, name: 'meh').id)
+
+    expect(@user.get_fab_state).to be :i_missed_fab
+
+    @user.fabs.find_or_build_this_periods_fab.save
+    expect(@user.get_fab_state).to be :a_team_mate_missed_fab
+
+    @team_mate.fabs.find_or_build_this_periods_fab.save
+    expect(@user.get_fab_state).to be :someone_on_staff_missed_fab
+
+    @outsider.fabs.find_or_build_this_periods_fab.save
+    expect(@user.get_fab_state).to be :happy_fab_cake_time
+  end
+
 end
