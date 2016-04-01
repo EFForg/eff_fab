@@ -297,49 +297,73 @@ div {
 // This media query allows us to change the presentation of the page depending
 // on how wide the window is.
 // STYLING COMMON TO BOTH TABLET AND DESKTOP
-@media (min-width: $narrow-width){
-  .fab-note-inputs {
-    float:left;
-    width:50%;
-    margin-right: 0%;
-    margin-top: 10px;
-  }
+// @media (min-width: $narrow-width){
+//   .fab-note-inputs {
+//     float:left;
+//     width:50%;
+//     margin-right: 0%;
+//     margin-top: 10px;
+//   }
 
-  .fab-note-inputs:nth-child(2) div{
-    text-align: right;
-  }
+//   .fab-note-inputs:nth-child(2) div{
+//     text-align: right;
+//   }
 
-  .fab-note-inputs h6 {
-    margin: 4px 0 4px 0;
-    font-size: $font-size-nudge;
-  }
+//   .fab-note-inputs h6 {
+//     margin: 4px 0 4px 0;
+//     font-size: $font-size-nudge;
+//   }
 
-  .fab-note-inputs:nth-child(2) h6 {
-    padding-left:3%;
-  }
+//   .fab-note-inputs:nth-child(2) h6 {
+//     padding-left:3%;
+//   }
+// }
+
+
+.nested-fields {
+    text-align: center;
+    @include susy-breakpoint($md) {
+      text-align: left;
+    }
+    input {
+      width: 95%;
+      @include susy-breakpoint($md) {
+        width: 75%;
+      }
+    }
 }
 
+// .fab-note-inputs {
 
-.fab-note-inputs {
-  input {
-    width: 94%;
-  }
+//   // input {
+//   //   width: 94%;
+//   // }
 
-  div {
-    padding-bottom: 1%;
-  }
-}
+//   // div {
+//   //   padding-bottom: 1%;
+//   // }
+// }
 
 .form-actions {
-  text-align: right;
+  text-align: center;
 
   input {
-    background-color: red;
-    color: white;
-    font-weight: 400;
+    margin-top: 2em;
+    font-size: 0.55em;
+    color: $link-color;
     border: none;
     border-radius: 4px;
-
+    font-family: 'Montserrat';
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    background-color: transparent;
+    border: 1px solid $link-color;
+    padding: 0.9em 2.5em 1em 2.5em;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      background-color: $link-color;
+    }
   }
 }
 
