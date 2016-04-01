@@ -404,6 +404,33 @@ h3 a {
 }
 
 
+.fabs-back {
+  @include container(95%);
+  @include susy-breakpoint($md) {
+    @include container(70%);
+  }
+  background-color: $content-bg-color;
+  margin-bottom: 4em;
+  padding-top: 2em;
+  padding-bottom: 1.5em;
+
+  .fab {
+    h3 a {
+      color: #bbb !important;
+      font-size: 14px;
+      text-transform: uppercase;
+      font-family: 'Montserrat';
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      margin-bottom: 1em;
+    }
+    .fab-notes {
+      font-family: 'Lato';
+      font-weight: 300;
+      letter-spacing: 0.15px;
+    }
+  }
+}
 // unless/until leetfilter works on individual fab pages
 body#fabs-index {
   .fab-forward-btn,.fab-backward-btn {
