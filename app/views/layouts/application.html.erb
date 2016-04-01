@@ -4,6 +4,7 @@
   <title>EffFab</title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <link rel="stylesheet" type="text/css" href="/fonts/fontello/css/eff.css">
+  <link rel="stylesheet" type="text/css" href="/fonts/fontello-eff/css/fontello.css">
 
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -20,9 +21,12 @@
   <%= render "/layouts/nav_bar" %>
 
   <div id="container">
-    <%# render "/layouts/banner_stuff" %>
-    <p id="notice"><%= notice %></p>
-    <p id="alert"><%= alert %></p>
+    <div class="flash-msgs">
+      <p id="notice"><%= notice %></p>
+      <% if alert %>
+        <p id="alert"><span class="icon-alien"></span><%= alert %></p>
+      <% end %>
+    </div>
 
     <%= yield %>
   </div>
