@@ -132,39 +132,45 @@ RSpec.describe Fab, type: :model do
       expect(fab.period).to eq fab_for_one_monday_back.period
     end
 
-    it "should be within the grace period if it's after the fab_starting_day but before the fab_due_time" do
-      allow(DateTime).to receive(:now) { DateTime.parse("Monday 4:59PM 2001-10-22") }
-      are_we_within_grace_period = nil
+    
 
-      Fab.instance_eval do
-        are_we_within_grace_period = self.within_grace_period?
-      end
-
-      expect(are_we_within_grace_period).to be_truthy
-    end
-
-    it "should not be in the grace period if it's just some random ass Sunday" do
-      # allow(DateTime).to receive(:now) { DateTime.parse("Tuesday 4:59PM 2001-10-23") }
-      allow(DateTime).to receive(:now) { DateTime.parse("Sunday 4:59PM 2001-10-21") }
-      are_we_within_grace_period = nil
-
-      Fab.instance_eval do
-        are_we_within_grace_period = self.within_grace_period?
-      end
-
-      expect(are_we_within_grace_period).to be_falsy
-    end
-
-    it "should not be in the grace period if it's just some random ass Tuesday" do
-      allow(DateTime).to receive(:now) { DateTime.parse("Tuesday 4:59PM 2001-10-23") }
-      are_we_within_grace_period = nil
-
-      Fab.instance_eval do
-        are_we_within_grace_period = self.within_grace_period?
-      end
-
-      expect(are_we_within_grace_period).to be_falsy
-    end
+    # describe "grace period" do
+    #
+    #   it "should be within the grace period if it's after the fab_starting_day but before the fab_due_time" do
+    #     allow(DateTime).to receive(:now) { DateTime.parse("Monday 4:59PM 2001-10-22") }
+    #     are_we_within_grace_period = nil
+    #
+    #     Fab.instance_eval do
+    #       are_we_within_grace_period = self.within_grace_period?
+    #     end
+    #
+    #     expect(are_we_within_grace_period).to be_truthy
+    #   end
+    #
+    #   it "should not be in the grace period if it's just some random ass Sunday" do
+    #     # allow(DateTime).to receive(:now) { DateTime.parse("Tuesday 4:59PM 2001-10-23") }
+    #     allow(DateTime).to receive(:now) { DateTime.parse("Sunday 4:59PM 2001-10-21") }
+    #     are_we_within_grace_period = nil
+    #
+    #     Fab.instance_eval do
+    #       are_we_within_grace_period = self.within_grace_period?
+    #     end
+    #
+    #     expect(are_we_within_grace_period).to be_falsy
+    #   end
+    #
+    #   it "should not be in the grace period if it's just some random ass Tuesday" do
+    #     allow(DateTime).to receive(:now) { DateTime.parse("Tuesday 4:59PM 2001-10-23") }
+    #     are_we_within_grace_period = nil
+    #
+    #     Fab.instance_eval do
+    #       are_we_within_grace_period = self.within_grace_period?
+    #     end
+    #
+    #     expect(are_we_within_grace_period).to be_falsy
+    #   end
+    #
+    # end
 
   end
 

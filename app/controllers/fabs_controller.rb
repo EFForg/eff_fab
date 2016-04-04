@@ -9,15 +9,13 @@ class FabsController < ApplicationController
   # GET /fabs.json
   def index
     @fabs = @user.fabs.includes(:forward).includes(:backward).to_a
-    @fab_editable = false # only show an edit form if it's the owner of the fab
 
+    # only show an edit form if it's the owner of the fab
     # if the user is allowed to edit this fab
-    if current_user == @user
-      @fab = @user.fabs.find_or_build_this_periods_fab
+    @fab_editable = current_user == @user ? true : false
 
-      @fabs.shift unless @fab.new_record?
-      @fab_editable = true
-    end
+    @fab = @user.fabs.find_or_build_this_periods_fab
+    @fabs.shift unless @fab.new_record?
 
     @fab_period = Fab.get_start_of_current_fab_period
   end

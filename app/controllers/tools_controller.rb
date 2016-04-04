@@ -8,8 +8,8 @@ class ToolsController < ApplicationController
     turbo_remind
   end
 
-  # POST /tools/send_shamings
-  def send_shamings
+  # POST /tools/send_report_on_aftermath
+  def send_report_on_aftermath
     turbo_report_on_aftermath
   end
 
@@ -52,7 +52,6 @@ class ToolsController < ApplicationController
 
     f.gif_tag open("http://media2.giphy.com/media/9B5EkgWrF4Rri/giphy.gif")
     f.save
-
   end
 
 

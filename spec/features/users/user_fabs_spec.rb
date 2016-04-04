@@ -17,13 +17,9 @@ feature 'User fabs page', :devise do
   #   Then I see my own email address
   scenario 'user sees own fab history' do
     log_me_in FactoryGirl.create(:user)
-    # below code makes yesterweek's fab
-    @me.fabs << FactoryGirl.create(:fab, period: DateTime.now.beginning_of_week(:monday).advance(weeks: -1))
-    # below code makes this week's fab
-    @me.fabs << FactoryGirl.create(:fab, period: DateTime.now.beginning_of_week(:monday))
 
-    @me.fabs.first.backward.first.update_attributes(body: "I have a note")
-    @me.fabs.last.backward.first.update_attributes(body: "I have an old note")
+    @me.fabs << FactoryGirl.create(:fab_due_in_prior_period)
+    @me.fabs << FactoryGirl.create(:fab_due_in_current_period)
 
     visit user_fabs_path(@me)
 
@@ -62,6 +58,14 @@ feature 'User fabs page', :devise do
     first_fab_note_text = strip_unprintable_characters(first_fab_note_text)
 
     expect(first_fab_note_text).to eq @other.fabs.first.backward.first.body.to_s
+
+    # this test section ensures the count of historic fabs is accurate.
+    # there was a controller bug where it wasn't shifting off the top of the list
+    c = find_all('h3').count
+    one_historic_header = 1 # there should be just 1 h3 containing the date of a historic fab
+    one_back_header = 1     # there's an H3 that's part of the figure that says "back"
+    one_forward_header = 1  # there's an H3 that's part of the figure that says "forward"
+    expect(c).to eq one_historic_header + one_back_header + one_forward_header
   end
 
   scenario "fabs display the date of the starting day of the current fab" do
@@ -74,8 +78,9 @@ feature 'User fabs page', :devise do
     # currently editable fabs display
     editable_fab_header_text = find_all('h4').first.text
     editable_fab_header_text_forward = find_all('h4').last.text
-    expect(editable_fab_header_text).to eq @me.fabs.first.display_back_start_day
-    expect(editable_fab_header_text_forward).to eq @me.fabs.first.display_forward_start_day
+
+    expect(editable_fab_header_text.downcase).to eq @me.fabs.first.display_back_start_day.downcase
+    expect(editable_fab_header_text_forward.downcase).to eq @me.fabs.first.display_forward_start_day.downcase
   end
 
 end
@@ -96,7 +101,10 @@ end
 def bring_up_anothers_fab_edit
   log_me_in
 
-  @other = FactoryGirl.create(:user_with_yesterweeks_fab, email: 'other@example.com')
+  @other = FactoryGirl.create(:user, email: 'other@example.com')
+  @other.fabs << FactoryGirl.create(:fab_due_in_prior_period)
+
+  @other.fabs << FactoryGirl.create(:fab_due_in_current_period)
 
   # Capybara.current_session.driver.header 'Referer', root_path
   visit user_fabs_path(@other)

@@ -146,24 +146,24 @@ class Fab < ActiveRecord::Base
       end
     end
 
-    # depricated, grace_period doesn't need to be used... use Fab#within_edit_period_of_old_fab? instead
-    # If Fab start day in Monday, and the fab due day is Monday, with a due time of 5PM...
-    # the grace period shall be defined to Mondays from 0:00 - 16:59
-    def self.within_grace_period?
-      we_are_within_the_grace_period_of_days? and we_are_within_the_grace_period_of_hours?
-    end
-
-    def self.we_are_within_the_grace_period_of_days?
-      starting_day_of_week = DateTime.parse(ENV['fab_starting_day']).wday
-      grace_period_days = DateTime.parse(ENV['fab_due_day']).wday - starting_day_of_week
-
-      (DateTime.now.wday - starting_day_of_week) <= grace_period_days and DateTime.now.wday >= starting_day_of_week
-    end
-
-    def self.we_are_within_the_grace_period_of_hours?
-      grace_period_hours = DateTime.parse(ENV['fab_due_time']).hour
-      DateTime.now.hour < grace_period_hours
-    end
+    # # depricated, grace_period doesn't need to be used... use Fab#within_edit_period_of_old_fab? instead
+    # # If Fab start day in Monday, and the fab due day is Monday, with a due time of 5PM...
+    # # the grace period shall be defined to Mondays from 0:00 - 16:59
+    # def self.within_grace_period?
+    #   we_are_within_the_grace_period_of_days? and we_are_within_the_grace_period_of_hours?
+    # end
+    #
+    # def self.we_are_within_the_grace_period_of_days?
+    #   starting_day_of_week = DateTime.parse(ENV['fab_starting_day']).wday
+    #   grace_period_days = DateTime.parse(ENV['fab_due_day']).wday - starting_day_of_week
+    #
+    #   (DateTime.now.wday - starting_day_of_week) <= grace_period_days and DateTime.now.wday >= starting_day_of_week
+    # end
+    #
+    # def self.we_are_within_the_grace_period_of_hours?
+    #   grace_period_hours = DateTime.parse(ENV['fab_due_time']).hour
+    #   DateTime.now.hour < grace_period_hours
+    # end
 
 
 

@@ -2,7 +2,10 @@
 #   FAB Preferences   #
 #######################
 
+
 fab_starting_day: "Monday"
+
+# Depricate
 fab_due_day: "Monday"
 
 # If the Fab isn't due until Monday, say 8 days
