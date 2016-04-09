@@ -30,11 +30,11 @@ class Fab < ActiveRecord::Base
     start_day = if within_edit_period_of_old_fab?
       # return the date for the prior week's fab entry so...
       # (go back 7 days, then go forward until the first Monday) (potentially jumping back more than 7 days!)
-      (DateTime.now.midnight - 2.week - 1.day)
+      (DateTime.now.in_time_zone.midnight - 2.week - 1.day)
     else
       # return the date for the current weeks fab entry so...
       # (go back 7 days from now, then go forward until the first Monday)
-      (DateTime.now.midnight - 1.week - 1.day)
+      (DateTime.now.in_time_zone.midnight - 1.week - 1.day)
     end
 
     start_day = advance_to_the_next_period_beginning(start_day)
@@ -109,7 +109,7 @@ class Fab < ActiveRecord::Base
   end
 
   def self.advance_to_the_next_period_beginning(given_day)
-    desired_wday = DateTime.parse(ENV['fab_starting_day']).wday
+    desired_wday = Date.parse(ENV['fab_starting_day']).wday
     current_date_progress = given_day
 
     until current_date_progress.wday == desired_wday do
@@ -129,7 +129,7 @@ class Fab < ActiveRecord::Base
       week_of_days = [0,1,2,3,4,5,6]
 
       # if it's thrs
-      starting_day_of_week = DateTime.parse(ENV['fab_starting_day']).wday
+      starting_day_of_week = Date.parse(ENV['fab_starting_day']).wday
 
       # we need to rotate the week so it begins with the first day of the fab period
       # which will allow us to easily sort through which days we need to jump
@@ -139,33 +139,12 @@ class Fab < ActiveRecord::Base
       jump_back_two_monday_days = rotated_week[0..3]
       # jump_back_single_monday_days = rotated_week[4..-1]
 
-      if jump_back_two_monday_days.include?(DateTime.now.wday)
+      if jump_back_two_monday_days.include?(DateTime.now.in_time_zone.wday)
         true
       else
         false
       end
     end
-
-    # # depricated, grace_period doesn't need to be used... use Fab#within_edit_period_of_old_fab? instead
-    # # If Fab start day in Monday, and the fab due day is Monday, with a due time of 5PM...
-    # # the grace period shall be defined to Mondays from 0:00 - 16:59
-    # def self.within_grace_period?
-    #   we_are_within_the_grace_period_of_days? and we_are_within_the_grace_period_of_hours?
-    # end
-    #
-    # def self.we_are_within_the_grace_period_of_days?
-    #   starting_day_of_week = DateTime.parse(ENV['fab_starting_day']).wday
-    #   grace_period_days = DateTime.parse(ENV['fab_due_day']).wday - starting_day_of_week
-    #
-    #   (DateTime.now.wday - starting_day_of_week) <= grace_period_days and DateTime.now.wday >= starting_day_of_week
-    # end
-    #
-    # def self.we_are_within_the_grace_period_of_hours?
-    #   grace_period_hours = DateTime.parse(ENV['fab_due_time']).hour
-    #   DateTime.now.hour < grace_period_hours
-    # end
-
-
 
     # depricated due to design decision
     def display_time_span(p_start)

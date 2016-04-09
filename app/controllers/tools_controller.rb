@@ -67,7 +67,7 @@ class ToolsController < ApplicationController
     # Sometimes a fab doesn't exist, so we might have to build one to use
     # as a base to find #prev or #next
     def find_or_create_base_fab(user, params)
-      t = DateTime.parse(params[:fab_period])
+      t = ActiveSupport::TimeZone[ENV['time_zone']].parse(params[:fab_period])
       user.fabs.where(period: t..(t+7)).limit(1).first or
         user.fabs.build(period: t)
     end

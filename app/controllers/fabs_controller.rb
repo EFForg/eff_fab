@@ -39,7 +39,7 @@ class FabsController < ApplicationController
   def create
     redirect_to '/', :alert => "Access denied." if current_user != @user
 
-    @fab = current_user.fabs.new(fab_params.merge(period: DateTime.now))
+    @fab = current_user.fabs.new(fab_params.merge(period: DateTime.now.in_time_zone))
 
     respond_to do |format|
       if @fab.save
