@@ -64,6 +64,10 @@ Reminders and report_on_aftermath notifications are sent over email via `rake ma
 0 16 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_report_on_aftermath
 ```
 
+##### Customize the images
+
+Drop in more images into `app/assets/images/banner_pool` to have them show up in that beautiful top banner.
+
 Credits
 -------
 
