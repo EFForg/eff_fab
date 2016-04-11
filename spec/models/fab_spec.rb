@@ -77,7 +77,7 @@ RSpec.describe Fab, type: :model do
   describe "advance_to_the_next_period_beginning" do
 
     # Not that this test was once confused by a daylight savings event taking
-    # place in PST on
+    # place in PST on first sunday of november
     it "should be able to find a Monday following a given Tuesday" do
       expected_difference_in_days = 6
       base_tuesday = ActiveSupport::TimeZone[ENV['time_zone']].parse("Tuesday 5:01PM 2001-10-23")
@@ -146,5 +146,55 @@ RSpec.describe Fab, type: :model do
       expect(a).to eq [true, false]
     end
   end
+
+  describe "Fab#get_fab_state_for_period" do
+
+    before :each do
+      @user = FactoryGirl.create(:user)
+      @team_mate = FactoryGirl.create(:user)
+    end
+
+    it "should have tested logic" do
+      expect(Fab.get_fab_state_for_period).to be :someone_on_staff_missed_fab
+
+      @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+      @team_mate.fabs << FactoryGirl.create(:fab_due_in_current_period)
+      expect(Fab.get_fab_state_for_period).to be :happy_fab_cake_time
+    end
+
+    it "should be able to work for arbitrary periods" do
+      yesterweek_period = Fab.get_start_of_current_fab_period - 1.week
+      expect(Fab.get_fab_state_for_period(yesterweek_period)).to be :someone_on_staff_missed_fab
+
+      @user.fabs << FactoryGirl.create(:fab_due_in_prior_period)
+      @team_mate.fabs << FactoryGirl.create(:fab_due_in_prior_period)
+
+      expect(Fab.get_fab_state_for_period(yesterweek_period)).to be :happy_fab_cake_time
+      expect(Fab.get_fab_state_for_period).to be :someone_on_staff_missed_fab
+    end
+
+    describe "tight timing logic" do
+      before :each do
+        @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+        @team_mate.fabs << FactoryGirl.create(:fab_due_in_current_period)
+
+        @exact_due_moment_of_fab = Fab.get_start_of_current_fab_period + 1.week + Fab.n_hours_until_fab_due.hours
+      end
+
+      it "shouldn't allow late fabs to count for cake" do
+        @team_mate.fabs.first.update_attributes(created_at: @exact_due_moment_of_fab + 1.minute)
+
+        expect(Fab.get_fab_state_for_period).to be :someone_on_staff_missed_fab
+      end
+
+      it "should allow fabs to count for cake if they're in 1 minute before due date" do
+        @team_mate.fabs.first.update_attributes(created_at: @exact_due_moment_of_fab - 1.minute)
+
+        expect(Fab.get_fab_state_for_period).to be :happy_fab_cake_time
+      end
+    end
+
+  end
+
 
 end

@@ -28,15 +28,15 @@ describe User do
 
   it "should say no team mate's fabs are missing if it's only their own fab missing" do
     @other = FactoryGirl.create(:user, email: 'other@example.com')
-    @other.fabs.find_or_build_this_periods_fab.save
+    @other.fabs << FactoryGirl.create(:fab_due_in_current_period)
 
     expect(@user.upcoming_fab_still_missing_for_team_mate?).to be false
   end
 
   it "should say no team mate's are missing fabs if everyone did theirs" do
     @other = FactoryGirl.create(:user, email: 'other@example.com')
-    @user.fabs.find_or_build_this_periods_fab.save
-    @other.fabs.find_or_build_this_periods_fab.save
+    @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @other.fabs << FactoryGirl.create(:fab_due_in_current_period)
 
     expect(@user.upcoming_fab_still_missing_for_team_mate?).to be false
     expect(@other.upcoming_fab_still_missing_for_team_mate?).to be false
@@ -46,10 +46,10 @@ describe User do
     @other = FactoryGirl.create(:user, email: 'other@example.com')
     expect(@user.only_person_of_team_missing_fab?).to be false
 
-    @other.fabs.find_or_build_this_periods_fab.save
+    @other.fabs << FactoryGirl.create(:fab_due_in_current_period)
     expect(@user.only_person_of_team_missing_fab?).to be true
 
-    @user.fabs.find_or_build_this_periods_fab.save
+    @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
     expect(@user.only_person_of_team_missing_fab?).to be false
   end
 
@@ -59,14 +59,36 @@ describe User do
 
     expect(@user.get_fab_state).to be :i_missed_fab
 
-    @user.fabs.find_or_build_this_periods_fab.save
+    @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
     expect(@user.get_fab_state).to be :a_team_mate_missed_fab
 
-    @team_mate.fabs.find_or_build_this_periods_fab.save
+    @team_mate.fabs << FactoryGirl.create(:fab_due_in_current_period)
     expect(@user.get_fab_state).to be :someone_on_staff_missed_fab
 
-    @outsider.fabs.find_or_build_this_periods_fab.save
+    @outsider.fabs << FactoryGirl.create(:fab_due_in_current_period)
     expect(@user.get_fab_state).to be :happy_fab_cake_time
+  end
+
+  it "should have fab_for_period_still_missing? show if missing" do
+    period = Fab.get_start_of_current_fab_period
+
+    expect(@user.fab_for_period_still_missing?(period)).to be_truthy
+
+    @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+
+    f = @user.fabs.first
+
+    # this one was completed just outside the time range for when due (oh noez!)
+    f.created_at = f.period + 1.week + Fab.n_hours_until_fab_due.hours + 1.minute
+    f.save
+
+    expect(@user.fab_for_period_still_missing?(period)).to be_truthy
+
+    # this fab is now set with a created_at within the due range
+    f.created_at = f.period + 1.week + Fab.n_hours_until_fab_due.hours - 1.minute
+    f.save
+
+    expect(@user.fab_for_period_still_missing?(period)).to be false
   end
 
 end

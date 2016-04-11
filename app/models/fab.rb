@@ -40,6 +40,19 @@ class Fab < ActiveRecord::Base
     start_day = advance_to_the_next_period_beginning(start_day)
   end
 
+  def self.n_hours_until_fab_due
+    ActiveSupport::TimeZone[ENV['time_zone']].parse(ENV['fab_due_time']).hour
+  end
+
+  def self.get_on_time_range_for_period(start_of_period)
+    hours_until_due = n_hours_until_fab_due
+    (start_of_period..start_of_period+1.week+hours_until_due.hours)
+  end
+
+  def self.get_fab_state_for_period(target_period = Fab.get_start_of_current_fab_period)
+    User.fab_still_missing_for_someone?(target_period) ? :someone_on_staff_missed_fab : :happy_fab_cake_time
+  end
+
   def to_s
     forwards = forward.collect {|n| n.body}.join(", ")
     backwards = backward.collect {|n| n.body}.join(", ")
@@ -121,6 +134,10 @@ class Fab < ActiveRecord::Base
 
   private
 
+    # This method controls whether the old fab or the slightly fresher fab is
+    # the default view.  It's determined by the day, and doesn't have
+    # hour/minute resolution because it turns over on friday (generally the day
+    # to do it on).
     # Old fab refers to a FAB which was created 2 mondays ago, not the most
     # recent monday.
     # If it's mon, tuesday, wed, thrs, then jump back 2 mondays

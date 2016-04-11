@@ -30,16 +30,24 @@ class User < ActiveRecord::Base
     fabs.find_or_build_this_periods_fab
   end
 
-  def upcoming_fab_still_missing?
-    upcoming_fab.new_record?
+  def upcoming_fab_still_missing?(target_period = Fab.get_start_of_current_fab_period)
+    fab_for_period_still_missing?(target_period)
+  end
+
+  def fab_for_period_still_missing?(target_period = Fab.get_start_of_current_fab_period)
+    range = Fab.get_on_time_range_for_period(target_period)
+
+    fabs.where(
+      period: target_period,
+      created_at: range).count == 0
   end
 
   def previous_fab_still_missing?
     upcoming_fab.exactly_previous_fab.new_record?
   end
 
-  def self.upcoming_fab_still_missing_for_someone?
-    self.all.any? { |u| u.upcoming_fab_still_missing? }
+  def self.fab_still_missing_for_someone?(target_period = Fab.get_start_of_current_fab_period)
+    self.all.any? { |u| u.upcoming_fab_still_missing?(target_period) }
   end
 
   def upcoming_fab_still_missing_for_team_mate?
@@ -56,7 +64,7 @@ class User < ActiveRecord::Base
   def get_fab_state
     return :i_missed_fab if upcoming_fab_still_missing?
     return :a_team_mate_missed_fab if upcoming_fab_still_missing_for_team_mate?
-    return :someone_on_staff_missed_fab if User.upcoming_fab_still_missing_for_someone?
+    return :someone_on_staff_missed_fab if User.fab_still_missing_for_someone?
     return :happy_fab_cake_time
   end
 
