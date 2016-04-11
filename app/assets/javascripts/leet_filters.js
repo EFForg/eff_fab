@@ -10,11 +10,14 @@ var LeetFilter = function(choiceWidget) {
     var self = this;
 
     document.onkeypress = function(e) {
-      if(e.keyCode == prevKeyCode)
-        self.cyclePrevCategory(self);
+      // Don't invoke code if we hit browser back hotkey...
+      if (!e.altKey && !e.ctrlKey) {
+        if(e.keyCode == prevKeyCode)
+          self.cyclePrevCategory(self);
 
-      if(e.keyCode == nextKeyCode)
-        self.cycleNextCategory(self);
+        if(e.keyCode == nextKeyCode)
+          self.cycleNextCategory(self);
+      }
     };
 
     _choiceWidget.initialize();
@@ -109,6 +112,8 @@ var ChoiceWidget = function() {
 
   // for instance, a dropbox would set an int here
   function setSelectedCategoryInDomUnitByIndex(val) {
+    // if (document.getElementById("leetFilterSelectedDisplay") === null) return
+
     // Do the input box
     // document.getElementById("nav-select").options.selectedIndex = val;
 
@@ -222,7 +227,6 @@ var FilterTool = {
     return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "-");
   }
 };
-
 
 
 window.choiceWidget = new ChoiceWidget();
