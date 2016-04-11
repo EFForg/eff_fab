@@ -1,7 +1,6 @@
 <h3>User</h3>
 <p>Name: <%= @user.name if @user.name %></p>
 <p>Email: <%= @user.email if @user.email %></p>
+<p>Team: <%= @user.team ? @user.team : "No Team"%></p>
 
-<p>FIXME: Latest Fab goes here with link to see past fab, Carousel style </p>
-
-<%= link_to "Create New Fab", new_user_fab_path(@user)%>
+<%= link_to 'Edit User', edit_user_path %>
