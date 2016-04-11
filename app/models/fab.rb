@@ -66,17 +66,6 @@ class Fab < ActiveRecord::Base
     end
   end
 
-  # depricated
-  # This method presents to the view what period this FAB is for
-  # Returns something like "February 8, 2016 - February 12, 2016"
-  def display_back_time_span
-    display_time_span(period)
-  end
-  # depricated
-  def display_forward_time_span
-    display_time_span(period + 1.week)
-  end
-
   # Returns "Week of March 28th, 2016"
   def display_back_start_day
     display_start_day_of_week(period)
@@ -135,9 +124,9 @@ class Fab < ActiveRecord::Base
   private
 
     # This method controls whether the old fab or the slightly fresher fab is
-    # the default view.  It's determined by the day, and doesn't have
+    # displayed on /users.  It's determined by the day, and doesn't have
     # hour/minute resolution because it turns over on friday (generally the day
-    # to do it on).
+    # to start doing FAB on).
     # Old fab refers to a FAB which was created 2 mondays ago, not the most
     # recent monday.
     # If it's mon, tuesday, wed, thrs, then jump back 2 mondays
@@ -145,7 +134,6 @@ class Fab < ActiveRecord::Base
     def self.within_edit_period_of_old_fab?
       week_of_days = [0,1,2,3,4,5,6]
 
-      # if it's thrs
       starting_day_of_week = Date.parse(ENV['fab_starting_day']).wday
 
       # we need to rotate the week so it begins with the first day of the fab period
@@ -161,14 +149,6 @@ class Fab < ActiveRecord::Base
       else
         false
       end
-    end
-
-    # depricated due to design decision
-    def display_time_span(p_start)
-      p_end = p_start + 4.days
-      s = p_start.strftime("'%y: %b %e - ")
-      s += p_end.strftime("%b %e")
-      s
     end
 
     def display_start_day_of_week(p_start)
