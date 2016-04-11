@@ -121,8 +121,6 @@ RSpec.describe Fab, type: :model do
       expect(fab.period).to eq fab_built_two_mondays_ago.period
     end
 
-
-
     it "should show the fab for one Monday back if you navigate to the fabs after on Friday at 00:01" do
       one_monday_back = ActiveSupport::TimeZone[ENV['time_zone']].parse("Monday 4:59PM 2001-10-22")
       reference_friday_now = ActiveSupport::TimeZone[ENV['time_zone']].parse("Friday 1:01AM 2001-10-26")
@@ -195,6 +193,5 @@ RSpec.describe Fab, type: :model do
     end
 
   end
-
 
 end

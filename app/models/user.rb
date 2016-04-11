@@ -31,10 +31,10 @@ class User < ActiveRecord::Base
   end
 
   def upcoming_fab_still_missing?(target_period = Fab.get_start_of_current_fab_period)
-    fab_for_period_still_missing?(target_period)
+    has_missing_fab_for_period?(target_period)
   end
 
-  def fab_for_period_still_missing?(target_period = Fab.get_start_of_current_fab_period)
+  def has_missing_fab_for_period?(target_period = Fab.get_start_of_current_fab_period)
     range = Fab.get_on_time_range_for_period(target_period)
 
     fabs.where(
@@ -74,26 +74,18 @@ class User < ActiveRecord::Base
   end
 
   def self.unfinished_fabs(target_period = nil)
-    find_users_with_missing_fabs_last_period.count
+    find_users_with_missing_fabs_current_period.count
   end
 
-  def self.find_users_with_missing_fabs_last_period(target_period = nil)
+  def self.find_users_with_missing_fabs_current_period(target_period = nil)
     target_period = Fab.get_start_of_current_fab_period if target_period.nil?
     rogue_users = []
 
     self.all.each do |u|
-      rogue_users << u if u.missed_fab_for_period?(target_period)
+      rogue_users << u if u.has_missing_fab_for_period?(target_period)
     end
 
     rogue_users
-  end
-
-  # FIXME: is this equivenant to upcoming_fab_still_missing? which is way cleaner?
-  def missed_fab_for_period?(target_period = nil)
-    target_period = Fab.get_start_of_current_fab_period if target_period.nil?
-
-    fab_attrs = {period: target_period..target_period + 7.days}
-    self.fabs.where(fab_attrs).empty?
   end
 
   def only_person_of_team_missing_fab?

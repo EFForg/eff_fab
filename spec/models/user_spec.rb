@@ -69,10 +69,10 @@ describe User do
     expect(@user.get_fab_state).to be :happy_fab_cake_time
   end
 
-  it "should have fab_for_period_still_missing? show if missing" do
+  it "should have has_missing_fab_for_period? show if missing" do
     period = Fab.get_start_of_current_fab_period
 
-    expect(@user.fab_for_period_still_missing?(period)).to be_truthy
+    expect(@user.has_missing_fab_for_period?(period)).to be_truthy
 
     @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
 
@@ -82,13 +82,26 @@ describe User do
     f.created_at = f.period + 1.week + Fab.n_hours_until_fab_due.hours + 1.minute
     f.save
 
-    expect(@user.fab_for_period_still_missing?(period)).to be_truthy
+    expect(@user.has_missing_fab_for_period?(period)).to be_truthy
 
     # this fab is now set with a created_at within the due range
     f.created_at = f.period + 1.week + Fab.n_hours_until_fab_due.hours - 1.minute
     f.save
 
-    expect(@user.fab_for_period_still_missing?(period)).to be false
+    expect(@user.has_missing_fab_for_period?(period)).to be false
+  end
+
+  describe "#find_users_with_missing_fabs_current_period" do
+    it "should find correct number of fab rogues" do
+
+      r = User.find_users_with_missing_fabs_current_period
+      expect(r.count).to eq 1
+
+      @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+      r = User.find_users_with_missing_fabs_current_period
+      expect(r.count).to eq 0
+
+    end
   end
 
 end
