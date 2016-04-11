@@ -66,7 +66,8 @@ Reminders and report_on_aftermath notifications are sent over email via `rake ma
 
 ##### Customize the images
 
-Drop in more images into `app/assets/images/banner_pool` to have them show up in that beautiful top banner.
+Drop in more images into `app/assets/images/banner_pool` to have them show up in that beautiful top banner.  If one image doesn't seem to work, it probably has a `+` sign or possibly something even more adventurous like a question mark, so try taking that out.  
+
 
 Credits
 -------
