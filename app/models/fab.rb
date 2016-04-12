@@ -136,12 +136,13 @@ class Fab < ActiveRecord::Base
 
       starting_day_of_week = Date.parse(ENV['fab_starting_day']).wday
 
-      # we need to rotate the week so it begins with the first day of the fab period
-      # which will allow us to easily sort through which days we need to jump
-      # backward by 2 mondays instead of just one
-      rotated_week = week_of_days.rotate(week_of_days.find_index(starting_day_of_week)) # => 1
+      # we need to rotate the week so it begins with the day of the week after
+      # the fab period.  This allows us to easily see that the first half of
+      # the rotated array refers to days that we need to jump
+      # backward by 2 mondays instead of just the nearest one Monday
+      rotated_week = week_of_days.rotate(week_of_days.find_index(starting_day_of_week) + 1) # rotate 2 if Monday
 
-      jump_back_two_monday_days = rotated_week[0..3]
+      jump_back_two_monday_days = rotated_week[0...3]
       # jump_back_single_monday_days = rotated_week[4..-1]
 
       if jump_back_two_monday_days.include?(DateTime.now.in_time_zone.wday)
