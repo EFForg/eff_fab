@@ -51,8 +51,8 @@ end
 
 create_teams
 
-
-20.times { build_fabs(FactoryGirl.create(:user, team_id: rand_team_id)) }
+i = 0
+20.times { build_fabs(User.create(name: "AutoGenned User", email: "user#{i++}@example.com", team_id: rand_team_id)) }
 
 u = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << u.email
