@@ -30,7 +30,11 @@
     <%= yield %>
   </div>
 
-  <script>invokePageSpecificJavascript();</script>
   <%= render "/layouts/navpara" %>
+
+  <script type="text/javascript">
+    invokePageSpecificJavascript();
+  </script>
+
 </body>
 </html>
