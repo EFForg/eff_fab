@@ -160,6 +160,8 @@ div {
 
   div.back {
     clear: left;
+    margin-left: 0;
+    padding-right: 0;
     @include susy-breakpoint($md) {
       margin-left: 60px;
       padding-right: 55px !important;
@@ -167,6 +169,8 @@ div {
   }
 
   div.forward {
+    margin-left: 0;
+    padding-right: 0;
     @include susy-breakpoint($md) {
       margin-left: -60px;
       padding-right: 70px !important;
@@ -215,7 +219,12 @@ div {
     letter-spacing: 0.15px;
     li {
       font-size: 0.6em;
-      padding-right: 2em;
+      padding-left: 1em;
+      padding-right: 0.8em;
+      @include susy-breakpoint($md) {
+        padding-left: 0;
+        padding-right: 2em;
+      }
       margin-top: 0.9em;
     }
   }

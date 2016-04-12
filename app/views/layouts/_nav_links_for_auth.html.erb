@@ -4,7 +4,6 @@
       <!-- <li><%# link_to 'Edit account', edit_user_registration_path %></li> -->
       <li>
         <%= link_to destroy_user_session_path, :method=>'delete' do %>
-          <span class="icon-eject"></span>
           Sign out
         <% end %>
       </li>
@@ -16,13 +15,11 @@
       <% if current_user.try(:admin?) %>
         <li>
           <%= link_to users_path do %>
-            <span class="icon-book-open"></span>
             View Fab
           <% end %>
         </li>
         <li>
           <%= link_to '/admin' do %>
-            <span class="icon-cog"></span>
             Administer
           <% end %>
         </li>
