@@ -41,9 +41,12 @@
     <% end %>
   </ul>
 
-  <ul>
-    <li id="hamburger"><i class="icon ion-navicon"></i></li>
-  </ul>
+  <% if params[:controller] == "users" and params[:action] == "index" %>
+    <ul>
+      <li id="hamburger"><i class="icon ion-navicon"></i></li>
+    </ul>
+  <% end %>
+
 </nav>
 
 <% if params[:controller] == "users" and params[:action] == "index" %>

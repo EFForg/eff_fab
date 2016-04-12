@@ -1,7 +1,9 @@
-<script type="text/javascript">
-
-
-// var tribbalax = function() {
+// Tribbalax is Jeremy Tribby's amazing paralax code for making that designy
+// paralax effect take place in the top banner as you scroll down
+// It also sets up the 'hamburger' thing when the menu is small, whouch should
+// be refactored into Tribburber.js or something (such a sweet name
+// for having libraries named after you, Tribby!)
+var Tribbalax = function() {
 
   var setTribbysGlobals = function() {
     window.ticking = false;
@@ -13,6 +15,7 @@
     window.translateValue = 0;
 
     window.nav = document.getElementsByTagName('nav')[0];
+
     window.navStyle = window.getComputedStyle(nav);
     window.navPosition = navStyle.getPropertyValue('position');
     window.navOffset = nav.getBoundingClientRect().top + scrollTop;
@@ -21,15 +24,15 @@
     window.afterNav = document.getElementById("container");
     window.navMargin = parseInt(window.getComputedStyle(afterNav,null).getPropertyValue('margin-top'));
     window.screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+    window.hamburger = document.getElementById('hamburger');
   };
 
   setTribbysGlobals();
 
+  if (typeof hamberger !== "undefined")
+    hamburger.addEventListener('click',openMenu,false);
 
-
-  var hamburger = document.getElementById('hamburger');
-
-  hamburger.addEventListener('click',openMenu,false);
 
   function openMenu() {
     document.body.classList.toggle('active');
@@ -165,18 +168,10 @@
     ticking = false;
   };
 
-  var reInitializeParalax = function() {
+  this.reInitializeParalax = function() {
     setTribbysGlobals();
-    doScroll();
+    doScroll(); // fixes paralax
+    // doResize(); // fixes hamburger
   };
 
-// };
-
-
-// tribbalax();
-
-$(document).on('page:restore', reInitializeParalax);
-
-
-
-</script>
+};
