@@ -77,7 +77,7 @@ end
 def build_fabs(u)
   return if u.nil?
 
-  this_monday = DateTime.now.in_time_zone - DateTime.now.in_time_zone.wday + 1.day
+  this_monday = Fab.get_start_of_current_fab_period
   last_monday = this_monday - 7.days
 
   f = u.fabs.create(period: last_monday)
