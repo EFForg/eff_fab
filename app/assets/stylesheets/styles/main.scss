@@ -162,12 +162,14 @@ div {
     clear: left;
     @include susy-breakpoint($md) {
       margin-left: 60px;
+      padding-right: 55px !important;
     }
   }
 
   div.forward {
     @include susy-breakpoint($md) {
       margin-left: -60px;
+      padding-right: 70px !important;
     }
   }
 
@@ -214,7 +216,7 @@ div {
     li {
       font-size: 0.6em;
       padding-right: 2em;
-      margin-top: 0.5em;
+      margin-top: 0.9em;
     }
   }
 }
@@ -252,7 +254,9 @@ div {
 }
 
 .team-name-header {
-  text-transform: capitalize;
+  text-transform: uppercase;
+  color: #bbb;
+  letter-spacing: 0.1em;
   font-family: 'Montserrat';
   font-weight: 400;
   text-align: center;
@@ -385,6 +389,8 @@ h3 a {
 
 
 .fab-backward-btn, .fab-forward-btn {
+  font-family: Lato;
+  font-weight: 300;
   position: absolute;
   margin-top: 115px;
   @include susy-breakpoint($md) {
@@ -393,6 +399,7 @@ h3 a {
   }
   &:hover {
     cursor: pointer !important;
+    opacity: 0.7;
   }
 }
 
