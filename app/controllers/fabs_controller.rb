@@ -2,7 +2,7 @@ class FabsController < ApplicationController
   before_action :set_user
   before_action :set_fab, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:update, :create]
-  before_action :author_access_only, only: [:update, :create]
+  before_action :author_access_only, only: [:update, :create, :destroy]
 
 
   # GET /fabs
@@ -37,9 +37,7 @@ class FabsController < ApplicationController
   # POST /fabs
   # POST /fabs.json
   def create
-    redirect_to '/', :alert => "Access denied." if current_user != @user
-
-    @fab = current_user.fabs.new(fab_params.merge(period: DateTime.now.in_time_zone))
+    @fab = current_user.fabs.new(fab_params.merge(period: Fab.get_start_of_current_fab_period))
 
     respond_to do |format|
       if @fab.save
