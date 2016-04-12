@@ -34,6 +34,22 @@ feature 'User fabs page', :devise do
   end
 
 
+  scenario "user creates a new fab of marvelous expectations" do
+    log_me_in
+
+    visit user_fabs_path(@me)
+    fill_in 'fab_notes_attributes_0_body', :with => "I'm making my fab"
+    fill_in 'fab_notes_attributes_3_body', :with => "here's the forward I think..."
+    click_button 'SUBMIT FAB'
+
+    @me.reload
+    fab = @me.fabs.first
+    expect(@me.fabs.count).to eq 1
+    expect(fab.period.yday).to eq  Fab.get_start_of_current_fab_period.yday
+    expect(fab.backward.first.body).to eq  "I'm making my fab"
+    expect(fab.forward.first.body).to eq  "here's the forward I think..."
+  end
+
   # Scenario: User cannot see another user's profile
   #   Given I am signed in
   #   When I visit another user's profile

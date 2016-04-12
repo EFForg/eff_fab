@@ -31,7 +31,6 @@ feature 'User index page', :devise do
 
     # written as per bug from wild...
     scenario "I navigate to /users on Monday, April 11th after due time, I should see Fabs for April 4th" do
-
       t = ActiveSupport::TimeZone[ENV['time_zone']].parse("2016-04-11 22:00").to_datetime
       stub_time!(t)
 
@@ -41,6 +40,22 @@ feature 'User index page', :devise do
 
     scenario "I navigate to /users on Monday, April 11th before due time, I should see Fabs for April 4th" do
       t = ActiveSupport::TimeZone[ENV['time_zone']].parse("2016-04-11 1:00").to_datetime
+      stub_time!(t)
+
+      visit users_path
+      expect_the_week_beginning_april_4
+    end
+
+    scenario "I navigate to /users on Tuesday, April 12th, I should see Fabs for April 4th" do
+      t = ActiveSupport::TimeZone[ENV['time_zone']].parse("2016-04-12 22:00").to_datetime
+      stub_time!(t)
+
+      visit users_path
+      expect_the_week_beginning_april_4
+    end
+
+    scenario "I navigate to /users on Wed, April 13th, I should see Fabs for April 4th" do
+      t = ActiveSupport::TimeZone[ENV['time_zone']].parse("2016-04-13 22:00").to_datetime
       stub_time!(t)
 
       visit users_path
@@ -74,7 +89,6 @@ feature 'User index page', :devise do
     end
 
   end
-
 
 end
 

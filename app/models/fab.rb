@@ -30,11 +30,11 @@ class Fab < ActiveRecord::Base
     start_day = if within_edit_period_of_old_fab?
       # return the date for the prior week's fab entry so...
       # (go back 7 days, then go forward until the first Monday) (potentially jumping back more than 7 days!)
-      (DateTime.now.in_time_zone.midnight - 2.week - 1.day)
+      (DateTime.now.in_time_zone.midnight - 2.week)
     else
       # return the date for the current weeks fab entry so...
       # (go back 7 days from now, then go forward until the first Monday)
-      (DateTime.now.in_time_zone.midnight - 1.week - 1.day)
+      (DateTime.now.in_time_zone.midnight - 1.week)
     end
 
     start_day = advance_to_the_next_period_beginning(start_day)
