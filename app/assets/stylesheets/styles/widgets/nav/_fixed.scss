@@ -21,6 +21,15 @@ $nav-font: 'Montserrat';
 // }
 
 nav {
+
+
+  a {
+    display: inline-block;
+  }
+  ul li ul:nth-of-type(1) a {
+    margin-top: -4px;
+  }
+
   font-family: $nav-font;
   font-weight: 300;
   width: 100%;
