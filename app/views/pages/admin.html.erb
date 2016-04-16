@@ -1,5 +1,5 @@
 <div class="elegant">
-  <h1>Admin</h1>
+  <h1>Administrative Console</h1>
 
   <h2>Usage</h2>
 
@@ -13,10 +13,10 @@
       </span>
 
     <li>
-      <div style="margin-left:auto; margin-right:auto;width:15%;">
+      <div class="roll-update">
       <%= form_for(@user, remote: true, format: :json, ) do |f| %>
         <%= f.select :role, User.roles.collect{ |k,v| [ k,k ] }, {}, class: "clean-picker" %>
-        <%= f.submit class: "clean-picker-submit" %>
+        <%= f.submit "Update Current Role", class: "clean-picker-submit" %>
       <% end %>
       </div>
       <div class="clear"></div>
@@ -57,6 +57,14 @@
         <span class="icon-user-add"></span>
         Create Model User
       <% end %>
+    <li>
+      <span class="faked-link">
+        <%= form_tag("/tools/populate_this_weeks_fabs", method: "post") do %>
+          <span class="icon-database"></span>
+          <%= submit_tag "Make Everyone's fab this week", data: { confirm: "Are you sure?" } %>
+        <% end %>
+      </span>
+
   </ul>
 
 </div>

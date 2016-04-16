@@ -55,6 +55,20 @@ class ToolsController < ApplicationController
   end
 
 
+  def populate_this_weeks_fabs
+    new_records_count = 0
+    User.all.each do |u|
+      f = u.fabs.find_or_build_this_periods_fab
+      if f.new_record?
+        f.save
+        new_records_count += 1
+      end
+    end
+
+    redirect_to "/admin", notice: "Success:  #{new_records_count} new fab records created."
+  end
+
+
   private
 
     # pass in a user_id and period in params and it will find the next or previous fab

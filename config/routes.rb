@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   post '/tools/send_reminders', to: "tools#send_reminders"
   post '/tools/send_report_on_aftermath', to: "tools#send_report_on_aftermath"
   post '/tools/populate_users', to: "tools#populate_users"
+  post '/tools/populate_this_weeks_fabs', to: "tools#populate_this_weeks_fabs"
+
 
   resources :teams
   get '/v', to: "visitors#version"
