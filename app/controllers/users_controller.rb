@@ -9,6 +9,10 @@ class UsersController < ApplicationController
       Team.where(name: params[:team_name]).includes(users: { current_period_fab: [:notes, :forward, :backward] }).to_a << Team.runner_ups
     end
 
+    # This array will grow as the views iterate over users and check for
+    # existance of fabs
+    @runners = []
+
     @fab_period = Fab.get_start_of_current_fab_period
   end
 

@@ -1,5 +1,4 @@
-<% fab = user.current_period_fab %>
-<% @fab = fab.nil? ? user.upcoming_fab : fab %>
+<% @fab = user.current_period_fab || user.build_upcoming_fab %>
 
 <% fab_reference = "#{@fab.period.to_json}" %>
 

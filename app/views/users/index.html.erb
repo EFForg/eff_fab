@@ -4,14 +4,20 @@
     <div class="<%= capsul_class_name %>" data-filter-name="<%= team.name %>">
       <h2 class="team-name-header"><%= team.name %></h2>
 
-      <% users = team.id.nil? ? Team.get_runners : team.users %>
+      <% users = team.id.nil? ? @runners : team.users %>
 
       <% users.each do |user| %>
-        <%= render user unless user.current_period_fab.nil? && team.id %>
+
+        <%# If this is a runner up, don't render them here, add them to the runners list %>
+        <% if team.id && user.current_period_fab.nil? %>
+          <% @runners << user %>
+        <% else %>
+          <%= render user %>
+        <% end %>
+
       <% end %>
 
     </div>
   <% end %>
-
 
 </div>

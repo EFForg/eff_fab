@@ -17,6 +17,9 @@ class Team < ActiveRecord::Base
     Team.new(name: "Team Runner Up", weight: 200)
   end
 
+  # This function is soooo EFFing wasteful! Only use it in mailer views
+  # The users#index page iteratively builds the runners array as it generates
+  # the view to avoid needing a second query
   def self.get_runners
     User.all.select { |u| u.upcoming_fab.id.nil? }
   end

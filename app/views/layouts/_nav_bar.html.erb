@@ -1,7 +1,9 @@
 <nav><img src="<%= asset_path('EFF-logo-plain.svg') %>" type="image/svg+xml">
 
   <ul>
+
     <% if params[:controller] == "users" and params[:action] == "index" %>
+
       <li id="first-li-containing-selected-team-and-teams-ul">
         Team: <a id="leetFilterSelectedDisplay">All teams</a>
         <ul>
@@ -13,6 +15,7 @@
 
         </ul>
       </li>
+
     <% end %>
 
     <% if user_signed_in? %>

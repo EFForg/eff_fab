@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     fabs.find_or_build_this_periods_fab
   end
 
+  def build_upcoming_fab
+    fabs.build_this_periods_fab
+  end
+
   def upcoming_fab_still_missing?(target_period = Fab.get_start_of_current_fab_period)
     has_missing_fab_for_period?(target_period)
   end

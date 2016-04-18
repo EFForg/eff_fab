@@ -22,6 +22,11 @@ class Fab < ActiveRecord::Base
     self.where(fab_attrs).first || self.new(period: get_start_of_current_fab_period)
   end
 
+  # careful to only call this when you know the user doesn't have a fab this period...
+  def self.build_this_periods_fab
+    self.new(period: get_start_of_current_fab_period)
+  end
+
   # If it's Thursday, should return the date of two mondays ago
   # if it's Friday, it should return the monday of the current week!!!
   def self.get_start_of_current_fab_period
