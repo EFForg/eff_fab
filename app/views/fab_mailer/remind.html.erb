@@ -16,7 +16,7 @@
       Due 4 pm by Monday.
     </p>
     <p>
-      <a href="<%= ditto = new_user_fab_url(@user, host: ENV['domain_name'], protocol: 'https') %>"> <%= ditto %></a>
+      <%= link_to "Update your fab", user_fabs_path(@user) %>
     </p>
   </body>
 </html>
