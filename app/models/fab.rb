@@ -17,7 +17,6 @@ class Fab < ActiveRecord::Base
 
   after_initialize :setup_children
 
-
   def self.find_or_build_this_periods_fab
     fab_attrs = {period: get_start_of_current_fab_period..get_start_of_current_fab_period+6.days}
     self.where(fab_attrs).first || self.new(period: get_start_of_current_fab_period)
@@ -66,6 +65,23 @@ class Fab < ActiveRecord::Base
     end
   end
 
+  def expose_notes(direction)
+    if self.new_record?
+      notes = [
+        OpenStruct.new({ body: direction == "forward" ? "=(" : "This user hasn't filled out this FAB!" }),
+        OpenStruct.new({ body: "" }),
+        OpenStruct.new({ body: "" })
+      ]
+    else
+      case direction
+      when "forward"
+        forward
+      when "back"
+        backward
+      end
+    end
+  end
+
   # Returns "Week of March 28th, 2016"
   def display_back_start_day
     display_start_day_of_week(period)
@@ -75,8 +91,12 @@ class Fab < ActiveRecord::Base
     display_start_day_of_week(period + 1.week)
   end
 
+  def present_start_day_for_week(is_forward)
+    is_forward ? display_forward_start_day : display_back_start_day
+  end
+
   def display_date_for_header
-    self.period.strftime("%b %e") + "-" + (self.period + 4.days).strftime("%e")
+    self.period.strftime("%b %-d ") + "-" + (self.period + 4.days).strftime(" %-d")
   end
 
   # this function can be used as a seek forward and will skip blank fabs

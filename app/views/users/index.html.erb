@@ -5,10 +5,13 @@
       <h2 class="team-name-header"><%= team.name %></h2>
 
       <% users = team.id.nil? ? Team.get_runners : team.users %>
+
       <% users.each do |user| %>
         <%= render user unless user.current_period_fab.nil? && team.id %>
       <% end %>
 
     </div>
   <% end %>
+
+
 </div>

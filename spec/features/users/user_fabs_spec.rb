@@ -89,7 +89,8 @@ feature 'User fabs page', :devise do
 
     # historic fabs display
     first_fab_header_text = find_all('h3').last.text
-    expect(first_fab_header_text).to eq @me.fabs.second.display_date_for_header
+
+    expect(first_fab_header_text.downcase).to eq @me.fabs.second.display_date_for_header.downcase
 
     # currently editable fabs display
     editable_fab_header_text = find_all('h4').first.text
