@@ -42,7 +42,7 @@ mail_password: ''
 
 production_base: &production_base
   db_adapter: 'mysql2'
-  db_encoding: 'utf8'
+  db_encoding: 'utf8mb4'
   db_database: 'eff_fab_prod'
   db_username: 'eff_fab'
   db_password: ''
