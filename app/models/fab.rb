@@ -9,8 +9,8 @@ class Fab < ActiveRecord::Base
 
   belongs_to :user
   has_many :notes
-  has_many :forward, -> { where(forward: true) }, class_name: "Note"
-  has_many :backward, -> { where(forward: false) }, class_name: "Note"
+  has_many :forward, -> { where(forward: true).order(:id) }, class_name: "Note"
+  has_many :backward, -> { where(forward: false).order(:id) }, class_name: "Note"
 
 
   accepts_nested_attributes_for :notes, reject_if: :all_blank, :allow_destroy => true
