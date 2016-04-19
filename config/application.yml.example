@@ -15,6 +15,7 @@ admin_name: John Doe
 admin_email: 'user@example.com'
 admin_password: 'password'
 
+domain_name: 'fab.eff.org'
 # run `rake secret` and paste that string below whilst uncommenting that line
 # secret_key_base: '6769ed413561af4d707e6c6d3b7258a10f7d9429055b24e7a136f1ab99d3aa3789d769894c28250ad6764d5973e86c1aefc2d56487f4360b6ff77165231f100a'
 
@@ -22,8 +23,6 @@ admin_password: 'password'
 ########################
 #        Mailer        #
 ########################
-
-domain_name: 'fab.eff.org'
 
 mail_server: 'smtp.example.com'
 mail_port: '587'
