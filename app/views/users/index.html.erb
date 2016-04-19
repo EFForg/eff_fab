@@ -1,8 +1,10 @@
-<% fabs_key = @teams.map{ |t| t.users.map{ |u| u.current_period_fab.updated_at unless u.current_period_fab.nil? } }.join %>
-<% users_key = @teams.map{ |t| t.users.map(&:updated_at)}.join %>
-<% teams_key = @teams.map(&:updated_at).join %>
 <%
-  cache_horoscope = [fabs_key, users_key, teams_key, adminy?].join
+  fabs_key = @teams.map{ |t| t.users.map{ |u| u.current_period_fab.updated_at unless u.current_period_fab.nil? } }.join;
+  users_key = @teams.map{ |t| t.users.map(&:updated_at)}.join;
+  teams_key = @teams.map(&:updated_at).join;
+%>
+<%
+  cache_horoscope = [@fab_period, fabs_key, users_key, teams_key, adminy?].join
 %>
 
 <% cache(Digest::MD5.hexdigest(cache_horoscope)) do %>
