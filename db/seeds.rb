@@ -57,7 +57,7 @@ i = 0
 u = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << u.email
 
-u.name = "Hugh D’Andrade"
+u.name = "Hugh D\`Andrade"
 u.save
 
 build_fabs(u)
