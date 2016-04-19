@@ -1,7 +1,12 @@
 class ToolsController < ApplicationController
   require File.expand_path('../../../lib/mailers', __FILE__)
 
-  before_action :admin_only, except: [:next_fab, :previous_fab]
+  before_action :admin_only, except: [:next_fab, :previous_fab, :version]
+
+  # GET /v
+  def version
+    render text: "0.0.1"
+  end
 
   # POST /tools/send_reminders
   def send_reminders

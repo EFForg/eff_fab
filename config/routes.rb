@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
+  root to: 'pages#home'
   get '/admin', to: "pages#admin"
+  get '/about', to: "pages#about"
 
   get '/tools/previous_fab'
   get '/tools/next_fab'
@@ -9,11 +11,10 @@ Rails.application.routes.draw do
   post '/tools/send_report_on_aftermath', to: "tools#send_report_on_aftermath"
   post '/tools/populate_users', to: "tools#populate_users"
   post '/tools/populate_this_weeks_fabs', to: "tools#populate_this_weeks_fabs"
+  get '/v', to: "tools#version"
 
 
   resources :teams
-  get '/v', to: "visitors#version"
-  root to: 'visitors#index'
   devise_for :users
   post '/u/overriden_create', to: 'users#overriden_create'
 

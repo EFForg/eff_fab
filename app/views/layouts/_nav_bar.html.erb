@@ -3,7 +3,6 @@
   <ul>
 
     <% if params[:controller] == "users" and params[:action] == "index" %>
-
       <li id="first-li-containing-selected-team-and-teams-ul">
         Team: <a id="leetFilterSelectedDisplay">All teams</a>
         <ul>
@@ -15,29 +14,30 @@
 
         </ul>
       </li>
-
     <% end %>
 
+    <li>
+      <%= link_to users_path do %>
+        View Fab
+      <% end %>
+    </li>
+
     <% if user_signed_in? %>
-      <!-- <li><%# link_to 'Edit account', edit_user_registration_path %></li> -->
-      <li>
-        <%= link_to destroy_user_session_path, :method=>'delete' do %>
-          Sign out
-        <% end %>
-      </li>
 
       <% if current_user.try(:admin?)%>
-        <li>
-          <%= link_to users_path do %>
-            View Fab
-          <% end %>
-        </li>
         <li>
           <%= link_to '/admin' do %>
             Administer
           <% end %>
         </li>
       <% end %>
+
+      <li>
+        <%= link_to destroy_user_session_path, :method=>'delete' do %>
+          Sign out
+        <% end %>
+      </li>
+
     <% else %>
       <li><%= link_to 'Sign in', new_user_session_path %></li>
       <li><%= link_to 'Sign up', new_user_registration_path %></li>
@@ -53,7 +53,6 @@
 </nav>
 
 <% if params[:controller] == "users" and params[:action] == "index" %>
-
   <div id="drawer">
     <ul>
       <% @teams.each do |team| %>
@@ -61,5 +60,4 @@
       <% end %>
     </ul>
   </div>
-
 <% end %>
