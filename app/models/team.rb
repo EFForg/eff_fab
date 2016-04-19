@@ -19,9 +19,6 @@ class Team < ActiveRecord::Base
 
   def self.get_runners
     # User.all.select { |u| u.upcoming_fab.id.nil? }
-    target_period = Fab.get_start_of_current_fab_period
-    p1 = target_period.strftime("%Y-%m-%d")
-    p2 = (target_period + 1.day).strftime("%Y-%m-%d")
 
     # query_non_runners = <<-EOT.strip_heredoc
     #
@@ -33,11 +30,15 @@ class Team < ActiveRecord::Base
     #
     # EOT
 
+    target_period = Fab.get_start_of_current_fab_period
+    p1 = target_period.strftime("%Y-%m-%d")
+    p2 = (target_period + 1.day).strftime("%Y-%m-%d")
+
     q = <<-EOT.strip_heredoc
 
     SELECT *
     FROM "users"
-      INNER JOIN "fabs"
+      LEFT JOIN "fabs"
       ON "fabs"."user_id" = "users"."id"
       GROUP BY "users"."email"
         HAVING max(
@@ -48,6 +49,7 @@ class Team < ActiveRecord::Base
               0
             END
         ) = 0
+
     EOT
 
     User.find_by_sql(q)
