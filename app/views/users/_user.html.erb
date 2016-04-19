@@ -1,32 +1,36 @@
 <% @fab = user.current_period_fab || user.build_upcoming_fab %>
 
-<% fab_reference = "#{@fab.period.to_json}" %>
+<% cache([@fab.updated_at, @fab_editable, adminy?]) do %>
 
-<figure class="fab-user basic-carousel"
-	data-user-id="<%= user.id %>"
-	data-fab-period="<%= fab_reference %>">
+  <% fab_reference = "#{@fab.period.to_json}" %>
 
-  <div style="background-image: url(<%= user.avatar.url(:thumb) %>)" class="portrait"></div>
-  <figcaption>
-    <hgroup>
-      <h1><%= link_to(user.name, user_fabs_path(user)) %></h1>
-      <h2><%= user.title %></h2>
-    </hgroup>
+	<figure class="fab-user basic-carousel"
+		data-user-id="<%= user.id %>"
+		data-fab-period="<%= fab_reference %>">
 
-		<% if @fab.gif_tag.present? %>
-			<div style="background-image: url(<%= @fab.gif_tag.url(:thumb) %>)" class="portrait"></div>
+	  <div style="background-image: url(<%= user.avatar.url(:thumb) %>)" class="portrait"></div>
+	  <figcaption>
+	    <hgroup>
+	      <h1><%= link_to(user.name, user_fabs_path(user)) %></h1>
+	      <h2><%= user.title %></h2>
+	    </hgroup>
+
+			<% if @fab.gif_tag.present? %>
+				<div style="background-image: url(<%= @fab.gif_tag.url(:thumb) %>)" class="portrait"></div>
+			<% end %>
+	  </figcaption>
+
+		<% if @fab_editable %>
+			<%= render '/fabs/form' %>
+		<% else %>
+			<%= render "users/show_in_figure_fab" %>
 		<% end %>
-  </figcaption>
+	</figure>
 
-	<% if defined?(editable) and editable %>
-		<%= render '/fabs/form' %>
-	<% else %>
-		<%= render "users/show_in_figure_fab" %>
+	<% if adminy? %>
+	  <div class="profile-edit">
+	    <%= link_to("Edit", edit_user_path(user)) %>
+	  </div>
 	<% end %>
-</figure>
 
-<% if adminy? %>
-  <div class="profile-edit">
-    <%= link_to("Edit", edit_user_path(user)) %>
-  </div>
 <% end %>

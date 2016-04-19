@@ -1,23 +1,35 @@
-<div class="row">
-  <% @teams.each do |team| %>
-    <% capsul_class_name = "team-group leet-filter-candidate #{string_to_class_name(team.name)}" %>
-    <div class="<%= capsul_class_name %>" data-filter-name="<%= team.name %>">
-      <h2 class="team-name-header"><%= team.name %></h2>
+<% fabs_key = @teams.map{ |t| t.users.map{ |u| u.current_period_fab.updated_at unless u.current_period_fab.nil? } }.join %>
+<% users_key = @teams.map{ |t| t.users.map(&:updated_at)}.join %>
+<% teams_key = @teams.map(&:updated_at).join %>
+<%
+  cache_horoscope = [fabs_key, users_key, teams_key, adminy?].join
+%>
 
-      <% users = team.id.nil? ? @runners : team.users %>
+<% cache(Digest::MD5.hexdigest(cache_horoscope)) do %>
 
-      <% users.each do |user| %>
+  <div class="row">
+    <% @teams.each do |team| %>
+      <% capsul_class_name = "team-group leet-filter-candidate #{string_to_class_name(team.name)}" %>
+      <div class="<%= capsul_class_name %>" data-filter-name="<%= team.name %>">
+        <h2 class="team-name-header"><%= team.name %></h2>
 
-        <%# If this is a runner up, don't render them here, add them to the runners list %>
-        <% if team.id && user.current_period_fab.nil? %>
-          <% @runners << user %>
-        <% else %>
-          <%= render user %>
+        <% users = team.id.nil? ? @runners : team.users %>
+
+        <% users.each do |user| %>
+
+          <%# If this is a runner up, don't render them here, add them to the runners list %>
+          <% if team.id && user.current_period_fab.nil? %>
+            <% @runners << user %>
+          <% else %>
+            <%= render user %>
+          <% end %>
+
         <% end %>
 
-      <% end %>
+      </div>
+    <% end %>
 
-    </div>
-  <% end %>
+  </div>
 
-</div>
+
+<% end %>

@@ -5,9 +5,9 @@ class Team < ActiveRecord::Base
 
   def self.all_including_runner_ups(eager_load = true)
     teams = if eager_load
-      self.all.includes(users: { current_period_fab: [:notes, :forward, :backward] }).to_a
+      self.all.includes(users: { current_period_fab: [:notes, :forward, :backward] })
     else
-      self.all.to_a
+      self.all
     end
 
     teams << self.runner_ups
