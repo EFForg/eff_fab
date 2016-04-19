@@ -64,7 +64,7 @@ class Fab < ActiveRecord::Base
   end
 
   def setup_children
-    if notes.empty?
+    if new_record? and notes.empty?
       3.times { notes.build(forward: true) }
       3.times { notes.build(forward: false) }
     end
