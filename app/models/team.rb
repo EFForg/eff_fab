@@ -17,30 +17,20 @@ class Team < ActiveRecord::Base
     Team.new(name: "Team Runner Up", weight: 200)
   end
 
-  def self.get_runners
-    # User.all.select { |u| u.upcoming_fab.id.nil? }
+  def self.get_runners(target_period = Fab.get_start_of_current_fab_period)
+    # target_period = Fab.get_start_of_current_fab_period # if target_period.nil?
 
-    # query_non_runners = <<-EOT.strip_heredoc
-    #
-    # SELECT "users"."name", "fabs"."period"
-    # FROM "users"
-    #   INNER JOIN "fabs"
-    #   ON "fabs"."user_id" = "users"."id"
-    #     WHERE "fabs"."period" BETWEEN date('#{p1}') AND date('#{p2}');
-    #
-    # EOT
-
-    target_period = Fab.get_start_of_current_fab_period
     p1 = target_period.strftime("%Y-%m-%d")
     p2 = (target_period + 1.day).strftime("%Y-%m-%d")
 
+    # Note, you can flip those bits in the case to invert the function
     q = <<-EOT.strip_heredoc
 
-      SELECT "users"."name"
+      SELECT "users"."id", "users"."name"
       FROM "users"
         LEFT JOIN "fabs"
         ON "fabs"."user_id" = "users"."id"
-        GROUP BY "users"."name"
+        GROUP BY "users"."id"
           HAVING max(
             case
               WHEN "fabs"."period" BETWEEN date('#{p1}') AND date('#{p2}') THEN
@@ -52,7 +42,7 @@ class Team < ActiveRecord::Base
 
     EOT
 
-    User.find_by_sql(q)
+    runners = User.find_by_sql(q)
   end
 
 end
