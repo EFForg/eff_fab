@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
   end
 
   def self.unfinished_fabs(target_period = nil)
-    find_users_with_missing_fabs_current_period.count
+    Team.get_runners.count
   end
 
   def self.find_users_with_missing_fabs_current_period(target_period = nil)

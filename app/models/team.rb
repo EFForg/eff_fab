@@ -36,19 +36,19 @@ class Team < ActiveRecord::Base
 
     q = <<-EOT.strip_heredoc
 
-    SELECT *
-    FROM "users"
-      LEFT JOIN "fabs"
-      ON "fabs"."user_id" = "users"."id"
-      GROUP BY "users"."email"
-        HAVING max(
-          case
-            WHEN "fabs"."period" BETWEEN date('#{p1}') AND date('#{p2}') THEN
-              1
-            ELSE
-              0
-            END
-        ) = 0
+      SELECT "users"."name"
+      FROM "users"
+        LEFT JOIN "fabs"
+        ON "fabs"."user_id" = "users"."id"
+        GROUP BY "users"."name"
+          HAVING max(
+            case
+              WHEN "fabs"."period" BETWEEN date('#{p1}') AND date('#{p2}') THEN
+                1
+              ELSE
+                0
+              END
+          ) = 0
 
     EOT
 
