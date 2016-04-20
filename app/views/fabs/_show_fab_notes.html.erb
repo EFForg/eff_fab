@@ -1,5 +1,5 @@
 <% title = forward ? 'forward' : 'back' %>
-<% time_span = @fab.send("display_#{title}_time_span") %>
+<% time_span = @fab.send("display_#{title}_start_day") %>
 <% if @fab.id.nil? %>
   <% notes = [
     OpenStruct.new({ body: forward ? "=(" : "This user hasn't filled out this FAB!" }),

@@ -1,13 +1,13 @@
 <h2 class="team-name-header"><%= @user.team_name %></h2>
 
-<%= render partial: '/users/user', locals: {user: @user, editable: @fab_editable }%>
+<%= render partial: '/users/user', locals: { user: @user }%>
 
 <br>
 
 <div class="fabs-back">
   <% @fabs.each do |fab| %>
     <div class="fab">
-      <%= render partial: 'index_fab_back', locals: {fab: fab} %>
+      <%= render partial: 'index_fab_back', locals: { fab: fab } %>
     </div>
   <% end %>
 </div>

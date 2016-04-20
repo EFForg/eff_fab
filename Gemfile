@@ -10,8 +10,12 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'nokogiri'
+
+gem 'aws-sdk', '< 2.0'
+
 group :development, :test do
   gem 'byebug'
+  # gem 'rack-mini-profiler'
 end
 group :development do
   gem 'web-console', '~> 2.0'
@@ -38,7 +42,8 @@ group :development, :test do
   gem 'sqlite3'
 end
 group :production do
-  gem 'mysql2'
+  #gem 'mysql2'
+  gem 'pg'
   gem 'rails_12factor'
 end
 group :test do

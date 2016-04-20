@@ -1,24 +1,13 @@
-<% title = forward ? 'forward' : 'back' %>
-<% start_day = @fab.send("display_#{title}_start_day") %>
+<% direction = forward ? 'forward' : 'back' %>
 
-<% if @fab.id.nil? %>
-  <% notes = [
-    OpenStruct.new({ body: forward ? "=(" : "This user hasn't filled out this FAB!" }),
-    OpenStruct.new({ body: "" }),
-    OpenStruct.new({ body: "" })
-    ] %>
-<% else %>
-  <% notes = forward ? @fab.forward : @fab.backward %>
-<% end %>
-
-<div class="<%= title %>">
-  <h3><%= title.capitalize %></h3>
+<div class="<%= direction %>">
+  <h3><%= direction.capitalize %></h3>
   <h4>
-    <%= start_day %>
+    <%= @fab.present_start_day_for_week(forward) %>
   </h4>
 
   <ul>
-    <% notes.each do |note| %>
+    <% @fab.expose_notes(direction).each do |note| %>
       <li><%= note.body %><%= "&zwnj;".html_safe %>
     <% end %>
   </ul>

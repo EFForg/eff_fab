@@ -1,24 +1,13 @@
 Eff Fab
 ================
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+This is a rails app built to make it easy for organizations with many users keep track of what they themselves are doing and what things their coworkers are up to.  
 
-This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
-provided by the [RailsApps Project](https://railsapps.github.io/).
-
-Rails Composer is supported by developers who purchase our RailsApps tutorials.
-
-Ruby on Rails
--------------
-
-This application requires:
-
-- Ruby 2.2.1
-
-Learn more about [Installing Rails](https://railsapps.github.io/installing-rails.html).
 
 Getting Started
 ---------------
+
+Note:  These instructions assume you have experience deploying conventional rails apps.  
 
 Install dependencies, or use [mah vagrant box](https://github.com/TheNotary/ruby_vagrant_box).
 
@@ -35,7 +24,7 @@ $  cp config/application.yml.example config/application.yml
 $  bundle install
 $  rake db:create
 $  rake db:migrate
-$  rake db:seed
+$  rake user:populate_users
 ```
 
 Now you can boot up the server
@@ -43,7 +32,8 @@ Now you can boot up the server
 $  rails s
 ```
 
-You may want to notice the configuration file located at `config/application.yml`
+You'll want to notice the configuration file located at `config/application.yml`, an admin will have been generated with the supplied credentials, and also the secret_key_base will need to be recalculated via `rake secret` and insertered for the app to work.  
+
 
 Setup
 -----
@@ -63,6 +53,11 @@ Reminders and report_on_aftermath notifications are sent over email via `rake ma
 
 0 16 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_report_on_aftermath
 ```
+
+##### Customize the images
+
+Drop in more images into `app/assets/images/banner_pool` to have them show up in that beautiful top banner.  If one image doesn't seem to work, it probably has a `+` sign or possibly something even more adventurous like a question mark, so try taking that out.  
+
 
 Credits
 -------

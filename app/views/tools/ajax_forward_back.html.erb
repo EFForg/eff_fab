@@ -3,7 +3,8 @@
   fab_period: @fab.period,
   neighbor_presence: [@previous_fab_exists, @next_fab_exists],
 }.to_json.html_safe %>;
-<%# lol... The above line must be the first in this file.  It's parsed by the js... =D %>
+<%# lol... The above line NEEDS to be the first in this file.  It's parsed by the js... =D %>
+<%# FIXME: buy thoughtbot's backbone book and use that to elegantly handle this crap %>
 
 <%= render partial: '/fabs/show_fab_notes_tribby.html.erb', locals: {forward: false} %>
 <%= render partial: '/fabs/show_fab_notes_tribby.html.erb', locals: {forward: true} %>

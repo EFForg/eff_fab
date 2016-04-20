@@ -35,7 +35,7 @@ end
 
 
 def build_fabs(u)
-  this_monday = DateTime.now - DateTime.now.wday + 1.day
+  this_monday = DateTime.now.in_time_zone - DateTime.now.in_time_zone.wday + 1.day
   last_monday = this_monday - 7.days
 
   f = u.fabs.create(period: last_monday)
@@ -51,13 +51,13 @@ end
 
 create_teams
 
-
-20.times { build_fabs(FactoryGirl.create(:user, team_id: rand_team_id)) }
+i = 0
+20.times { build_fabs(User.create(name: "AutoGenned User", email: "user#{i++}@example.com", team_id: rand_team_id)) }
 
 u = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << u.email
 
-u.name = "Hugh D’Andrade"
+u.name = "Hugh D\`Andrade"
 u.save
 
 build_fabs(u)

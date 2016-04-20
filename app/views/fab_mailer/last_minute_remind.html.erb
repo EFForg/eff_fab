@@ -23,7 +23,7 @@
     <% elsif @user.upcoming_fab_still_missing_for_team_mate? %>
       <% subtraction_of_self = @user.upcoming_fab_still_missing? ? 1 : 0 %>
       <%# describing count of team mates missing fab %>
-      <% c = @user.team.users.find_users_with_missing_fabs_last_period.count - subtraction_of_self %>
+      <% c = @user.team.users.find_users_with_missing_fabs_current_period.count - subtraction_of_self %>
 
       <p>
         You have
@@ -36,7 +36,7 @@
       </p>
 
       <ul>
-        <% @user.team.users.find_users_with_missing_fabs_last_period.each do |u| %>
+        <% @user.team.users.find_users_with_missing_fabs_current_period.each do |u| %>
           <li><%= u.name %></li>
         <% end %>
       </ul>

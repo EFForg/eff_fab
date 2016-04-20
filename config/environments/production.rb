@@ -87,6 +87,29 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
 
+  if ENV['storage'] == "s3"
+    paperclip_config = {
+      :storage => :s3,
+      :s3_credentials => {
+        :bucket => ENV['amazon_bucket_name'],
+        :access_key_id => ENV['amazon_access_key_id'],
+        :secret_access_key => ENV['amazon_secret_access_key']
+      },
+      :s3_protocol => 'https',
+      :url => ':s3_domain_url',
+      :path => '/:class/:attachment/:id_partition/:style/:filename'
+    }
+
+    # paperclip_config.merge(url: ENV['amazon_bucket_url']) if ENV['amazon_bucket_url'] != ""
+
+    if ENV['amazon_s3_host_name'] != ""
+      region_host_name = 's3-' + ENV['amazon_region'] + '.amazonaws.com'
+      paperclip_config.merge(s3_host_name: region_host_name)
+    end
+
+    config.paperclip_defaults = paperclip_config
+  end
+
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
