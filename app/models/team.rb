@@ -26,14 +26,14 @@ class Team < ActiveRecord::Base
     # Note, you can flip those bits in the case to invert the function
     q = <<-EOT.strip_heredoc
 
-      SELECT "users"."id", "users"."name"
-      FROM "users"
-        LEFT JOIN "fabs"
-        ON "fabs"."user_id" = "users"."id"
-        GROUP BY "users"."id"
+      SELECT users.id, users.name
+      FROM users
+        LEFT JOIN fabs
+        ON fabs.user_id = users.id
+        GROUP BY users.id
           HAVING max(
             case
-              WHEN "fabs"."period" BETWEEN date('#{p1}') AND date('#{p2}') THEN
+              WHEN fabs.period BETWEEN date('#{p1}') AND date('#{p2}') THEN
                 1
               ELSE
                 0
