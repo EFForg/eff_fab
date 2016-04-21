@@ -15,7 +15,7 @@ FactoryGirl.define do
 
   factory :user_with_yesterweeks_fab, parent: :user_with_completed_fab do
     after(:create) do |user|
-      user.fabs << FactoryGirl.create(:fab_from_last_week)
+      user.fabs << FactoryGirl.create(:fab_due_in_prior_period)
     end
   end
 

@@ -23,7 +23,8 @@ RSpec.describe FabMailer, type: :mailer do
     it 'should list off everyone who missed FAB this round on their team' do
       other1 = FactoryGirl.create(:user)
       other2 = FactoryGirl.create(:user)
-      user.fabs.find_or_build_this_periods_fab.save
+      user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+
 
       expect(mail.subject).to match("[FAB] Some members of your team are fab flunking!")
       expect(mail.body.encoded).to match(other1.name)

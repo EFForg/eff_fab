@@ -30,16 +30,28 @@ class User < ActiveRecord::Base
     fabs.find_or_build_this_periods_fab
   end
 
-  def upcoming_fab_still_missing?
-    upcoming_fab.new_record?
+  def build_upcoming_fab
+    fabs.build_this_periods_fab
+  end
+
+  def upcoming_fab_still_missing?(target_period = Fab.get_start_of_current_fab_period)
+    has_missing_fab_for_period?(target_period)
+  end
+
+  def has_missing_fab_for_period?(target_period = Fab.get_start_of_current_fab_period)
+    range = Fab.get_on_time_range_for_period(target_period)
+
+    fabs.where(
+      period: target_period,
+      created_at: range).count == 0
   end
 
   def previous_fab_still_missing?
     upcoming_fab.exactly_previous_fab.new_record?
   end
 
-  def self.upcoming_fab_still_missing_for_someone?
-    self.all.any? { |u| u.upcoming_fab_still_missing? }
+  def self.fab_still_missing_for_someone?(target_period = Fab.get_start_of_current_fab_period)
+    self.all.any? { |u| u.upcoming_fab_still_missing?(target_period) }
   end
 
   def upcoming_fab_still_missing_for_team_mate?
@@ -56,7 +68,7 @@ class User < ActiveRecord::Base
   def get_fab_state
     return :i_missed_fab if upcoming_fab_still_missing?
     return :a_team_mate_missed_fab if upcoming_fab_still_missing_for_team_mate?
-    return :someone_on_staff_missed_fab if User.upcoming_fab_still_missing_for_someone?
+    return :someone_on_staff_missed_fab if User.fab_still_missing_for_someone?
     return :happy_fab_cake_time
   end
 
@@ -66,26 +78,18 @@ class User < ActiveRecord::Base
   end
 
   def self.unfinished_fabs(target_period = nil)
-    find_users_with_missing_fabs_last_period.count
+    Team.get_runners.count
   end
 
-  def self.find_users_with_missing_fabs_last_period(target_period = nil)
+  def self.find_users_with_missing_fabs_current_period(target_period = nil)
     target_period = Fab.get_start_of_current_fab_period if target_period.nil?
     rogue_users = []
 
     self.all.each do |u|
-      rogue_users << u if u.missed_fab_for_period?(target_period)
+      rogue_users << u if u.has_missing_fab_for_period?(target_period)
     end
 
     rogue_users
-  end
-
-  # FIXME: is this equivenant to upcoming_fab_still_missing? which is way cleaner?
-  def missed_fab_for_period?(target_period = nil)
-    target_period = Fab.get_start_of_current_fab_period if target_period.nil?
-
-    fab_attrs = {period: target_period..target_period + 7.days}
-    self.fabs.where(fab_attrs).empty?
   end
 
   def only_person_of_team_missing_fab?

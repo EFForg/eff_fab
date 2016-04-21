@@ -10,11 +10,14 @@ var LeetFilter = function(choiceWidget) {
     var self = this;
 
     document.onkeypress = function(e) {
-      if(e.keyCode == prevKeyCode)
-        self.cyclePrevCategory(self);
+      // Don't invoke code if we hit browser back hotkey...
+      if (!e.altKey && !e.ctrlKey) {
+        if(e.keyCode == prevKeyCode)
+          self.cyclePrevCategory(self);
 
-      if(e.keyCode == nextKeyCode)
-        self.cycleNextCategory(self);
+        if(e.keyCode == nextKeyCode)
+          self.cycleNextCategory(self);
+      }
     };
 
     _choiceWidget.initialize();
@@ -38,7 +41,7 @@ var LeetFilter = function(choiceWidget) {
   // Pass in a category name (the valid css class form)
   // and this function will show that category exclusively, hiding others
   this.refreshDisplayedCategory = function(categoryName) {
-    var categoryNameClassy = classifyTeamName(categoryName);
+    var categoryNameClassy = FilterTool.classifyTeamName(categoryName);
 
     // Clear the filters
     if (categoryNameClassy == clearFiltersName) {
@@ -83,12 +86,6 @@ var LeetFilter = function(choiceWidget) {
     $('.leet-filter-button-selected').removeClass('leet-filter-button-selected');
   }
 
-  // converts "Web Development" to "Web-Development"
-  // converts "/" to "-"
-  function classifyTeamName(teamString) {
-    return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "-");
-  }
-
 };
 
 
@@ -108,13 +105,15 @@ var ChoiceWidget = function() {
   var selectorForCategorySections = "leet-filter-candidate";
   var clearFiltersName = "All teams";
 
-  var _currentCategory = classifyTeamName(clearFiltersName);
+  var _currentCategory = FilterTool.classifyTeamName(clearFiltersName);
   var filterCategories = [];
   var filterCategoriesDisplayName = [];
 
 
   // for instance, a dropbox would set an int here
   function setSelectedCategoryInDomUnitByIndex(val) {
+    // if (document.getElementById("leetFilterSelectedDisplay") === null) return
+
     // Do the input box
     // document.getElementById("nav-select").options.selectedIndex = val;
 
@@ -132,7 +131,7 @@ var ChoiceWidget = function() {
   };
 
   this.getClearFiltersName = function() {
-    return classifyTeamName(clearFiltersName);
+    return FilterTool.classifyTeamName(clearFiltersName);
   };
 
 
@@ -141,11 +140,11 @@ var ChoiceWidget = function() {
 
     var arrayOfLeetness = [].slice.call(leetFilterCandidates);
     var categories = arrayOfLeetness.map(function(elements) {
-      return classifyTeamName(elements.dataset.filterName);
+      return FilterTool.classifyTeamName(elements.dataset.filterName);
     });
 
     // Assume the dropdown starts with the clear filters thing selected
-    categories.unshift(classifyTeamName(clearFiltersName));
+    categories.unshift(FilterTool.classifyTeamName(clearFiltersName));
 
     return categories;
   };
@@ -164,7 +163,7 @@ var ChoiceWidget = function() {
 
 
   this.setChoiceByName = function(categoryName) {
-    _currentCategory = classifyTeamName(categoryName);
+    _currentCategory = FilterTool.classifyTeamName(categoryName);
     var i = filterCategories.indexOf(_currentCategory);
 
     setSelectedCategoryInDomUnitByIndex(i);
@@ -172,7 +171,7 @@ var ChoiceWidget = function() {
 
 
   this.chooseNextCategory = function() {
-    var targetCategoryName = classifyTeamName(getNextCatName(getCurrentIndex()));
+    var targetCategoryName = FilterTool.classifyTeamName(getNextCatName(getCurrentIndex()));
     setSelectedCategoryInDomUnitByIndex(getNextIndex());
 
     _currentCategory = targetCategoryName;
@@ -180,7 +179,7 @@ var ChoiceWidget = function() {
   };
 
   this.choosePrevCategory = function() {
-    var targetCategoryName = classifyTeamName(getPrevCatName(getCurrentIndex()));
+    var targetCategoryName = FilterTool.classifyTeamName(getPrevCatName(getCurrentIndex()));
     setSelectedCategoryInDomUnitByIndex(getPrevIndex());
 
     _currentCategory = targetCategoryName;
@@ -217,12 +216,17 @@ var ChoiceWidget = function() {
     return filterCategories[index];
   }
 
-  // TODO: Make dry via mixin
-  function classifyTeamName(teamString) {
+}
+
+
+// Just a DRY spot to put javascript methods into
+var FilterTool = {
+  // converts "Web Development" to "Web-Development"
+  // converts "/" to "-"
+  classifyTeamName: function(teamString) {
     return teamString.trim().replace(/\W/g, "-").replace(/[^0-9A-z.\-]/g, "-");
   }
-
-}
+};
 
 
 window.choiceWidget = new ChoiceWidget();

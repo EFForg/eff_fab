@@ -1,59 +1,87 @@
-<nav><img src="<%= asset_path('EFF-logo-plain.svg') %>" type="image/svg+xml">
+<%
+  t = @teams.nil? ? nil : @teams.map(&:updated_at).join;
+  nav_horoscope = [
+       params[:controller] == "users",
+       params[:action] == "index",
+       current_user.try(:admin?),
+       user_signed_in?,
+       t
+     ];
+%>
 
-  <ul>
-    <% if params[:controller] == "users" and params[:action] == "index" %>
-      <li id="first-li-containing-selected-team-and-teams-ul">
-        Team: <a id="leetFilterSelectedDisplay">All teams</a>
-        <ul>
-          <a onclick="leetFilter.clearFilters();"><li>All teams</li></a>
+<% cache(Digest::MD5.hexdigest(nav_horoscope.join)) do %>
 
-          <% @teams.each do |team| %>
-            <a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><li><%= team.name %></li></a>
-          <% end %>
 
-        </ul>
-      </li>
-    <% end %>
+  <nav><img src="<%= asset_path('EFF-logo-plain.svg') %>" type="image/svg+xml">
 
-    <% if user_signed_in? %>
-      <!-- <li><%# link_to 'Edit account', edit_user_registration_path %></li> -->
+    <ul>
+
+      <% if params[:controller] == "users" and params[:action] == "index" %>
+
+        <% cache(Digest::MD5.hexdigest(['leet-filter-select', t].join)) do %>
+          <li id="first-li-containing-selected-team-and-teams-ul">
+            Team: <a id="leetFilterSelectedDisplay">All teams</a>
+            <ul>
+              <a onclick="leetFilter.clearFilters();"><li>All teams</li></a>
+
+              <% @teams.each do |team| %>
+                <a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><li><%= team.name %></li></a>
+              <% end %>
+
+            </ul>
+          </li>
+        <% end %>
+
+      <% end %>
+
       <li>
-        <%= link_to destroy_user_session_path, :method=>'delete' do %>
-          Sign out
+        <%= link_to users_path do %>
+          View Fab
         <% end %>
       </li>
 
-      <% if current_user.try(:admin?)%>
+      <% if user_signed_in? %>
+
+        <% if current_user.try(:admin?)%>
+          <li>
+            <%= link_to '/admin' do %>
+              Administer
+            <% end %>
+          </li>
+        <% end %>
+
         <li>
-          <%= link_to users_path do %>
-            View Fab
+          <%= link_to destroy_user_session_path, :method=>'delete' do %>
+            Sign out
           <% end %>
         </li>
-        <li>
-          <%= link_to '/admin' do %>
-            Administer
-          <% end %>
-        </li>
-      <% end %>
-    <% else %>
-      <li><%= link_to 'Sign in', new_user_session_path %></li>
-      <li><%= link_to 'Sign up', new_user_registration_path %></li>
-    <% end %>
-  </ul>
 
-  <ul>
-    <li id="hamburger"><i class="icon ion-navicon"></i></li>
-  </ul>
-</nav>
-
-<% if params[:controller] == "users" and params[:action] == "index" %>
-
-  <div id="drawer">
-    <ul>
-      <% @teams.each do |team| %>
-        <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
+      <% else %>
+        <li><%= link_to 'Sign in', new_user_session_path %></li>
+        <li><%= link_to 'Sign up', new_user_registration_path %></li>
       <% end %>
     </ul>
-  </div>
+
+    <% if params[:controller] == "users" and params[:action] == "index" %>
+      <ul>
+        <li id="hamburger"><i class="icon ion-navicon"></i></li>
+      </ul>
+    <% end %>
+
+  </nav>
+
+  <% if params[:controller] == "users" and params[:action] == "index" %>
+
+    <% cache(Digest::MD5.hexdigest(['leet-filter-hamburger', t].join)) do %>
+      <div id="drawer">
+        <ul>
+          <% @teams.each do |team| %>
+            <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  <% end %>
 
 <% end %>

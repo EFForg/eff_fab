@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :admin_only
+  before_action :admin_only, except: [:home, :about]
 
   def admin
     @user = current_user

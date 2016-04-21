@@ -1,15 +1,20 @@
 class ToolsController < ApplicationController
   require File.expand_path('../../../lib/mailers', __FILE__)
 
-  before_action :admin_only, except: [:next_fab, :previous_fab]
+  before_action :admin_only, except: [:next_fab, :previous_fab, :version]
+
+  # GET /v
+  def version
+    render text: "0.0.1"
+  end
 
   # POST /tools/send_reminders
   def send_reminders
     turbo_remind
   end
 
-  # POST /tools/send_shamings
-  def send_shamings
+  # POST /tools/send_report_on_aftermath
+  def send_report_on_aftermath
     turbo_report_on_aftermath
   end
 
@@ -52,7 +57,20 @@ class ToolsController < ApplicationController
 
     f.gif_tag open("http://media2.giphy.com/media/9B5EkgWrF4Rri/giphy.gif")
     f.save
+  end
 
+
+  def populate_this_weeks_fabs
+    new_records_count = 0
+    User.all.each do |u|
+      f = u.fabs.find_or_build_this_periods_fab
+      if f.new_record?
+        f.save
+        new_records_count += 1
+      end
+    end
+
+    redirect_to "/admin", notice: "Success:  #{new_records_count} new fab records created."
   end
 
 
@@ -68,7 +86,7 @@ class ToolsController < ApplicationController
     # Sometimes a fab doesn't exist, so we might have to build one to use
     # as a base to find #prev or #next
     def find_or_create_base_fab(user, params)
-      t = DateTime.parse(params[:fab_period])
+      t = ActiveSupport::TimeZone[ENV['time_zone']].parse(params[:fab_period])
       user.fabs.where(period: t..(t+7)).limit(1).first or
         user.fabs.build(period: t)
     end

@@ -1,0 +1,17 @@
+defaults: &defaults
+  access_key_id: <%= ENV['amazon_access_key_id'] %>
+  secret_access_key: <%= ENV['amazon_secret_access_key'] %>
+  acl: public-read # options: private, public-read, public-read-write, authenticated-read
+  max_file_size: 524288000 # 500 megabytes
+
+development:
+  <<: *defaults
+  bucket: <%= ENV['amazon_bucket'] %>
+
+test:
+  <<: *defaults
+  bucket: <%= ENV['amazon_bucket'] %>
+
+production:
+  <<: *defaults
+  bucket: <%= ENV['amazon_bucket'] %>
