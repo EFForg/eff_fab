@@ -9,16 +9,16 @@
 
     <% if @user.upcoming_fab_still_missing? %>
       <p>
-        You still haven't done your FAB!!!  Plz plz plz, just do that thing!
+        Hey, we noticed that you still haven't done your FAB. 
       </p>
       <p><a href="<%= ditto = new_user_fab_url(@user, host: ENV['domain_name'], protocol: 'https') %>"> <%= ditto %></a></p>
     <% else %>
-      <p>You did your FAB, that's great!!!!</p>
+      <p>Thanks for doing your FAB.  You're awesome.</p>
     <% end %>
 
     <% if @user.only_person_of_team_missing_fab? %>
       <p>
-        You're the only one on your team who hasn't done this thing even!
+        You're the only one on your team who hasn't filled out FAB. Just so you know.
       </p>
     <% elsif @user.upcoming_fab_still_missing_for_team_mate? %>
       <% subtraction_of_self = @user.upcoming_fab_still_missing? ? 1 : 0 %>
@@ -32,7 +32,7 @@
         <%= c > 1 ? "haven't" : "hasn't" %>
         completed FAB!
         <%= c > 1 ? "Are they" : "Is this individual" %>
-        near you right now???  Ask that person to help you get cake treats now!!!!
+        near you right now?  Ask that person to help you get FAB cake now!
       </p>
 
       <ul>
