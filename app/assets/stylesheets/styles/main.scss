@@ -101,6 +101,7 @@ div {
 //   }
 // }
 .fab-user {
+  overflow-x: hidden;
   display: block;
   @include container(95%);
   @include susy-breakpoint($md) {
@@ -179,6 +180,8 @@ div {
 
 
   div.back,div.forward {
+    position: relative;
+
     h3 {
       font-family: 'Montserrat';
       font-size: 1.1em;
@@ -464,7 +467,7 @@ form#new_user {
   margin-bottom: 1em;
   padding: 2em;
 
-  input[type="submit"] {  
+  input[type="submit"] {
     margin-top: 1em;
     font-size: 0.8em;
     color: $link-color;
