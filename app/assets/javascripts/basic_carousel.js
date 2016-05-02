@@ -25,7 +25,11 @@
     };
 
     function cycleFab_click(button_element, forward) {
-      var fab_encapsulator = $(button_element).parent();
+      var button_element = $(button_element);
+      if (button_element.hasClass('carouselBusy'))
+        return; // we're already waiting for a server response it seems
+
+      var fab_encapsulator = button_element.parent();
 
       var cycle_options = {
         user_id: fab_encapsulator.attr('data-user-id'),
@@ -34,6 +38,15 @@
       }
 
       var direction = forward ? 'forward' : 'backward';
+
+
+      setCarouselToBusy(button_element);
+
+      // FIXME: OO refactor so the selectors aren't all brain fucks, then enable
+      // an initial shake animation via queing
+      // Shake the display so user knows what will change
+      // fab_encapsulator.children('.back').first().effect( "shake" );
+      // fab_encapsulator.children('.forward').first().effect( "shake" );
 
       requestCycledFab(direction, cycle_options, function(markup) {
         var options = JSON.parse(markup.split(';')[0]);
@@ -51,6 +64,7 @@
             animateEntry(oldBackwardAndForward[0], direction);
             animateEntry(oldBackwardAndForward[1], direction);
 
+            setCarouselToReady(button_element);
           });
 
         });
@@ -60,7 +74,29 @@
       });
     }
 
+    function setCarouselToBusy(button_element) {
+      var fab_encapsulator = button_element.parent();
 
+      // Disable the buttons
+      // Display a loading thing
+
+      fab_encapsulator.children('a').addClass('carouselBusy');
+      button_element.addClass('icon-spin5 animate-spin carouselShrink');
+      button_element.html('');
+    }
+
+    function setCarouselToReady(button_element) {
+      var fab_encapsulator = button_element.parent();
+
+      fab_encapsulator.children('a').removeClass('carouselBusy');
+      button_element.removeClass('icon-spin5 animate-spin carouselShrink');
+
+      // Restore the original symbols now that the glyphicon is disabled
+      if (button_element.hasClass('fab-forward-btn'))
+        button_element.html('&gt;');
+      else
+        button_element.html('&lt;');
+    }
 
     function slideExistingFabAway(direction, fab_encapsulator, cbForShowingNew) {
       var old_backward_notes = fab_encapsulator.children('.back').first();
@@ -125,7 +161,6 @@
       query_list.push("user_id=" + cycle_options.user_id);
       if (cycle_options.fab_period != undefined)
         query_list.push("fab_period=" + encodeURI(cycle_options.fab_period));
-
 
       var url = action + query_list.join("&");
       return ajaxRequest(url, function(data) {

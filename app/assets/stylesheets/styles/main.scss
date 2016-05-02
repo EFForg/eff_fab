@@ -239,9 +239,6 @@ div {
 
 
 
-
-
-
 .rotating-thing img {
   width: 100%;
 }
@@ -420,6 +417,16 @@ h3 a {
 }
 .fab-backward-btn {
   left: 10%;
+}
+
+a.carouselBusy {
+  // color: orange;
+  color: #cfae74;
+}
+
+a.carouselShrink {
+  font-size: 30px;
+  margin-top: 112px;
 }
 
 
