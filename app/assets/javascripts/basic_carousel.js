@@ -23,13 +23,18 @@
       });
 
     };
+    // This is the entire fab figure for the carousel that's been interacted with
+    this.fab_encapsulator = null;
+
+    // this is the button that was clicked to interact with the carousel
+    this.button_element = null;
 
     function cycleFab_click(button_element, forward) {
-      var button_element = $(button_element);
+      this.button_element = button_element = $(button_element);
+      this.fab_encapsulator = fab_encapsulator = button_element.parent();
+
       if (button_element.hasClass('carouselBusy'))
         return; // we're already waiting for a server response it seems
-
-      var fab_encapsulator = button_element.parent();
 
       var cycle_options = {
         user_id: fab_encapsulator.attr('data-user-id'),
@@ -39,8 +44,7 @@
 
       var direction = forward ? 'forward' : 'backward';
 
-
-      setCarouselToBusy(button_element);
+      setCarouselToBusy();
 
       // FIXME: OO refactor so the selectors aren't all brain fucks, then enable
       // an initial shake animation via queing
@@ -52,42 +56,37 @@
         var options = JSON.parse(markup.split(';')[0]);
         var new_fab_id = options.fab_id;
         var new_fab_period = options.fab_period;
-        var which_fabs_exist = options.neighbor_presence;
+        // var which_fabs_exist = options.neighbor_presence;
 
-        disablePreviousOrNextBarsIfNeeded(fab_encapsulator, which_fabs_exist);
+        // disablePreviousOrNextBarsIfNeeded(which_fabs_exist);
         markup = markup.split(";").slice(1).join(";");
 
-        populateFabInDisplay(markup, fab_encapsulator, function(oldBackwardAndForward) {
+        populateFabInDisplay(markup, function(oldBackwardAndForward) {
 
-          slideExistingFabAway(direction, fab_encapsulator, function() {
+          slideExistingFabAway(direction, function() {
 
             animateEntry(oldBackwardAndForward[0], direction);
             animateEntry(oldBackwardAndForward[1], direction);
 
-            setCarouselToReady(button_element);
+            setCarouselToReady();
           });
 
         });
-
 
         fab_encapsulator.attr('data-fab-period', new_fab_period);
       });
     }
 
-    function setCarouselToBusy(button_element) {
-      var fab_encapsulator = button_element.parent();
-
-      // Disable the buttons
-      // Display a loading thing
-
+    // Disable the buttons
+    // Display a loading thing
+    function setCarouselToBusy() {
       fab_encapsulator.children('a').addClass('carouselBusy');
       button_element.addClass('icon-spin5 animate-spin carouselShrink');
       button_element.html('');
     }
 
-    function setCarouselToReady(button_element) {
-      var fab_encapsulator = button_element.parent();
-
+    // reverse UI state imposed by setCarouselToBusy
+    function setCarouselToReady() {
       fab_encapsulator.children('a').removeClass('carouselBusy');
       button_element.removeClass('icon-spin5 animate-spin carouselShrink');
 
@@ -98,7 +97,7 @@
         button_element.html('&lt;');
     }
 
-    function slideExistingFabAway(direction, fab_encapsulator, cbForShowingNew) {
+    function slideExistingFabAway(direction, cbForShowingNew) {
       var old_backward_notes = fab_encapsulator.children('.back').first();
       var old_forward_notes = fab_encapsulator.children('.forward').first();
 
@@ -134,26 +133,22 @@
     }
 
 
-
-    function disablePreviousOrNextBarsIfNeeded(fab_element, which_fabs_exist) {
+    // DEPRICATED:
+    function disablePreviousOrNextBarsIfNeeded(which_fabs_exist) {
       var previous_fab_exists = which_fabs_exist[0];
       var next_fab_exists = which_fabs_exist[1];
 
-      enableAndDisableButtonsAsAppropriate();
+      if (previous_fab_exists)
+        fab_encapsulator.children('.fab-backward-btn').first().removeClass('disabled');
+      else
+        fab_encapsulator.children('.fab-backward-btn').first().addClass('disabled');
 
-      function enableAndDisableButtonsAsAppropriate() {
-        if (previous_fab_exists)
-          fab_element.children('.fab-backward-btn').first().removeClass('disabled');
-        else
-          fab_element.children('.fab-backward-btn').first().addClass('disabled');
-
-        if (next_fab_exists)
-          fab_element.children('.fab-forward-btn').first().removeClass('disabled');
-        else
-          fab_element.children('.fab-forward-btn').first().addClass('disabled');
-      }
-
+      if (next_fab_exists)
+        fab_encapsulator.children('.fab-forward-btn').first().removeClass('disabled');
+      else
+        fab_encapsulator.children('.fab-forward-btn').first().addClass('disabled');
     }
+
 
     function requestCycledFab(direction, cycle_options, cb) {
       var action = (direction == "forward") ? "/tools/next_fab?" : "/tools/previous_fab?"
@@ -183,7 +178,7 @@
 
     // removes the old forward notes, and overwrites the backward notes with
     // the backward AND forward... kinda odd... javascript...
-    function populateFabInDisplay(markup, fab_encapsulator, cb) {
+    function populateFabInDisplay(markup, cb) {
       var ulElements = parseTheUlElementsFromServerResponse(markup);
 
       // Apply the new elements to the DOM
@@ -195,7 +190,6 @@
       var forward_notes = fab_encapsulator.children('.forward').last();
 
       // Hide them before the user notices what we're doing
-
       backward_notes.hide();
       forward_notes.hide();
 
