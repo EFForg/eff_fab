@@ -1,22 +1,14 @@
-Eff Fab
+Forward and Back
 ================
 
 This is a rails app built to make it easy for organizations with many users keep track of what they themselves are doing and what things their coworkers are up to.  
-
-Copyright (C) 2014-2016 Electronic Frontier Foundation (EFF).
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License along with this program. If not, see https://www.gnu.org/licenses/.
 
 Getting Started
 ---------------
 
 Note:  These instructions assume you have experience deploying conventional rails apps.  
 
-Install dependencies, or use [mah vagrant box](https://github.com/TheNotary/ruby_vagrant_box).
+Install dependencies:
 
 ```
 $  sudo apt-get install mysql-server libmysqlclient-dev imagemagic
@@ -25,7 +17,7 @@ $  sudo apt-get install mysql-server libmysqlclient-dev imagemagic
 If you want to run the unit tests you need to install PhantomJS directly from this link:
 http://phantomjs.org/download.html
 
-Setup the app as with most rails apps
+Setup the app as with most rails apps:
 ```
 $  cp config/application.yml.example config/application.yml
 $  bundle install
@@ -34,7 +26,7 @@ $  rake db:migrate
 $  rake user:populate_users
 ```
 
-Now you can boot up the server
+Now you can boot up the server:
 ```
 $  rails s
 ```
@@ -46,19 +38,16 @@ Setup
 -----
 
 ##### Populate Database Records
-To prime up the database with a basic admin user, run `rake db:seed`.  To populate the app for EFF usage, login as the admin user (see application.yml for credentials) and navigate to `/admin` and click the button for `Populate Users`, this will scrape https://www.eff.org/about/staff for user names, emails, and pictures and plug them into the database.  It takes a while...
+To prime up the database with a basic admin user, run `rake db:seed`.  To populate the app for EFF usage, login as the admin user (see application.yml for credentials) and navigate to `/admin` and click the button for `Populate Users`, this will scrape https://www.eff.org/about/staff for user names, emails, and pictures and plug them into the database.
 
 ##### Setup Reminder Mailings
 Reminders and report_on_aftermath notifications are sent over email via `rake mail:send_reminder` and `rake mail:send_report_on_aftermath` respectively.  It's clever to have these commands executed via cron.  An example crontab follows:
 
 ```
-0 12 * * 5 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_reminder
-
-0 12 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_reminder
-0 15 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_reminder
-15 15 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_last_minute_reminder
-
-0 16 * * 1 bash -l -c "cd /www/fab.int.eff.org/ && rake mail:send_report_on_aftermath
+0 13 * * 5 bash -l -c "cd /path/to/eff_fab/ && /path/to/rake -t RAILS_ENV=production mail:send_reminder"
+0 12 * * 1 bash -l -c "cd /path/to/eff_fab/ && /path/to/rake -t RAILS_ENV=production mail:send_reminder"
+0 15 * * 1 bash -l -c "cd /path/to/eff_fab/ && /path/to/rake -t RAILS_ENV=production mail:send_reminder"
+15 15 * * 1 bash -l -c "cd /path/to/eff_fab/ && /path/to/rake -t RAILS_ENV=production mail:send_last_minute_reminder"
 ```
 
 ##### Customize the images
@@ -71,3 +60,4 @@ Credits
 
 License
 -------
+Forward and Back is licensed under the GPLv3. See LICENSE for more details.
