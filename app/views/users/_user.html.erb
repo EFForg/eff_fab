@@ -1,6 +1,6 @@
 <% @fab = user.current_period_fab || user.build_upcoming_fab %>
 
-<% cache([@fab.updated_at, @fab_editable, adminy?]) do %>
+<% cache([@fab.user.id, @fab.updated_at, @fab_editable, adminy?]) do %>
 
   <% fab_reference = "#{@fab.period.to_json}" %>
 
