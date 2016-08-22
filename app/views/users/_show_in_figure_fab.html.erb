@@ -1,9 +1,10 @@
-<a class="fab-backward-btn unselectable">&lt;</a>
+  <a class="fab-backward-btn unselectable">&lt;</a>
+  <a class="fab-forward-btn unselectable disabled">&gt;</a>
 
-<%= render partial: "fabs/show_fab_notes_tribby",
-      locals: { :forward => false } %>
+  <div class="clear"></div>
 
-<%= render partial: "fabs/show_fab_notes_tribby",
-      locals: { :forward => true } %>
+  <%= render partial: "fabs/show_fab_notes_tribby",
+        locals: { :forward => false } %>
 
-<a class="fab-forward-btn unselectable disabled">&gt;</a>
+  <%= render partial: "fabs/show_fab_notes_tribby",
+        locals: { :forward => true } %>
