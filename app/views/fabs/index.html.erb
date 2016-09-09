@@ -1,8 +1,13 @@
 <h2 class="team-name-header"><%= @user.team_name %></h2>
 
-<%= render partial: '/users/user', locals: { user: @user }%>
+<%= render layout: 'users/user', locals: { user: @user } do %>
+  <% if @previous_fab && should_show_previous_fab? %>
+    <div class="retro">
+      <%= render partial: "users/show_in_figure_fab", locals: { fab: @previous_fab, retro: true } %>
+    </div>
+  <% end %>
+<% end %>
 
-<br>
 
 <div class="fabs-back">
   <% @fabs.each do |fab| %>

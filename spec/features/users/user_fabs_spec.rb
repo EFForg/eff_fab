@@ -78,10 +78,11 @@ feature 'User fabs page', :devise do
     # this test section ensures the count of historic fabs is accurate.
     # there was a controller bug where it wasn't shifting off the top of the list
     c = find_all('h3').count
-    one_historic_header = 1 # there should be just 1 h3 containing the date of a historic fab
+    one_previous_back = 1   # there should be an H3 for the previous fabs's Back
+    one_previous_forward = 1# there should be an H3 for the previous fabs's Forward
     one_back_header = 1     # there's an H3 that's part of the figure that says "back"
     one_forward_header = 1  # there's an H3 that's part of the figure that says "forward"
-    expect(c).to eq one_historic_header + one_back_header + one_forward_header
+    expect(c).to eq one_previous_back + one_previous_forward + one_back_header + one_forward_header
   end
 
   scenario "fabs display the date of the starting day of the current fab" do

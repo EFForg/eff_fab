@@ -23,8 +23,10 @@
 		<% if @fab_editable %>
 			<%= render '/fabs/form' %>
 		<% else %>
-			<%= render "users/show_in_figure_fab" %>
+			<%= render partial: "users/show_in_figure_fab", locals: { fab: @fab } %>
 		<% end %>
+
+		<%= yield %>
 	</figure>
 
 	<% if adminy? %>

@@ -13,4 +13,12 @@ module FabsHelper
     render partial: '/fabs/show_fab_notes', locals: { forward: forward }
   end
 
+  def fab_direction_title(direction, retro)
+    if retro
+      { "back" => "Further back", "forward" => "Retro forward" }[direction]
+    else
+      direction.capitalize
+    end
+  end
+
 end

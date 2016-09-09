@@ -1,9 +1,5 @@
 <a class="fab-backward-btn unselectable">&lt;</a>
 
-<%= render partial: "fabs/show_fab_notes_tribby",
-      locals: { :forward => false } %>
-
-<%= render partial: "fabs/show_fab_notes_tribby",
-      locals: { :forward => true } %>
+<%= render partial: "fabs/fab_notes", locals: { fab: fab, retro: defined?(retro) && retro } %>
 
 <a class="fab-forward-btn unselectable disabled">&gt;</a>
