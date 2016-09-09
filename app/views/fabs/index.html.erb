@@ -2,9 +2,7 @@
 
 <%= render layout: 'users/user', locals: { user: @user } do %>
   <% if @previous_fab && should_show_previous_fab? %>
-    <div class="retro">
-      <%= render partial: "users/show_in_figure_fab", locals: { fab: @previous_fab, retro: true } %>
-    </div>
+    <%= render partial: "users/show_in_figure_fab", locals: { fab: @previous_fab, retro: true } %>
   <% end %>
 <% end %>
 
