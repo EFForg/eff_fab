@@ -7,6 +7,8 @@
   <% notes = forward ? @fab.forward : @fab.backward %>
 <% end %>
 
+<% placeholders = forward ? [] : @previous_fab.try(:forward).try(:map, &:body) || [] %>
+
 <% week_back_forward = forward ? "Next Week" : "Last Week" %>
 
 <div class="fab-note-inputs <%= title %>">
@@ -15,11 +17,14 @@
     <%= start_day %>
   </h4>
 
-  <% notes.each do |x| %>
+  <% notes.zip(placeholders).each do |note, placeholder| %>
     <div class="nested-fields"</div>
-      <%= f.fields_for(:notes, x) do |builder| %>
-        <%= render 'note_fields', :f => builder, :x => x %>
+      <%= f.fields_for(:notes, note) do |f| %>
+        <%= f.hidden_field :forward, value: note.forward %>
+        <%= f.text_field :body, placeholder: placeholder %>
       <% end %>
     </div>
   <% end %>
+
+  <% if !forward %><em>* Placeholder values are taken from last week</em><% end %>
 </div>

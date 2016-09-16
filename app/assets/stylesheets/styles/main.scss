@@ -346,16 +346,13 @@ div {
     }
 }
 
-// .fab-note-inputs {
-
-//   // input {
-//   //   width: 94%;
-//   // }
-
-//   // div {
-//   //   padding-bottom: 1%;
-//   // }
-// }
+.fab-note-inputs {
+  em {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #bbb;
+  }
+}
 
 .form-actions {
   text-align: center;
