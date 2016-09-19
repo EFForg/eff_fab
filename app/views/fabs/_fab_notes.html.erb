@@ -1,0 +1,14 @@
+<% ["back", "forward"].each do |direction| %>
+  <div class="<%= direction %>">
+    <h3><%= fab_direction_title(direction, defined?(retro) && retro) %></h3>
+    <h4>
+      <%= fab.present_start_day_for_week(direction == "forward") %>
+    </h4>
+  
+    <ul>
+      <% fab.expose_notes(direction).each do |note| %>
+        <li><%= note.body %><%= "&zwnj;".html_safe %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

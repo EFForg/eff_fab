@@ -17,6 +17,9 @@ class FabsController < ApplicationController
     @fab = @user.fabs.find_or_build_this_periods_fab
     @fabs.shift unless @fab.new_record?
 
+    @previous_fab = @fab.exactly_previous_fab(include_hypothetical_fab = false)
+    @fabs.shift if should_show_previous_fab?
+
     @fab_period = Fab.get_start_of_current_fab_period
   end
 
@@ -89,5 +92,10 @@ class FabsController < ApplicationController
       params.require(:fab).permit(:user_id, :gif_tag, :period,
         notes_attributes: [:id, :body, :_destroy, :forward]
       )
+    end
+
+    helper_method :should_show_previous_fab?
+    def should_show_previous_fab?
+      @previous_fab && !@fab_editable
     end
 end
