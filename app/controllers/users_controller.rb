@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def overriden_create
+  def overridden_create
     @user = User.new(secure_params.merge(password: User.generate_password))
 
     respond_to do |format|
