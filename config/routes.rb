@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :teams
   devise_for :users
-  post '/u/overriden_create', to: 'users#overriden_create'
+  post '/u/overridden_create', to: 'users#overridden_create'
 
   resources :users do
     resources :fabs
