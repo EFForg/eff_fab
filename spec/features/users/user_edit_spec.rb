@@ -59,4 +59,11 @@ feature 'User profile edit' do
     visit edit_user_path(other)
     expect(page).to have_content 'Access denied'
   end
+
+  scenario "user can't delete own account" do
+    me = FactoryGirl.create(:user)
+    login_as(me, :scope => :user)
+    visit edit_user_path(me)
+    expect(page).to have_no_content 'Delete user'
+  end
 end
