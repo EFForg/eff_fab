@@ -24,6 +24,9 @@
       <%= f.input :email %>
     </div>
     <div class="form-field">
+      <%= f.input :title %>
+    </div>
+    <div class="form-field">
       <%= f.select :team_id, Team.all.collect {|t| [t.name, t.id]} %>
     </div>
     <div class="form-field">
