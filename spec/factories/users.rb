@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
     name "Test User"
-    sequence(:email) {|n| "person_#{n}@example.com" }
+    sequence(:email) {|n| "person_#{n}@eff.org" }
     password "please123"
 
     # put user on a team
@@ -20,7 +20,7 @@ FactoryGirl.define do
   end
 
   factory :user_admin, parent: :user do
-    role = :admin
+    role :admin
   end
 
   factory :user_with_completed_fab, parent: :user do
