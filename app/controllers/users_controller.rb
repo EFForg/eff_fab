@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :admin_only, except: [:show, :index]
+  before_action :admin_or_self_only, only: [:edit, :update]
+  before_action :admin_only, only: [:destory, :new, :overridden_create]
 
   def index
     @teams = if params[:team_name].nil?
@@ -67,6 +68,14 @@ class UsersController < ApplicationController
     params.require(:user).permit(:role, :avatar, :name, :email, :team_id,
       {fabs_attributes: [:id, :gif_tag_file_name]}
     )
+  end
+
+
+  def admin_or_self_only
+    @user = User.find(params[:id])
+    if current_user != @user
+      admin_only
+    end
   end
 
 end
