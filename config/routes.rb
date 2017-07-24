@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :users, only: [:create, :destroy]
+    resources :users, only: :create do
+       match :index, via: :delete, on: :collection, action: :destroy_by_email
+    end
   end
 end

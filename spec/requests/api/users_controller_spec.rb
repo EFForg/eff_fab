@@ -15,7 +15,7 @@ describe 'Users API', :type => :request do
 
   it 'Destroys users via API' do
     @user = FactoryGirl.create(:user)
-    delete "/api/users/#{@user.id}", {}, @env
+    delete "/api/users", {email: @user.email}, @env
     expect(response.status).to eq(200)
     expect(User.count).to eq 1
   end
