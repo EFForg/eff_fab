@@ -15,7 +15,7 @@ module ApplicationHelper
   def pick_a_banner_image
     array = Dir.entries("app/assets/images/banner_pool").reject {|f| File.directory? f}
 
-    w = DateTime.now.in_time_zone.cweek
+    w = DateTime.current.cweek
     array.shuffle!(random: Random.new(w))
 
     d = DateTime.now.in_time_zone.yday
