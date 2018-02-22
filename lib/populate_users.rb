@@ -1,7 +1,5 @@
 def scrape_procedure
-  debug_mode = true
-
-  # Clear out existing users.
+  # Clear out existing users
   User.delete_all
   Team.delete_all
   Fab.delete_all
@@ -12,34 +10,23 @@ def scrape_procedure
   u.save
   puts 'CREATED ADMIN USER: ' << u.email
 
-  team_id = Team.find_by(name: 'Other')
-  profiles = get_staff_profiles
-
-  profiles.each do |profile|
-    u = create_user_from_profile(profile, team_id)
-    build_fabs(u) if debug_mode
+  get_staff_profiles.each do |profile|
+    u = create_user_from_profile(profile)
+    build_fabs(u)
   end
-
-  delete_other_team_if_not_needed
 end
 
-# The dogs create the other team, but don't count as real users... thus this func
-def delete_other_team_if_not_needed
-  t = Team.find_by(name: 'Other')
-  t.delete if t && t.users.count == 0
-end
-
-def get_staff_profiles()
+def get_staff_profiles
   page = Nokogiri::HTML(open("https://www.eff.org/about/staff/"))
-  profiles = page.css('.view-staff-staff-profiles-page-view .views-row')
+  page.css('.view-staff-staff-profiles-page-view .views-row')
 end
 
-def create_user_from_profile(profile, team)
+def create_user_from_profile(profile)
   attrs = {}
-  attrs[:name] = profile.css('h2').text.strip
-  attrs[:title] = profile.css('h3').text.strip
-  attrs[:email] = profile.css('.email').text.strip
-  attrs[:team] = get_team(profile)
+  attrs[:name] = profile.css('.views-field-title').text.strip
+  attrs[:title] = profile.css('.views-field-field-profile-title').text.strip
+  attrs[:email] = profile.css('.views-field-field-profile-email').text.strip
+  attrs[:team] = get_team(get_name_from(attrs[:title]))
   attrs[:password] = User.generate_password
 
   # Save each user and their photo.
@@ -49,22 +36,15 @@ def create_user_from_profile(profile, team)
 
     # Provide some status updates.
     puts attrs[:name]
-    if u.errors.messages.count > 0
-      puts u.errors.messages
-    end
-    return u
+    puts u.errors.messages if u.errors.messages.count > 0
+
+    u
   end
 end
 
-def get_team(profile)
-  name = profile.css('.views-field-field-profile-team').text.strip
-  name = 'Other' if name.blank?
-
-  if t = Team.find_by(name: name)
-    return t
-  else
-    return Team.create(name: name, weight: get_weight(name))
-  end
+def get_team(name)
+  Team.find_by(name: name) ||
+    Team.create(name: name, weight: get_weight(name))
 end
 
 def save_user_photo(user, profile)
@@ -96,23 +76,47 @@ def get_weight(name)
 end
 
 def teams_and_weight
-  # The team names were generated via the command...
-  # Team.select(:name).map {|t| t.name }.to_json
-  { "Activism" => 10,
+  {
+    "Activism" => 10,
     "International" => 15,
-
-    "Web Development" => 20,
+    "Engineering/Design" => 20,
     "Tech Projects" => 22,
     "Tech Ops" => 25,
-
     "Press/Graphics" => 30,
-
     "Legal" => 40,
-
     "Development" => 50,
     "Finance/HR" => 55,
-
     "Operations" => 60,
     "Executive" => 65,
-    "Other" => 999 }
+    "Runner Up" => 999
+  }
+end
+
+def get_name_from(title)
+  if title.split(' ').any? { |word| %w(activist grassroots activism researcher writer strategist).include?(word.downcase) }
+    "Activism"
+  elsif title.split(' ').any? { |word| %w(international global).include?(word.downcase) }
+    "International"
+  elsif title.split(' ').any? { |word| %w(technologist technology).include?(word.downcase) }
+    "Tech Projects"
+  elsif title.split(' ').any? { |word| %w(systems infrastructure).include?(word.downcase) }
+    "Tech Ops"
+  elsif title.split(' ').any? { |word| %w(web software designer).include?(word.downcase) }
+    "Engineering/Design"
+  elsif title.split(' ').any? { |word| %w(legal attorney liberties legislative).include?(word.downcase) }
+    "Legal"
+  elsif title.split(' ').any? { |word| %w(press graphics).include?(word.downcase) }
+    # idk, there weren't any when i wrote this
+    "Press"
+  elsif title.split(' ').any? { |word| %w(membership events).include?(word.downcase) }
+    "Development"
+  elsif title.split(' ').any? { |word| %w(finance accountant human).include?(word.downcase) }
+    "Finance/HR"
+  elsif title.split(' ').any? { |word| %w(operations).include?(word.downcase) }
+    "Operations"
+  elsif title.split(' ').any? { |word| %w(executive).include?(word.downcase) }
+    "Executive"
+  else
+    "Runner Up"
+  end
 end
