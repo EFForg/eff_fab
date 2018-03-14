@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :wheres, only: :index
+
   namespace :api do
     namespace :v1 do
       resources :users, only: :create do
