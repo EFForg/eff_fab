@@ -4,20 +4,18 @@
       <th>Name</th>
       <th>Team</th>
       <th>Where</th>
-      <th>How?</th>
       <th>Email</th>
     </thead>
     <tbody>
       <% @users.each do |user| %>
         <% where = where_or_stub_for(user) %>
         <tr>
-          <td><%= user.name %></td>
+          <td><%= link_to user.name, user_wheres_path(user) %></td>
           <td><%= user.team_name %></td>
           <td>
             <%= where.body %>
             <div class='description'><%= time_since(where.sent_at) %></span>
           </td>
-          <td><%= where.provenance %>
           <td><%= user.email %></td>
         </tr>
       <% end %>
