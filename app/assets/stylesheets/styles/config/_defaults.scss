@@ -19,8 +19,14 @@ body {
 .striped-table {
   text-align: left;
   width: 100%;
+  margin: 20px 0px;
+  border-collapse: collapse;
   td, th {
     padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  thead {
+    background: #ddd;
   }
   tbody tr:nth-child(odd) {
     background: white;
