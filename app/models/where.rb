@@ -6,6 +6,6 @@ class Where < ActiveRecord::Base
   before_create :ensure_sent_at
 
   def ensure_sent_at
-    sent_at = Time.now if sent_at.blank?
+    self.sent_at = Time.now if sent_at.blank?
   end
 end
