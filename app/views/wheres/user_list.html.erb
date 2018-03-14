@@ -1,0 +1,22 @@
+<div id="where-user-list">
+  <h2>Where in the world is <%= @user.name %>?</h2>
+
+  <% if @wheres.empty? %>
+    <div class='where-empty-state'><%= I18n.t('shruggie') %></div>
+  <% else %>
+    <table class="striped-table">
+      <thead>
+        <th>When?</th>
+        <th>Where?</th>
+      </thead>
+      <tbody>
+        <% @wheres.each do |where| %>
+          <tr>
+            <td class="description"><%= time_since(where.sent_at) %></td>
+            <td><%= where.body %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

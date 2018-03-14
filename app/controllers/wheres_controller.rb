@@ -4,4 +4,9 @@ class WheresController < ApplicationController
   def index
     @users = User.all
   end
+
+  def user_list
+    @user = User.find(params[:user_id])
+    @wheres = @user.wheres.order('sent_at DESC')
+  end
 end

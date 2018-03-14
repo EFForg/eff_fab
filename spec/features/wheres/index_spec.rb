@@ -24,4 +24,10 @@ RSpec.feature "The list of all users' most recent whereabouts", type: :feature d
     expect(page).to have_content(where2.user.name)
     expect(page).to have_content(where2.body)
   end
+
+  scenario "User can visit one user's historical whereabouts page" do
+    expect(page).to have_link(
+      where1.user.name, href: user_wheres_path(where1.user)
+    )
+  end
 end
