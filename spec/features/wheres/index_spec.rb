@@ -5,10 +5,10 @@ Warden.test_mode!
 RSpec.feature "The list of all users' most recent whereabouts", type: :feature do
 
   let!(:where1) do
-    FactoryGirl.create(:where, body: "Flex day at the Sunnydale job fair")
+    FactoryGirl.create(:where_message, body: "Flex day at the Sunnydale job fair")
   end
   let!(:where2) do
-    FactoryGirl.create(:where, body: "Sick recovering from demon attack")
+    FactoryGirl.create(:where_message, body: "Sick recovering from demon attack")
   end
 
   before do

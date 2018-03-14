@@ -41,6 +41,7 @@
       </li>
 
       <% if user_signed_in? %>
+        <li> <%= link_to 'View Whereabouts', wheres_path %> </li>
 
         <li>
           <%= link_to user_fabs_path(current_user) do %>
