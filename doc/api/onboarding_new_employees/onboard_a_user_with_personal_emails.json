@@ -1,0 +1,68 @@
+{
+  "resource": "Onboarding New Employees",
+  "resource_explanation": null,
+  "http_method": "POST",
+  "route": "api/v1/users",
+  "description": "Onboard a user with personal emails",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "username",
+      "description": "The EFF-wide username; the part before '@eff.org' in their email"
+    },
+    {
+      "required": true,
+      "name": "password",
+      "description": "A beefy and highly entropic string"
+    },
+    {
+      "required": false,
+      "name": "personal_email",
+      "description": "Any extra email addresses they use"
+    },
+    {
+      "required": false,
+      "name": "staff",
+      "description": "Should they get a FAB? Defaults to true."
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "api/v1/users",
+      "request_body": "username=valentine.satterfield&password=A6MtOpRoY2&personal_email[]=weldon.wolf%40senger.io&personal_email[]=tom.daniel%40gerhold.net",
+      "request_headers": {
+        "Accept": "application/json",
+        "Authorization": "Basic cGVyc29uXzI6cGxlYXNlMTIz\n",
+        "Www-Authenticate": "Basic cGVyc29uXzI6cGxlYXNlMTIz\n",
+        "Host": "example.org",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\n  \"id\": 2,\n  \"email\": \"valentine.satterfield@eff.org\",\n  \"created_at\": \"2018-03-14T19:34:02.609-07:00\",\n  \"updated_at\": \"2018-03-14T19:34:02.609-07:00\",\n  \"name\": null,\n  \"role\": \"user\",\n  \"team_id\": null,\n  \"title\": null,\n  \"avatar_file_name\": null,\n  \"avatar_content_type\": null,\n  \"avatar_file_size\": null,\n  \"avatar_updated_at\": null,\n  \"personal_emails\": [\n    \"weldon.wolf@senger.io\",\n    \"tom.daniel@gerhold.net\"\n  ],\n  \"staff\": true\n}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"49e7eb324e1f8dcdbb67844ab771daf0\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Set-Cookie": "_eff_fab_session=T3hScFJKSE1PQzg5T0JZdzNxblZTM0s5aWYzTTk0MGZZQUw0U1hzbU5OTUVCNDY2V2hNdzlzOWxHRUhIYnRQSXV6MjVGdU83aFRDaXJxTWF0RnlsRDBUKzdOZndIVUJWM2lRYm90U0VRYzQwL1BvOWtFWWVyWllXczVOUmsyS1pTVUVyZUhDbW0wc0pLak1WRHo0TzlnPT0tLVVuUTFObVRYaXpuUk5keUpBVHlnb1E9PQ%3D%3D--da0e34e2cfc8b2f5cf744ea09c953d7dfed77058; path=/; HttpOnly",
+        "X-Request-Id": "097a0a41-8797-4265-8cb4-4574e9c298b5",
+        "X-Runtime": "0.013402",
+        "Content-Length": "374"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

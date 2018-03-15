@@ -14,6 +14,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'nokogiri'
 gem 'aws-sdk', '< 2.0' if ENV['storage'] == "s3"
 gem 'rspec_api_documentation'
+gem "apitome"
 
 group :development, :test do
   gem 'byebug'

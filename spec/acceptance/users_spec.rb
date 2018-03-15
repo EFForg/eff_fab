@@ -1,20 +1,20 @@
 require 'rails_helper'
 require 'rspec_api_documentation/dsl'
 
-resource "users" do
+resource "Onboarding New Employees" do
   header "Accept", "application/json"
 
   post "api/v1/users" do
     parameter :username, "The EFF-wide username; the part before '@eff.org' in their email", required: true
     parameter :password, "A beefy and highly entropic string", required: true
     parameter :personal_email, "Any extra email addresses they use", required: false
-    parameter :staff, "Should they get a FAB? defaults to true", required: false
+    parameter :staff, "Should they get a FAB? Defaults to true.", required: false
 
     let(:username) { "#{Faker::Name.first_name}.#{Faker::Name.last_name}".downcase }
     let(:password) { Faker::Internet.password }
     let(:user) { User.last }
 
-    example "An unauthenticated user is rejected" do
+    example "Without authentication, you can't create a new employee" do
       expect { do_request }.not_to change(User, :count)
       expect(status).to eq(401)
     end
@@ -27,7 +27,7 @@ resource "users" do
       header "Authorization", :auth
       header "WWW-Authenticate", :auth
 
-      example "Onboard a user" do
+      example "Onboard a bare-bones user" do
         expect { do_request }.to change(User, :count).by(1)
         expect(user.email).to eq("#{username}@eff.org")
         expect(user.staff).to be_truthy
@@ -50,7 +50,7 @@ resource "users" do
       context "with an explicit staff flag" do
         let(:staff) { [true, false].sample }
 
-        example "Onboard a non-staff user" do
+        example "Onboard a user without FABs" do
           expect { do_request }.to change(User, :count).by(1)
           expect(user.staff).to eq(staff)
 
