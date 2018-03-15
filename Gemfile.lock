@@ -121,6 +121,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.13.1)
+    mustache (1.0.5)
     mysql2 (0.4.10)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
@@ -188,6 +189,10 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -205,6 +210,10 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
+    rspec_api_documentation (5.1.0)
+      activesupport (>= 3.0.0)
+      mustache (~> 1.0, >= 0.99.4)
+      rspec (~> 3.0)
     rubyzip (1.2.1)
     sass (3.5.5)
       sass-listen (~> 4.0.0)
@@ -291,6 +300,7 @@ DEPENDENCIES
   rails_12factor
   rails_layout
   rspec-rails
+  rspec_api_documentation
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_form

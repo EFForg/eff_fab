@@ -22,4 +22,9 @@ Rails.application.routes.draw do
     resources :fabs
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:create, :destroy]
+    end
+  end
 end
