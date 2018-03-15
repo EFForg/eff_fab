@@ -1,4 +1,4 @@
-class Where < ActiveRecord::Base
+class WhereMessage < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :user_id, :body

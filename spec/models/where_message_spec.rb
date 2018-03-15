@@ -1,14 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Where, type: :model do
-  let(:where) { FactoryGirl.create(:where) }
-
+RSpec.describe WhereMessage, type: :model do
   it 'has a user' do
-    expect(where.user).to be_a(User)
+    expect(FactoryGirl.create(:where_message).user).to be_a(User)
   end
 
   describe "#ensure_sent_at" do
-    let(:whereabout) { FactoryGirl.build(:where, sent_at: sent_at) }
+    let(:whereabout) { FactoryGirl.build(:where_message, sent_at: sent_at) }
 
     context "when sent_at is present" do
       let(:sent_at) { 2.days.ago }
