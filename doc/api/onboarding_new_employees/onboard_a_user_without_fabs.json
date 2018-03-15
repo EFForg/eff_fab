@@ -1,0 +1,68 @@
+{
+  "resource": "Onboarding New Employees",
+  "resource_explanation": null,
+  "http_method": "POST",
+  "route": "api/v1/users",
+  "description": "Onboard a user without FABs",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "username",
+      "description": "The EFF-wide username; the part before '@eff.org' in their email"
+    },
+    {
+      "required": true,
+      "name": "password",
+      "description": "A beefy and highly entropic string"
+    },
+    {
+      "required": false,
+      "name": "personal_email",
+      "description": "Any extra email addresses they use"
+    },
+    {
+      "required": false,
+      "name": "staff",
+      "description": "Should they get a FAB? Defaults to true."
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "api/v1/users",
+      "request_body": "username=camila.kertzmann&password=L0E28zZgIbF0Id&staff=false",
+      "request_headers": {
+        "Accept": "application/json",
+        "Authorization": "Basic cGVyc29uXzM6cGxlYXNlMTIz\n",
+        "Www-Authenticate": "Basic cGVyc29uXzM6cGxlYXNlMTIz\n",
+        "Host": "example.org",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\n  \"id\": 2,\n  \"email\": \"camila.kertzmann@eff.org\",\n  \"created_at\": \"2018-03-14T19:34:02.647-07:00\",\n  \"updated_at\": \"2018-03-14T19:34:02.647-07:00\",\n  \"name\": null,\n  \"role\": \"user\",\n  \"team_id\": null,\n  \"title\": null,\n  \"avatar_file_name\": null,\n  \"avatar_content_type\": null,\n  \"avatar_file_size\": null,\n  \"avatar_updated_at\": null,\n  \"personal_emails\": [\n\n  ],\n  \"staff\": false\n}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"c67494e4e84ac716b7c84b1a6fabe7f9\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Set-Cookie": "_eff_fab_session=aVRHOFp1NXV5RE9udXZlMGE1VmtTRnZianZkdlFMcEluZ05LZnR0S2EyQUZPcTNBcnMvRzhqc3paL01qVW5rM3g5S0F0amxFNmFmcTdJMGtPekp1SnJrWXNEdUFoZ0RUMmNranBtUkt4WFpJWGE2d0Q5TFRCSlZqL0VCcFhJS2xjaUszbENrZ0tLaW1YS2hyRDI4ZlRBPT0tLXBYSUZLeldpMmhicEMvSmFZZ3BTM3c9PQ%3D%3D--6fd533d14128b4862f0e4ab2b6fec40bb5842f6e; path=/; HttpOnly",
+        "X-Request-Id": "beac413c-f70d-482c-b5fa-a7a1d8189aed",
+        "X-Runtime": "0.017145",
+        "Content-Length": "322"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

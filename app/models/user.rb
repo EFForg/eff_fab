@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   enum role: [:user, :admin_user_mode, :admin]
+  serialize :personal_emails, Array
   after_initialize :set_default_role, :if => :new_record?
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "60x90>" }, default_url: "/images/:style/missing.png"
