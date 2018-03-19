@@ -66,4 +66,21 @@ feature 'User profile edit' do
     visit edit_user_path(me)
     expect(page).to have_no_content 'Delete user'
   end
+
+  context "admin user" do
+    let(:admin) { FactoryGirl.create(:user_admin) }
+    let(:user) { FactoryGirl.create(:user) }
+
+    before do
+      login_as(admin)
+      visit edit_user_path(user)
+    end
+
+    scenario "can generate API key" do
+      click_link "Generate API token"
+      expect(page).to have_content 'User updated'
+      expect(page).to have_content user.access_token
+    end
+  end
+
 end

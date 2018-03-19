@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :fabs
+    member do
+      post 'generate_access_token'
+    end
   end
 
   namespace :api do

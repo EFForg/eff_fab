@@ -100,4 +100,8 @@ class User < ActiveRecord::Base
     upcoming_fab_still_missing? and !upcoming_fab_still_missing_for_team_mate?
   end
 
+  def generate_access_token
+    api_key.destroy if api_key
+    create_api_key
+  end
 end

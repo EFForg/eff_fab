@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :generate_access_token]
   before_action :authenticate_user!, except: [:show, :index]
   before_action :admin_or_self_only, only: [:edit, :update]
   before_action :admin_only, only: [:destory, :new, :overridden_create]
@@ -50,6 +50,17 @@ class UsersController < ApplicationController
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def generate_access_token
+    if @user.generate_access_token
+      respond_to do |format|
+        format.html { redirect_to user_path(@user), :notice => "User updated." }
+        format.json { render json: @user }
+       end
+    else
+      redirect_to users_path, alert: "Unable to update user."
     end
   end
 
