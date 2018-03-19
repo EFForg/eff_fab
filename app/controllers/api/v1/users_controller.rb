@@ -1,7 +1,8 @@
-class Api::UsersController < Api::ApplicationController
+class Api::V1::UsersController < Api::ApplicationController
   before_action :authenticate_user!
   before_action :admin_only
 
+  # POST /api/v1/users
   def create
     @user = User.new(secure_params.merge(password: User.generate_password))
 
@@ -12,6 +13,7 @@ class Api::UsersController < Api::ApplicationController
     end
   end
 
+  # DELETE /api/v1/users/delete
   def destroy_by_email
     @user = User.where(email: params[:email]).first
 
@@ -24,7 +26,8 @@ class Api::UsersController < Api::ApplicationController
 
   private
   def secure_params
-    params.require(:user).permit(:role, :title, :avatar, :name, :email, :team_id,
+    params.require(:user).permit(
+      :role, :title, :avatar, :name, :email, :team_id, :staff, :personal_emails,
       {fabs_attributes: [:id, :gif_tag_file_name]}
     )
   end
