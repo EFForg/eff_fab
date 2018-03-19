@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Users API', :type => :request do
 
   before :each do
-    @admin = FactoryGirl.create(:user_admin)
+    @admin = FactoryGirl.create(:user_admin, :with_api_key)
     http_login @admin
   end
 

@@ -1,6 +1,5 @@
 class Api::V1::UsersController < Api::ApplicationController
-  before_action :authenticate_user!
-  before_action :admin_only
+  before_action :authenticate_from_access_token
 
   # POST /api/v1/users
   def create

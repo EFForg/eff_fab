@@ -11,6 +11,10 @@ FactoryGirl.define do
         user.team_id = t.id
       end
     end
+
+    trait :with_api_key do
+      association :api_key
+    end
   end
 
   factory :user_with_yesterweeks_fab, parent: :user_with_completed_fab do
