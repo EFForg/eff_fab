@@ -1,9 +1,9 @@
 {
-  "resource": "Onboarding New Employees",
+  "resource": "Offboarding previous employees",
   "resource_explanation": null,
   "http_method": "DELETE",
   "route": "/api/v1/users",
-  "description": "Without authentication, you can't destroy a user",
+  "description": "With authentication, succeeds",
   "explanation": null,
   "parameters": [
     {
@@ -26,7 +26,7 @@
       "request_path": "/api/v1/users",
       "request_body": "user[username]=faker%3A%3Ainternet.user_name",
       "request_headers": {
-        "Accept": "application/json",
+        "Authorization": "b1e1458ba1a9ff4fc92109e7278cdff9",
         "Host": "example.org",
         "Content-Type": "application/x-www-form-urlencoded",
         "Cookie": ""
@@ -34,20 +34,21 @@
       "request_query_parameters": {
       },
       "request_content_type": "application/x-www-form-urlencoded",
-      "response_status": 401,
-      "response_status_text": "Unauthorized",
-      "response_body": null,
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\n  \"success\": true\n}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
-        "Content-Type": "text/html",
-        "Cache-Control": "no-cache",
-        "X-Request-Id": "3c2870b3-c1df-4de0-8c17-a565c968c326",
-        "X-Runtime": "0.002319",
-        "Content-Length": "0"
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"7363e85fe9edee6f053a4b319588c086\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "f340d7cb-6661-4b52-b4cb-e5ef8f8de677",
+        "X-Runtime": "0.006459",
+        "Content-Length": "16"
       },
-      "response_content_type": "text/html",
+      "response_content_type": "application/json; charset=utf-8",
       "curl": null
     }
   ]
