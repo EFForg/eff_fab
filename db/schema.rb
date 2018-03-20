@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419182514) do
+ActiveRecord::Schema.define(version: 20180315162202) do
 
   create_table "fabs", force: :cascade do |t|
     t.integer  "user_id"
@@ -71,5 +71,14 @@ ActiveRecord::Schema.define(version: 20160419182514) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["team_id"], name: "index_users_on_team_id"
+
+  create_table "where_messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "sent_at"
+    t.text     "body"
+    t.string   "provenance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

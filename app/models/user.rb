@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 
   belongs_to :team
   has_many :fabs
+  has_many :where_messages
   has_one :current_period_fab,
     -> { where(period: Fab.get_start_of_current_fab_period..Fab.get_start_of_current_fab_period + 7.days) },
     class_name: "Fab"
