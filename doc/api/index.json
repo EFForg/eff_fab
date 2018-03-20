@@ -1,0 +1,52 @@
+{
+  "resources": [
+    {
+      "name": "Onboarding New Employees",
+      "explanation": null,
+      "examples": [
+        {
+          "description": "Without authentication, you can't create a new employee",
+          "link": "onboarding_new_employees/without_authentication,_you_can't_create_a_new_employee.json",
+          "groups": "all",
+          "route": "api/v1/users",
+          "method": "post"
+        },
+        {
+          "description": "Onboard a bare-bones user",
+          "link": "onboarding_new_employees/onboard_a_bare-bones_user.json",
+          "groups": "all",
+          "route": "api/v1/users",
+          "method": "post"
+        },
+        {
+          "description": "Onboard a user with personal emails",
+          "link": "onboarding_new_employees/onboard_a_user_with_personal_emails.json",
+          "groups": "all",
+          "route": "api/v1/users",
+          "method": "post"
+        },
+        {
+          "description": "Onboard a user without FABs",
+          "link": "onboarding_new_employees/onboard_a_user_without_fabs.json",
+          "groups": "all",
+          "route": "api/v1/users",
+          "method": "post"
+        },
+        {
+          "description": "Without authentication, you can't destroy a user",
+          "link": "onboarding_new_employees/without_authentication,_you_can't_destroy_a_user.json",
+          "groups": "all",
+          "route": "/api/v1/users",
+          "method": "delete"
+        },
+        {
+          "description": "With authentication, destroys a user",
+          "link": "onboarding_new_employees/with_authentication,_destroys_a_user.json",
+          "groups": "all",
+          "route": "/api/v1/users",
+          "method": "delete"
+        }
+      ]
+    }
+  ]
+}

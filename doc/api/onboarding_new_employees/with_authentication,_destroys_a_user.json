@@ -1,0 +1,51 @@
+{
+  "resource": "Onboarding New Employees",
+  "resource_explanation": null,
+  "http_method": "DELETE",
+  "route": "/api/v1/users",
+  "description": "With authentication, destroys a user",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "email",
+      "description": "The user's EFF email"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "DELETE",
+      "request_path": "/api/v1/users",
+      "request_body": "email=person_5%40eff.org",
+      "request_headers": {
+        "Accept": "application/json",
+        "Authorization": "0078e82d7290c4156587540dcda2f344",
+        "Host": "example.org",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\n  \"success\": true\n}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"7363e85fe9edee6f053a4b319588c086\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "0adbefa4-e434-448a-b9a7-556c501e2303",
+        "X-Runtime": "0.007741",
+        "Content-Length": "16"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

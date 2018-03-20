@@ -3,10 +3,11 @@ class Api::V1::UsersController < Api::ApplicationController
 
   # POST /api/v1/users
   def create
+      #email: params[:email] || "#{params[:username]}@eff.org",
     @user = User.new(secure_params.merge(password: User.generate_password))
 
     if @user.save
-      render json: { success: true, user: @user }, status: :created
+      render json: { success: true, user: @user.to_json }, status: :created
     else
       render json: { success: false, errors: @user.errors }, status: :unprocessable_entity
     end

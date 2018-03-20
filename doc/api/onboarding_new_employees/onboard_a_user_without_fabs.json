@@ -1,0 +1,64 @@
+{
+  "resource": "Onboarding New Employees",
+  "resource_explanation": null,
+  "http_method": "POST",
+  "route": "api/v1/users",
+  "description": "Onboard a user without FABs",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "scope": "user",
+      "name": "email",
+      "description": "User email"
+    },
+    {
+      "required": false,
+      "scope": "user",
+      "name": "personal_emails",
+      "description": "Any extra email addresses they use"
+    },
+    {
+      "required": false,
+      "scope": "user",
+      "name": "staff",
+      "description": "Should they get a FAB? Defaults to true."
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "api/v1/users",
+      "request_body": "user[name]=Test+User&user[email]=alaina%40collier.info&user[staff]=false",
+      "request_headers": {
+        "Accept": "application/json",
+        "Authorization": "ce81fe2355f3a0c0488db4f0c7c7177d",
+        "Host": "example.org",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\n  \"success\": true,\n  \"user\": \"{\\\"id\\\":2,\\\"email\\\":\\\"alaina@collier.info\\\",\\\"created_at\\\":\\\"2018-03-20T10:45:07.157-07:00\\\",\\\"updated_at\\\":\\\"2018-03-20T10:45:07.157-07:00\\\",\\\"name\\\":\\\"Test User\\\",\\\"role\\\":\\\"user\\\",\\\"team_id\\\":null,\\\"title\\\":null,\\\"avatar_file_name\\\":null,\\\"avatar_content_type\\\":null,\\\"avatar_file_size\\\":null,\\\"avatar_updated_at\\\":null,\\\"personal_emails\\\":[],\\\"staff\\\":false}\"\n}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"6f0f75b57e2ed3b35d37627ef9313b85\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "72c8126f-2dd3-48d6-9b1e-fc7a86df34a4",
+        "X-Runtime": "0.011686",
+        "Content-Length": "388"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

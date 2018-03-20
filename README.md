@@ -66,26 +66,7 @@ Administering Users
 
 Like the app, the API uses basic auth for authentication. Along with your request, you must pass basic auth credentials associated with a user who has the admin role. In other words if the basic auth name is [NAME], there must be user with admin credentials and the email address [NAME]@eff.org.
 
-To create a user, POST to `/api/users` with
-```
-{
-  "user" : {
-    "role": "user",
-    "name": "Neko",
-    "title": "Office Dog"
-    "team_id": [TEAM_ID],
-    "email": "neko@eff.org"
-  }
-}
-```
-`TEAM_ID` is the numerical id of the team in the fab app. You can also omit this field and let the user fill in their team later.
-
-To delete a user, DELETE to `/api/users` with
-```
-{
-  "email": "[EMAIL]"
-}
-```
+Navigate to `/api/docs` for details.
 
 Credits
 -------

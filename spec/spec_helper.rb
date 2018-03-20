@@ -17,6 +17,7 @@
 #
 
 require 'capybara/poltergeist'
+require 'rspec_api_documentation'
 Capybara.javascript_driver = :poltergeist
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
@@ -95,4 +96,8 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+end
+RspecApiDocumentation.configure do |config|
+  config.format = :json
+  config.keep_source_order = true
 end

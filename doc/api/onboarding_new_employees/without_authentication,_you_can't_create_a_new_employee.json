@@ -1,0 +1,62 @@
+{
+  "resource": "Onboarding New Employees",
+  "resource_explanation": null,
+  "http_method": "POST",
+  "route": "api/v1/users",
+  "description": "Without authentication, you can't create a new employee",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "scope": "user",
+      "name": "email",
+      "description": "User email"
+    },
+    {
+      "required": false,
+      "scope": "user",
+      "name": "personal_emails",
+      "description": "Any extra email addresses they use"
+    },
+    {
+      "required": false,
+      "scope": "user",
+      "name": "staff",
+      "description": "Should they get a FAB? Defaults to true."
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "api/v1/users",
+      "request_body": "user[name]=Test+User&user[email]=myriam%40bartell.net",
+      "request_headers": {
+        "Accept": "application/json",
+        "Host": "example.org",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 401,
+      "response_status_text": "Unauthorized",
+      "response_body": null,
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "text/html",
+        "Cache-Control": "no-cache",
+        "X-Request-Id": "f7313562-5359-4d28-97dd-6ee14a6f28c5",
+        "X-Runtime": "0.049756",
+        "Content-Length": "0"
+      },
+      "response_content_type": "text/html",
+      "curl": null
+    }
+  ]
+}
