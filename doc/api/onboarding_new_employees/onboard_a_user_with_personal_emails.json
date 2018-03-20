@@ -7,10 +7,14 @@
   "explanation": null,
   "parameters": [
     {
-      "required": true,
+      "scope": "user",
+      "name": "username",
+      "description": "The EFF-wide username; the part before '@eff.org' in their email"
+    },
+    {
       "scope": "user",
       "name": "email",
-      "description": "User email"
+      "description": "Their EFF email. Either email or username must be present."
     },
     {
       "required": false,
@@ -32,10 +36,10 @@
     {
       "request_method": "POST",
       "request_path": "api/v1/users",
-      "request_body": "user[name]=Test+User&user[email]=roma.lang%40thompson.co&user[personal_emails][]=ellie.hilll%40ondricka.info&user[personal_emails][]=sebastian%40conn.co",
+      "request_body": "user[name]=Test+User&user[username]=daniella.klein&user[personal_emails][]=prince%40bechtelar.net&user[personal_emails][]=seth.wolf%40hammesokon.biz",
       "request_headers": {
         "Accept": "application/json",
-        "Authorization": "d4af66cc5f42005736c49d63ed88241a",
+        "Authorization": "0d4387cffd772edf14146fe123437e89",
         "Host": "example.org",
         "Content-Type": "application/x-www-form-urlencoded",
         "Cookie": ""
@@ -45,17 +49,17 @@
       "request_content_type": "application/x-www-form-urlencoded",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\n  \"success\": true,\n  \"user\": \"{\\\"id\\\":2,\\\"email\\\":\\\"roma.lang@thompson.co\\\",\\\"created_at\\\":\\\"2018-03-20T10:45:07.117-07:00\\\",\\\"updated_at\\\":\\\"2018-03-20T10:45:07.117-07:00\\\",\\\"name\\\":\\\"Test User\\\",\\\"role\\\":\\\"user\\\",\\\"team_id\\\":null,\\\"title\\\":null,\\\"avatar_file_name\\\":null,\\\"avatar_content_type\\\":null,\\\"avatar_file_size\\\":null,\\\"avatar_updated_at\\\":null,\\\"personal_emails\\\":[\\\"ellie.hilll@ondricka.info\\\",\\\"sebastian@conn.co\\\"],\\\"staff\\\":true}\"\n}",
+      "response_body": "{\n  \"success\": true,\n  \"user\": \"{\\\"id\\\":2,\\\"email\\\":\\\"daniella.klein@eff.org\\\",\\\"created_at\\\":\\\"2018-03-20T12:26:12.675-07:00\\\",\\\"updated_at\\\":\\\"2018-03-20T12:26:12.675-07:00\\\",\\\"name\\\":\\\"Test User\\\",\\\"role\\\":\\\"user\\\",\\\"team_id\\\":null,\\\"title\\\":null,\\\"avatar_file_name\\\":null,\\\"avatar_content_type\\\":null,\\\"avatar_file_size\\\":null,\\\"avatar_updated_at\\\":null,\\\"personal_emails\\\":[\\\"prince@bechtelar.net\\\",\\\"seth.wolf@hammesokon.biz\\\"],\\\"staff\\\":true}\"\n}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "application/json; charset=utf-8",
-        "ETag": "W/\"496ca03455d2dc816e5d6b3153c2dc65\"",
+        "ETag": "W/\"777873eebaa9d49be3e3b128429d79f2\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "f2436e70-022e-4843-91e1-f757f4492c33",
-        "X-Runtime": "0.011330",
-        "Content-Length": "440"
+        "X-Request-Id": "eab55699-733b-4ed2-8028-2c039235ab0c",
+        "X-Runtime": "0.012914",
+        "Content-Length": "443"
       },
       "response_content_type": "application/json; charset=utf-8",
       "curl": null

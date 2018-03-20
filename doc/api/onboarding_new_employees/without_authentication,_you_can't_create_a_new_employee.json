@@ -7,10 +7,14 @@
   "explanation": null,
   "parameters": [
     {
-      "required": true,
+      "scope": "user",
+      "name": "username",
+      "description": "The EFF-wide username; the part before '@eff.org' in their email"
+    },
+    {
       "scope": "user",
       "name": "email",
-      "description": "User email"
+      "description": "Their EFF email. Either email or username must be present."
     },
     {
       "required": false,
@@ -32,7 +36,7 @@
     {
       "request_method": "POST",
       "request_path": "api/v1/users",
-      "request_body": "user[name]=Test+User&user[email]=myriam%40bartell.net",
+      "request_body": "user[name]=Test+User&user[username]=antonietta.mcclure",
       "request_headers": {
         "Accept": "application/json",
         "Host": "example.org",
@@ -51,8 +55,8 @@
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "text/html",
         "Cache-Control": "no-cache",
-        "X-Request-Id": "f7313562-5359-4d28-97dd-6ee14a6f28c5",
-        "X-Runtime": "0.049756",
+        "X-Request-Id": "aeda5cdb-ca98-4aba-94cc-165361a24431",
+        "X-Runtime": "0.052784",
         "Content-Length": "0"
       },
       "response_content_type": "text/html",

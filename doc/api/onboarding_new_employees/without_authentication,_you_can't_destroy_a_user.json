@@ -7,9 +7,14 @@
   "explanation": null,
   "parameters": [
     {
-      "required": true,
+      "scope": "user",
       "name": "email",
-      "description": "The user's EFF email"
+      "description": "The user's EFF email.  Either email or username must be present."
+    },
+    {
+      "scope": "user",
+      "name": "username",
+      "description": "The EFF-wide username; the part before '@eff.org' in their email"
     }
   ],
   "response_fields": [
@@ -19,7 +24,7 @@
     {
       "request_method": "DELETE",
       "request_path": "/api/v1/users",
-      "request_body": "email=person_4%40eff.org",
+      "request_body": "user[username]=faker%3A%3Ainternet.user_name",
       "request_headers": {
         "Accept": "application/json",
         "Host": "example.org",
@@ -38,8 +43,8 @@
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "text/html",
         "Cache-Control": "no-cache",
-        "X-Request-Id": "5a2a9e9d-15f9-4baf-9998-dcfcc9097322",
-        "X-Runtime": "0.002734",
+        "X-Request-Id": "3c2870b3-c1df-4de0-8c17-a565c968c326",
+        "X-Runtime": "0.002319",
         "Content-Length": "0"
       },
       "response_content_type": "text/html",

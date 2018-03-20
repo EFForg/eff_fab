@@ -7,9 +7,14 @@
   "explanation": null,
   "parameters": [
     {
-      "required": true,
+      "scope": "user",
       "name": "email",
-      "description": "The user's EFF email"
+      "description": "The user's EFF email.  Either email or username must be present."
+    },
+    {
+      "scope": "user",
+      "name": "username",
+      "description": "The EFF-wide username; the part before '@eff.org' in their email"
     }
   ],
   "response_fields": [
@@ -19,10 +24,10 @@
     {
       "request_method": "DELETE",
       "request_path": "/api/v1/users",
-      "request_body": "email=person_5%40eff.org",
+      "request_body": "user[username]=faker%3A%3Ainternet.user_name",
       "request_headers": {
         "Accept": "application/json",
-        "Authorization": "0078e82d7290c4156587540dcda2f344",
+        "Authorization": "72f0bbcfc76d361341454289bc73b0eb",
         "Host": "example.org",
         "Content-Type": "application/x-www-form-urlencoded",
         "Cookie": ""
@@ -40,8 +45,8 @@
         "Content-Type": "application/json; charset=utf-8",
         "ETag": "W/\"7363e85fe9edee6f053a4b319588c086\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "0adbefa4-e434-448a-b9a7-556c501e2303",
-        "X-Runtime": "0.007741",
+        "X-Request-Id": "b46cba28-aeda-4176-92ab-06a897969a1e",
+        "X-Runtime": "0.004990",
         "Content-Length": "16"
       },
       "response_content_type": "application/json; charset=utf-8",

@@ -7,10 +7,14 @@
   "explanation": null,
   "parameters": [
     {
-      "required": true,
+      "scope": "user",
+      "name": "username",
+      "description": "The EFF-wide username; the part before '@eff.org' in their email"
+    },
+    {
       "scope": "user",
       "name": "email",
-      "description": "User email"
+      "description": "Their EFF email. Either email or username must be present."
     },
     {
       "required": false,
@@ -32,10 +36,10 @@
     {
       "request_method": "POST",
       "request_path": "api/v1/users",
-      "request_body": "user[name]=Test+User&user[email]=xavier.koelpin%40jaskolski.co",
+      "request_body": "user[name]=Test+User&user[username]=chaya.gislason",
       "request_headers": {
         "Accept": "application/json",
-        "Authorization": "c025e1b9fa26aed605e86bba5ef3509d",
+        "Authorization": "b41fc04ca1d25184e2e004eccbf2a85d",
         "Host": "example.org",
         "Content-Type": "application/x-www-form-urlencoded",
         "Cookie": ""
@@ -45,17 +49,17 @@
       "request_content_type": "application/x-www-form-urlencoded",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\n  \"success\": true,\n  \"user\": \"{\\\"id\\\":2,\\\"email\\\":\\\"xavier.koelpin@jaskolski.co\\\",\\\"created_at\\\":\\\"2018-03-20T10:45:07.076-07:00\\\",\\\"updated_at\\\":\\\"2018-03-20T10:45:07.076-07:00\\\",\\\"name\\\":\\\"Test User\\\",\\\"role\\\":\\\"user\\\",\\\"team_id\\\":null,\\\"title\\\":null,\\\"avatar_file_name\\\":null,\\\"avatar_content_type\\\":null,\\\"avatar_file_size\\\":null,\\\"avatar_updated_at\\\":null,\\\"personal_emails\\\":[],\\\"staff\\\":true}\"\n}",
+      "response_body": "{\n  \"success\": true,\n  \"user\": \"{\\\"id\\\":2,\\\"email\\\":\\\"chaya.gislason@eff.org\\\",\\\"created_at\\\":\\\"2018-03-20T12:26:12.640-07:00\\\",\\\"updated_at\\\":\\\"2018-03-20T12:26:12.640-07:00\\\",\\\"name\\\":\\\"Test User\\\",\\\"role\\\":\\\"user\\\",\\\"team_id\\\":null,\\\"title\\\":null,\\\"avatar_file_name\\\":null,\\\"avatar_content_type\\\":null,\\\"avatar_file_size\\\":null,\\\"avatar_updated_at\\\":null,\\\"personal_emails\\\":[],\\\"staff\\\":true}\"\n}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "application/json; charset=utf-8",
-        "ETag": "W/\"65a3ee67f4ddbc8fd4fde44cbd29c271\"",
+        "ETag": "W/\"8e27da2c75449fbcc79c513092968a7c\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "37a4228d-438b-4dce-ab1a-6b9df779c3a0",
-        "X-Runtime": "0.015406",
-        "Content-Length": "395"
+        "X-Request-Id": "9cc3c31e-5bf1-4764-a4d7-dc332b646aed",
+        "X-Runtime": "0.014604",
+        "Content-Length": "390"
       },
       "response_content_type": "application/json; charset=utf-8",
       "curl": null

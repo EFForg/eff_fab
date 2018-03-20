@@ -7,14 +7,16 @@ resource "Onboarding New Employees" do
   post "api/v1/users" do
     let(:body) { JSON.parse(response_body) }
 
-    parameter :email, required: true, scope: :user
+    parameter :username, "The EFF-wide username; the part before '@eff.org' in their email", scope: :user
+    parameter :email, "Their EFF email. Either email or username must be present.", scope: :user
     parameter :personal_emails, "Any extra email addresses they use", required: false, scope: :user
     parameter :staff, "Should they get a FAB? Defaults to true.", required: false, scope: :user
 
     let(:user) { User.last }
+    let(:username) { "#{Faker::Name.first_name}.#{Faker::Name.last_name}".downcase }
     let(:extra_attrs) { {} }
     let(:raw_post) do
-      {  user: { name: "Test User", email: Faker::Internet.email }.merge(extra_attrs) }
+      {  user: { name: "Test User", username: username }.merge(extra_attrs) }
     end
 
     example "Without authentication, you can't create a new employee" do
@@ -31,6 +33,7 @@ resource "Onboarding New Employees" do
 
       example "Onboard a bare-bones user" do
         expect { do_request }.to change(User, :count).by(1)
+        expect(user.email).to eq("#{username}@eff.org")
         expect(user.staff).to be_truthy
 
         expect(status).to eq(201)
@@ -64,10 +67,12 @@ resource "Onboarding New Employees" do
   end
 
   delete "/api/v1/users" do
-    parameter :email, "The user's EFF email", required: true
+    parameter :email, "The user's EFF email.  Either email or username must be present.", scope: :user
+    parameter :username, "The EFF-wide username; the part before '@eff.org' in their email", scope: :user
 
-    let!(:user) { FactoryGirl.create(:user) }
-    let(:email) { user.email }
+    let!(:user) { FactoryGirl.create(:user, email: "Faker::Internet.user_name@eff.org") }
+    let(:username) { user.email.split('@').first }
+    let(:raw_post) { {  user: { username: username } } }
 
     example "Without authentication, you can't destroy a user" do
       expect { do_request }.not_to change(User, :count)

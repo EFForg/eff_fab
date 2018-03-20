@@ -3,8 +3,10 @@ class Api::V1::UsersController < Api::ApplicationController
 
   # POST /api/v1/users
   def create
-      #email: params[:email] || "#{params[:username]}@eff.org",
-    @user = User.new(secure_params.merge(password: User.generate_password))
+    @user = User.new(secure_params.merge(
+      password: User.generate_password,
+      email: email
+    ))
 
     if @user.save
       render json: { success: true, user: @user.to_json }, status: :created
@@ -13,9 +15,9 @@ class Api::V1::UsersController < Api::ApplicationController
     end
   end
 
-  # DELETE /api/v1/users/delete
+  # DELETE /api/v1/users
   def destroy_by_email
-    @user = User.where(email: params[:email]).first
+    @user = User.where(email: email).first
 
     if @user and @user.destroy
       render json: { success: true }, status: :ok
@@ -31,5 +33,9 @@ class Api::V1::UsersController < Api::ApplicationController
       { personal_emails: [] },
       { fabs_attributes: [:id, :gif_tag_file_name] }
     )
+  end
+
+  def email
+    secure_params[:email] || "#{params[:user][:username]}@eff.org"
   end
 end
