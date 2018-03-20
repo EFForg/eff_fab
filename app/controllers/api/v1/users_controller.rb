@@ -27,8 +27,9 @@ class Api::V1::UsersController < Api::ApplicationController
   private
   def secure_params
     params.require(:user).permit(
-      :role, :title, :avatar, :name, :email, :team_id, :staff, :personal_emails,
-      {fabs_attributes: [:id, :gif_tag_file_name]}
+      :name, :email, :role, :title, :avatar, :team_id, :staff,
+      { personal_emails: [] },
+      { fabs_attributes: [:id, :gif_tag_file_name] }
     )
   end
 end
