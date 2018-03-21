@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :admin_only, except: [:show, :index]
+  before_action :admin_or_self_only, only: [:edit, :update]
+  before_action :admin_only, only: [:destory, :new, :overridden_create]
 
   def index
     @teams = if params[:team_name].nil?
@@ -16,13 +18,8 @@ class UsersController < ApplicationController
     @fab_period = Fab.get_start_of_current_fab_period
   end
 
-  def show
-    @user = User.find(params[:id])
-  end
-
   # POST /users/:id
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(secure_params)
       respond_to do |format|
         format.html { redirect_to users_path, :notice => "User updated." }
@@ -34,20 +31,15 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find(params[:id])
     user.destroy
     redirect_to users_path, :notice => "User deleted."
-  end
-
-  def edit
-    @user = User.find(params[:id])
   end
 
   def new
     @user = User.new
   end
 
-  def overriden_create
+  def overridden_create
     @user = User.new(secure_params.merge(password: User.generate_password))
 
     respond_to do |format|
@@ -63,10 +55,20 @@ class UsersController < ApplicationController
 
   private
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
   def secure_params
     params.require(:user).permit(:role, :avatar, :name, :email, :team_id,
       {fabs_attributes: [:id, :gif_tag_file_name]}
     )
+  end
+
+  def admin_or_self_only
+    if current_user != @user
+      admin_only
+    end
   end
 
 end

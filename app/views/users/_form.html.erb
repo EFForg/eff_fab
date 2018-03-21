@@ -1,5 +1,5 @@
 <% if @user.new_record? %>
-  <% form_params = { url: '/u/overriden_create', html: {method: :post} } %>
+  <% form_params = { url: '/u/overridden_create', html: {method: :post} } %>
 <% else %>
   <% form_params = {} %>
 <% end %>
@@ -24,6 +24,9 @@
       <%= f.input :email %>
     </div>
     <div class="form-field">
+      <%= f.input :title %>
+    </div>
+    <div class="form-field">
       <%= f.select :team_id, Team.all.collect {|t| [t.name, t.id]} %>
     </div>
     <div class="form-field">
@@ -37,14 +40,14 @@
       <%= f.button :submit %>
     </div>
   <% else %>
-    <div class="">
-      <%# update user %>
-      <%= f.button :submit %>
+    <div>
+      <div>
+        <%= f.button :submit %>
+      </div>
       <%= link_to "Cancel", user_fabs_path(@user), class: 'button' %>
-    </div>
-
-    <div class="form-actions">
+      <% if current_user.try(:admin?) %>
         <%= link_to 'Delete user', @user, method: :delete, data: { confirm: 'Are you sure you want to delete this user?' } %>
+      <% end %>
     </div>
   <% end %>
 

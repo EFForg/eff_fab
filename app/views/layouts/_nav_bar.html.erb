@@ -36,11 +36,23 @@
 
       <li>
         <%= link_to users_path do %>
-          View Fab
+          View Fabs
         <% end %>
       </li>
 
       <% if user_signed_in? %>
+
+        <li>
+          <%= link_to user_fabs_path(current_user) do %>
+            Edit fab
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to edit_user_path(current_user) do %>
+            Edit profile
+          <% end %>
+        </li>
 
         <% if current_user.try(:admin?)%>
           <li>

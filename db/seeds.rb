@@ -52,7 +52,10 @@ end
 create_teams
 
 i = 0
-20.times { build_fabs(User.create(name: "AutoGenned User", email: "user#{i++}@example.com", team_id: rand_team_id)) }
+20.times { build_fabs(User.create(name: "AutoGenned User",
+                                  email: "user#{i+=1}@example.com",
+                                  password: "correct horse battery staple",
+                                  team_id: rand_team_id)) }
 
 u = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << u.email
