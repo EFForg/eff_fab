@@ -5,7 +5,7 @@ Warden.test_mode!
 RSpec.feature "A single user's whereabouts page", type: :feature do
   let(:user) { FactoryGirl.create(:user) }
   let!(:not_my_where) do
-    FactoryGirl.create(:where, body: "someone else's status")
+    FactoryGirl.create(:where_message, body: "someone else's status")
   end
 
   before(:each) do
@@ -22,13 +22,13 @@ RSpec.feature "A single user's whereabouts page", type: :feature do
 
   context "when the user has whereabouts" do
     let!(:my_where1) do
-      FactoryGirl.create(:where, user: user, sent_at: 7.days.ago)
+      FactoryGirl.create(:where_message, user: user, sent_at: 7.days.ago)
     end
     let!(:my_where2) do
-      FactoryGirl.create(:where, user: user, sent_at: 6.days.ago)
+      FactoryGirl.create(:where_message, user: user, sent_at: 6.days.ago)
     end
     let!(:my_where3) do
-      FactoryGirl.create(:where, user: user, sent_at: 4.days.ago)
+      FactoryGirl.create(:where_message, user: user, sent_at: 4.days.ago)
     end
 
     scenario "shows all the user's whereabouts" do

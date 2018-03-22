@@ -7,6 +7,6 @@ class WheresController < ApplicationController
 
   def user_list
     @user = User.find(params[:user_id])
-    @wheres = @user.wheres.order('sent_at DESC')
+    @wheres = @user.where_messages.order('sent_at DESC')
   end
 end
