@@ -6,7 +6,7 @@ class Wherebot
   INBOX = "eff-where".freeze
 
   class << self
-    def update_wheres(destructive: true)
+    def update_wheres(destructive: false)
       imap = Net::IMAP.new(
         ENV['incoming_mail_server'], ENV['incoming_mail_port'], true
       )

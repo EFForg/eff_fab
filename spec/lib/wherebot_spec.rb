@@ -63,25 +63,25 @@ RSpec.describe Wherebot do
       expect(user2.where_messages.first.body).to include("EOM")
     end
 
-    it "trashes the read messages and closes the connection" do
-      expect(imap).to receive(:copy).with(where1.id, "Trash")
-      expect(imap).to receive(:copy).with(where2.id, "Trash")
-      expect(imap).to receive(:store).with(where1.id, "+FLAGS", [:Deleted])
-      expect(imap).to receive(:store).with(where2.id, "+FLAGS", [:Deleted])
-      expect(imap).to receive(:expunge)
+    it "cleans up after itself non-destructively" do
+      expect(imap).not_to receive(:copy)
+      expect(imap).not_to receive(:store)
+      expect(imap).not_to receive(:expunge)
       expect(imap).to receive(:logout)
       expect(imap).to receive(:disconnect)
 
       update_wheres
     end
 
-    context "in demo mode" do
-      let(:update_wheres) { described_class.update_wheres(destructive: false) }
+    context "in destructive mode" do
+      let(:update_wheres) { described_class.update_wheres(destructive: true) }
 
-      it "cleans up after itself non-destructively" do
-        expect(imap).not_to receive(:copy)
-        expect(imap).not_to receive(:store)
-        expect(imap).not_to receive(:expunge)
+      it "trashes the read messages and closes the connection" do
+        expect(imap).to receive(:copy).with(where1.id, "Trash")
+        expect(imap).to receive(:copy).with(where2.id, "Trash")
+        expect(imap).to receive(:store).with(where1.id, "+FLAGS", [:Deleted])
+        expect(imap).to receive(:store).with(where2.id, "+FLAGS", [:Deleted])
+        expect(imap).to receive(:expunge)
         expect(imap).to receive(:logout)
         expect(imap).to receive(:disconnect)
 
