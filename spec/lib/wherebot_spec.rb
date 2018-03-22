@@ -1,8 +1,8 @@
 require "wherebot"
 
 RSpec.describe Wherebot do
-  def from_sender(user)
-    email_parts = user.email.split("@")
+  def from_sender(email)
+    email_parts = email.split("@")
     OpenStruct.new(
       name: user.name, mailbox: email_parts.first, host: email_parts.second
     )
@@ -20,7 +20,7 @@ RSpec.describe Wherebot do
     let(:where1) do
       OpenStruct.new(id: 1, attr: {
         "ENVELOPE" => OpenStruct.new(
-          date: 2.weeks.ago.to_s, subject: "WFH wooo!", from: [from_sender(user)]
+          date: 2.weeks.ago.to_s, subject: "WFH wooo!", from: [from_sender(user.email)]
         ),
         "BODY[TEXT]" => 'AUW'
       })
@@ -28,7 +28,7 @@ RSpec.describe Wherebot do
     let(:where2) do
       OpenStruct.new(id: 2, attr: {
         "ENVELOPE" => OpenStruct.new(
-          date: 1.weeks.ago.to_s, subject: "WFHellmouth", from: [from_sender(user2)]
+          date: 1.weeks.ago.to_s, subject: "WFHellmouth", from: [from_sender(user2.email)]
         ),
         "BODY[TEXT]" => 'EOM'
       })
@@ -88,6 +88,25 @@ RSpec.describe Wherebot do
         update_wheres
       end
     end
+
+    # I don't get RSpec 3's pending logic.
+    # TODO: Uncomment this when personal emails exist.
+    #context "sent from a personal email" do
+      #let(:user) { FactoryGirl.create(:user, personal_emails: ['also_me@me.com']) }
+      #let(:where2) do
+        #OpenStruct.new(id: 2, attr: {
+          #"ENVELOPE" => OpenStruct.new(
+            #date: Time.now.to_s,
+            #subject: "PTO EOM",
+            #from: [from_sender(user2.personal_emails.first)]
+          #)
+        #})
+      #end
+
+      #it "assigns where_message to the correct user" do
+        #expect { update_wheres }.to change(user.where_messages, :count).by(1)
+      #end
+    #end
   end
 
   describe 'Wherebot::Message.body' do
