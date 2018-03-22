@@ -3,7 +3,7 @@ class WhereMessage < ActiveRecord::Base
 
   belongs_to :user
 
-  validates_presence_of :user_id, :body
+  validates_presence_of :user, :body
 
   before_create :ensure_sent_at
 

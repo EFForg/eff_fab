@@ -87,6 +87,13 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 
+  config.imap_settings = {
+    port: ENV['incoming_mail_port'],
+    address: ENV['incoming_mail_server'],
+    user_name: ENV['wherebot_user_name'],
+    password: ENV['wherebot_password']
+  }
+
   if ENV['storage'] == "s3"
     paperclip_config = {
       :storage => :s3,

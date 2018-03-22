@@ -1,4 +1,5 @@
 require_relative '../mailers'
+require_relative '../wherebot'
 
 namespace :mail do
 
@@ -17,4 +18,8 @@ namespace :mail do
     turbo_last_minute_remind
   end
 
+  desc "Get where_messages from wherebot@eff.org"
+  task :update_wheres, [:destructive] => :environment do |t, args|
+    Wherebot.update_wheres(destructive: args[:whatever_arg_that_is])
+  end
 end
