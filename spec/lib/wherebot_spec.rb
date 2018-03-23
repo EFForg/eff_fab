@@ -107,6 +107,19 @@ RSpec.describe Wherebot do
         #expect { update_wheres }.to change(user.where_messages, :count).by(1)
       #end
     #end
+
+    context "when email can't be saved" do
+      before do
+        allow_any_instance_of(WhereMessage).to receive(:save).and_return(false)
+      end
+
+      it "saves email to an env variable" do
+        # just for now, until something else makes sense
+        expect { update_wheres }.to change { ENV['where_failures'] }
+        expect(ENV['where_failures']).to match(/WFH wooo!/)
+        expect(ENV['where_failures']).to match(/WFHellmouth/)
+      end
+    end
   end
 
   describe 'Wherebot::Message.body' do

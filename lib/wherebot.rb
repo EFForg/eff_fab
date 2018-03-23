@@ -46,16 +46,21 @@ class Wherebot
     end
 
     def create
-      WhereMessage.find_or_create_by(
+      wm = WhereMessage.find_or_create_by(
         provenance: 'where@eff.org',
         sent_at: DateTime.parse(headers.date),
-        body: body,
         user: User.find_by(
           email: "#{headers.from[0].mailbox}@#{headers.from[0].host}"
         )
       )
+      if wm.update(body: body)
+        destroy_message
+      else
+        storage = ENV['where_failures'].try(:dup) || ''
+        storage << wm.to_json
+        ENV['where_failures'] = storage
+      end
 
-      destroy_message
     end
 
     def body
