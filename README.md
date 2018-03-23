@@ -64,9 +64,9 @@ Administering Users
 
 ### From the API
 
-Like the app, the API uses basic auth for authentication. Along with your request, you must pass basic auth credentials associated with a user who has the admin role. In other words if the basic auth name is [NAME], there must be user with admin credentials and the email address [NAME]@eff.org.
+The API authenticates admin users through API tokens.  Admin users can view and create API tokens through their FAB profile.
 
-Navigate to `/api/docs` for details.
+Navigate to `/api/docs` for more information.
 
 Credits
 -------
