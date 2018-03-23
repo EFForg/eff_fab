@@ -109,15 +109,19 @@ RSpec.describe Wherebot do
     #end
 
     context "when email can't be saved" do
+      def failure_list
+        ENV['WHERE_FAILURES']
+      end
+
       before do
         allow_any_instance_of(WhereMessage).to receive(:save).and_return(false)
       end
 
       it "saves email to an env variable" do
         # just for now, until something else makes sense
-        expect { update_wheres }.to change { ENV['WHERE_FAILURES'] }
-        expect(ENV['WHERE_FAILURES']).to match(/WFH wooo!/)
-        expect(ENV['WHERE_FAILURES']).to match(/WFHellmouth/)
+        expect { update_wheres }.to change { failure_list }
+        expect(JSON.parse(failure_list).map { |i| i['body'] })
+          .to match_array(["WFH wooo!\nAUW", "WFHellmouth\nEOM"])
       end
     end
   end

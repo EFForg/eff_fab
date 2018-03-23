@@ -56,9 +56,7 @@ class Wherebot
       if wm.update(body: body)
         destroy_message
       else
-        storage = ENV['WHERE_FAILURES'].try(:dup) || ''
-        storage << wm.to_json
-        ENV['WHERE_FAILURES'] = storage
+        store_failure(wm)
       end
 
     end
@@ -139,6 +137,18 @@ class Wherebot
         @imap.copy(@id, TRASH)
         @imap.store(@id, "+FLAGS", [:Deleted])
       end
+    end
+
+    def store_failure(where_message)
+      storage = ENV['WHERE_FAILURES'].try(:dup).to_s
+
+      if storage.empty?
+        storage = [JSON.parse(where_message.to_json)]
+      else
+        storage = JSON.parse(storage) << JSON.parse(where_message.to_json)
+      end
+
+      ENV['WHERE_FAILURES'] = storage.to_json
     end
   end
 end
