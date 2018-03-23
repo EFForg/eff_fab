@@ -119,6 +119,8 @@ class Wherebot
     end
 
     def remove_trailing_junk(body)
+      body.strip!
+
       if %w(= % &).include?(body.last)
         body[0..-2]
       else
