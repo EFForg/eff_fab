@@ -8,7 +8,7 @@ class Wherebot
   class << self
     def update_wheres(destructive: false)
       imap = Net::IMAP.new(
-        ENV['incoming_mail_server'], ENV['incoming_mail_port'], true
+        ENV['INCOMING_MAIL_SERVER'], ENV['INCOMING_MAIL_PORT'], true
       )
 
       sign_into_wheremail(imap)
@@ -23,7 +23,7 @@ class Wherebot
     private
 
     def sign_into_wheremail(imap)
-      imap.login(ENV['wherebot_user_name'], ENV['wherebot_password'])
+      imap.login(ENV['WHEREBOT_USER_NAME'], ENV['WHEREBOT_PASSWORD'])
       imap.examine(INBOX)
     end
 
@@ -56,9 +56,9 @@ class Wherebot
       if wm.update(body: body)
         destroy_message
       else
-        storage = ENV['where_failures'].try(:dup) || ''
+        storage = ENV['WHERE_FAILURES'].try(:dup) || ''
         storage << wm.to_json
-        ENV['where_failures'] = storage
+        ENV['WHERE_FAILURES'] = storage
       end
 
     end

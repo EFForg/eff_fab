@@ -88,10 +88,10 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   config.imap_settings = {
-    port: ENV['incoming_mail_port'],
-    address: ENV['incoming_mail_server'],
-    user_name: ENV['wherebot_user_name'],
-    password: ENV['wherebot_password']
+    port: ENV['INCOMING_MAIL_PORT'],
+    address: ENV['INCOMING_MAIL_SERVER'],
+    user_name: ENV['WHEREBOT_USER_NAME'],
+    password: ENV['WHEREBOT_PASSWORD']
   }
 
   if ENV['storage'] == "s3"

@@ -115,9 +115,9 @@ RSpec.describe Wherebot do
 
       it "saves email to an env variable" do
         # just for now, until something else makes sense
-        expect { update_wheres }.to change { ENV['where_failures'] }
-        expect(ENV['where_failures']).to match(/WFH wooo!/)
-        expect(ENV['where_failures']).to match(/WFHellmouth/)
+        expect { update_wheres }.to change { ENV['WHERE_FAILURES'] }
+        expect(ENV['WHERE_FAILURES']).to match(/WFH wooo!/)
+        expect(ENV['WHERE_FAILURES']).to match(/WFHellmouth/)
       end
     end
   end
