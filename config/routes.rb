@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       resources :users, only: :create do
         match :index, via: :delete, on: :collection, action: :destroy_by_email
       end
+      resources :mattermost, only: :create
     end
   end
 end

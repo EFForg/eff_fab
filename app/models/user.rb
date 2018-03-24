@@ -105,4 +105,12 @@ class User < ActiveRecord::Base
     api_key.destroy if api_key
     create_api_key
   end
+
+  def username
+    email.split("@").first
+  end
+
+  def last_whereabouts
+    where_messages.order('sent_at DESC').first
+  end
 end

@@ -1,4 +1,6 @@
 class WhereMessage < ActiveRecord::Base
+  PROVENANCES = { mattermost: "Mattermost", where_email: "where@eff.org" }
+
   belongs_to :user
 
   validates_presence_of :user_id, :body
