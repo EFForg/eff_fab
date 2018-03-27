@@ -92,11 +92,14 @@ class Wherebot
     end
 
     def strip_quotes_and_signatures_from(body)
-      has_eom = body.match(/.*eom.?/i)
+      return unless body.present?
+
+      has_eom = body.match(/.*eom.?/i) # EOM, eom, <eom>, ~eom~, etc
       return has_eom[0] if has_eom.present?
+
       body = body.split("Sent from").first
       body = body.split("\nOn").first
-      body = body.split('--').first
+      body = body.split(/--( ?)\n|~~( ?)\n/).first
       body = body.split(/Content-Language: en-../).last
       body = body.split('********').first
     end
@@ -117,6 +120,8 @@ class Wherebot
     end
 
     def remove_trailing_junk(body)
+      return unless body.present?
+
       body.strip!
 
       if %w(= % &).include?(body.last)
