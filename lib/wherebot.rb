@@ -4,6 +4,7 @@ require 'mail'
 class Wherebot
   TRASH = "Trash".freeze
   INBOX = "eff-where".freeze
+  WHEREBOT_ORIGIN ="where@eff.org".freeze
 
   class << self
     def update_wheres(destructive: false)
@@ -13,7 +14,7 @@ class Wherebot
 
       sign_into_wheremail(imap)
 
-      new_messages(imap).each do |id|
+      imap.search(["UNSEEN"]).each do |id|
         Wherebot::Message.new(imap, id, destructive).create
       end
 
@@ -27,10 +28,6 @@ class Wherebot
       imap.examine(INBOX)
     end
 
-    def new_messages(imap)
-      @new_messages ||= imap.search(["UNSEEN"])
-    end
-
     def clean_up(imap, destructive)
       imap.expunge if destructive
       imap.logout
@@ -39,6 +36,10 @@ class Wherebot
   end
 
   class Message
+    include ActionView::Helpers::SanitizeHelper
+
+    delegate :subject, :from, :date, to: :mail
+
     def initialize(imap, email_id, destroy = false)
       @imap = imap
       @id = email_id
@@ -47,12 +48,11 @@ class Wherebot
 
     def create
       wm = WhereMessage.find_or_create_by(
-        provenance: 'where@eff.org',
-        sent_at: DateTime.parse(headers.date),
-        user: User.find_by(
-          email: "#{headers.from[0].mailbox}@#{headers.from[0].host}"
-        )
+        provenance: WHEREBOT_ORIGIN,
+        sent_at: date,
+        user: User.find_by(email: from)
       )
+
       if wm.update(body: body)
         destroy_message
       else
@@ -72,21 +72,15 @@ class Wherebot
 
     private
 
-    def headers
-      @headers ||= @imap.fetch(@id, "ENVELOPE")[0].attr["ENVELOPE"]
-    end
-
-    def full_body
-      @full_body ||= @imap.fetch(@id, 'BODY[TEXT]')[0].attr['BODY[TEXT]']
+    def mail
+      @mail ||= Mail.new(@imap.fetch(@id, 'BODY.PEEK[]')[0].attr['BODY[]'])
     end
 
     def get_text
-      body = full_body.split("Content-Type: text/")[1] || full_body
-      body = body.split("Content-Transfer-Encoding: ")[1] || body
-
-      if body.first(4) == "html"
-        body = ActionController::Base.helpers.strip_tags(body) || body
-      end
+      message = mail
+      message = message.parts[0] while message.multipart?
+      body = message.body.decoded
+      strip_tags(body) if message.content_type.try(:start_with?, "text/html")
 
       body
     end
@@ -106,13 +100,14 @@ class Wherebot
 
     def reject_encryption(body)
       # this message is either made up only of encryption,
-      # or is insufferably sesquepedalian.
+      # or is insufferably sesquipedalian.
       body = '' if body.present? && body.split(' ').map(&:length).min > 10
       body
     end
 
     def strip_junk_from(body)
       return unless body.present?
+
       body.gsub!(/\n|\r/, ' ')
       body.gsub!('  ', ' ')
       body.remove!(/quoted-printable|\r\n|\n\r|=2E|7bit|html;|charset=utf-8/)
@@ -123,35 +118,26 @@ class Wherebot
       return unless body.present?
 
       body.strip!
-
-      if %w(= % &).include?(body.last)
-        body[0..-2]
-      else
-        body
-      end
+      %w(= % &).include?(body.last) ? body[0..-2] : body
     end
 
     def nice_subject
-      subject = headers.subject
-      subject.gsub!('[EFF-where] ', '')
-      subject
+      nice_subject = subject || ''
+      nice_subject.gsub!('[EFF-where] ', '')
+      nice_subject
     end
 
     def destroy_message
-      if @destroy
-        @imap.copy(@id, TRASH)
-        @imap.store(@id, "+FLAGS", [:Deleted])
-      end
+      return unless @destroy
+
+      @imap.copy(@id, TRASH)
+      @imap.store(@id, "+FLAGS", [:Deleted])
     end
 
-    def store_failure(where_message)
+    def store_failure(message)
       storage = ENV['WHERE_FAILURES'].try(:dup).to_s
-
-      if storage.empty?
-        storage = [JSON.parse(where_message.to_json)]
-      else
-        storage = JSON.parse(storage) << JSON.parse(where_message.to_json)
-      end
+      json = JSON.parse(message.to_json)
+      storage = storage.empty? ? [json] : JSON.parse(storage) << json
 
       ENV['WHERE_FAILURES'] = storage.to_json
     end
