@@ -15,6 +15,7 @@ gem 'nokogiri'
 gem 'aws-sdk', '< 2.0' if ENV['storage'] == "s3"
 gem 'rspec_api_documentation'
 gem "apitome"
+gem 'rails-html-sanitizer', ">= 1.0.4" # address CVE-2018-3741
 
 group :development, :test do
   gem 'byebug'
