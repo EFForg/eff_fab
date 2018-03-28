@@ -16,10 +16,20 @@ Rails.application.routes.draw do
 
   resources :teams
   devise_for :users
-  post '/u/overriden_create', to: 'users#overriden_create'
+  post '/u/overridden_create', to: 'users#overridden_create'
 
   resources :users do
     resources :fabs
+    member do
+      post 'generate_access_token'
+    end
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: :create do
+        match :index, via: :delete, on: :collection, action: :destroy_by_email
+      end
+    end
+  end
 end

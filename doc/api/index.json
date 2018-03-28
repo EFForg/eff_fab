@@ -1,0 +1,51 @@
+{
+  "resources": [
+    {
+      "name": "Onboarding New Employees",
+      "explanation": null,
+      "examples": [
+        {
+          "description": "Without authentication, fails",
+          "link": "onboarding_new_employees/without_authentication,_fails.json",
+          "groups": "all",
+          "route": "api/v1/users",
+          "method": "post"
+        },
+        {
+          "description": "Onboard a bare-bones user",
+          "link": "onboarding_new_employees/onboard_a_bare-bones_user.json",
+          "groups": "all",
+          "route": "api/v1/users",
+          "method": "post"
+        },
+        {
+          "description": "Onboard a user with extra info",
+          "link": "onboarding_new_employees/onboard_a_user_with_extra_info.json",
+          "groups": "all",
+          "route": "api/v1/users",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "name": "Offboarding previous employees",
+      "explanation": null,
+      "examples": [
+        {
+          "description": "Without authentication, fails",
+          "link": "offboarding_previous_employees/without_authentication,_fails.json",
+          "groups": "all",
+          "route": "/api/v1/users",
+          "method": "delete"
+        },
+        {
+          "description": "With authentication, succeeds",
+          "link": "offboarding_previous_employees/with_authentication,_succeeds.json",
+          "groups": "all",
+          "route": "/api/v1/users",
+          "method": "delete"
+        }
+      ]
+    }
+  ]
+}

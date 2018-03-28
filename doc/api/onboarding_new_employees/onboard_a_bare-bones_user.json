@@ -1,0 +1,81 @@
+{
+  "resource": "Onboarding New Employees",
+  "resource_explanation": null,
+  "http_method": "POST",
+  "route": "api/v1/users",
+  "description": "Onboard a bare-bones user",
+  "explanation": null,
+  "parameters": [
+    {
+      "scope": "user",
+      "name": "username",
+      "description": "The EFF-wide username. The part before '@' in their email"
+    },
+    {
+      "scope": "user",
+      "name": "email",
+      "description": "Their EFF email. Either email or username must be present."
+    },
+    {
+      "scope": "user",
+      "name": "personal_emails",
+      "description": "Any extra email addresses they use"
+    },
+    {
+      "scope": "user",
+      "name": "staff",
+      "description": "Should they get a FAB? Defaults to true."
+    },
+    {
+      "scope": "user",
+      "name": "name",
+      "description": "Their actual human name"
+    },
+    {
+      "scope": "user",
+      "name": "role",
+      "description": "user, admin_user_mode or admin. Defaults to user."
+    },
+    {
+      "scope": "user",
+      "name": "title",
+      "description": "What does this person do at EFF?"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "api/v1/users",
+      "request_body": "user[name]=Test+User&user[username]=chaya.gislason",
+      "request_headers": {
+        "Accept": "application/json",
+        "Authorization": "b41fc04ca1d25184e2e004eccbf2a85d",
+        "Host": "example.org",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\n  \"success\": true,\n  \"user\": \"{\\\"id\\\":2,\\\"email\\\":\\\"chaya.gislason@eff.org\\\",\\\"created_at\\\":\\\"2018-03-20T12:26:12.640-07:00\\\",\\\"updated_at\\\":\\\"2018-03-20T12:26:12.640-07:00\\\",\\\"name\\\":\\\"Test User\\\",\\\"role\\\":\\\"user\\\",\\\"team_id\\\":null,\\\"title\\\":null,\\\"avatar_file_name\\\":null,\\\"avatar_content_type\\\":null,\\\"avatar_file_size\\\":null,\\\"avatar_updated_at\\\":null,\\\"personal_emails\\\":[],\\\"staff\\\":true}\"\n}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"8e27da2c75449fbcc79c513092968a7c\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "9cc3c31e-5bf1-4764-a4d7-dc332b646aed",
+        "X-Runtime": "0.014604",
+        "Content-Length": "390"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   enum role: [:user, :admin_user_mode, :admin]
+  serialize :personal_emails, Array
   after_initialize :set_default_role, :if => :new_record?
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "60x90>" }, default_url: "/images/:style/missing.png"
@@ -17,11 +18,14 @@ class User < ActiveRecord::Base
   validates_associated :team
 
   belongs_to :team
+  has_one :api_key, foreign_key: :owner_id
   has_many :fabs
   has_many :where_messages
   has_one :current_period_fab,
     -> { where(period: Fab.get_start_of_current_fab_period..Fab.get_start_of_current_fab_period + 7.days) },
     class_name: "Fab"
+
+  delegate :access_token, to: :api_key, allow_nil: true
 
   before_save { |t| t.email = t.email.downcase }
 
@@ -97,4 +101,8 @@ class User < ActiveRecord::Base
     upcoming_fab_still_missing? and !upcoming_fab_still_missing_for_team_mate?
   end
 
+  def generate_access_token
+    api_key.destroy if api_key
+    create_api_key
+  end
 end

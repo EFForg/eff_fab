@@ -1,0 +1,55 @@
+{
+  "resource": "Offboarding previous employees",
+  "resource_explanation": null,
+  "http_method": "DELETE",
+  "route": "/api/v1/users",
+  "description": "With authentication, succeeds",
+  "explanation": null,
+  "parameters": [
+    {
+      "scope": "user",
+      "name": "email",
+      "description": "The user's EFF email.  Either email or username must be present."
+    },
+    {
+      "scope": "user",
+      "name": "username",
+      "description": "The EFF-wide username; the part before '@eff.org' in their email"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "DELETE",
+      "request_path": "/api/v1/users",
+      "request_body": "user[username]=faker%3A%3Ainternet.user_name",
+      "request_headers": {
+        "Authorization": "b1e1458ba1a9ff4fc92109e7278cdff9",
+        "Host": "example.org",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\n  \"success\": true\n}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"7363e85fe9edee6f053a4b319588c086\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "f340d7cb-6661-4b52-b4cb-e5ef8f8de677",
+        "X-Runtime": "0.006459",
+        "Content-Length": "16"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}
