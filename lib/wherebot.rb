@@ -91,11 +91,12 @@ class Wherebot
       has_eom = body.match(/.*eom.?/i) # EOM, eom, <eom>, ~eom~, etc
       return has_eom[0] if has_eom.present?
 
-      body = body.split("Sent from").first
-      body = body.split("\nOn").first
-      body = body.split(/--( ?)\n|~~( ?)\n/).first
-      body = body.split(/Content-Language: en-../).last
-      body = body.split('********').first
+      body = (body ||= '').split("Sent from").first
+      body = (body ||= '').split("\nOn").first
+      body = (body ||= '').split(/--( ?)(\r?)\n|~~( ?)\n/).first
+      body = (body ||= '').split(/Content-Language: en-../).last
+      body = (body ||= '').split('********').first
+      body ||= ''
     end
 
     def reject_encryption(body)
