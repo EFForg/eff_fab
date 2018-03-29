@@ -1,4 +1,4 @@
-class Api::V1::MattermostController < ApplicationController
+class Api::V1::MattermostController < Api::ApplicationController
   before_action :authenticate_mattermost
 
   def create
