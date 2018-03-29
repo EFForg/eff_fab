@@ -80,7 +80,7 @@ class Wherebot
       message = mail
       message = message.parts[0] while message.multipart?
       body = message.body.decoded
-      strip_tags(body) if message.content_type.try(:start_with?, "text/html")
+      body = strip_tags(body) if message.content_type.try(:start_with?, "text/html")
 
       body
     end
