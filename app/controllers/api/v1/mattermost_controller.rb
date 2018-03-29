@@ -12,11 +12,14 @@ class Api::V1::MattermostController < ApplicationController
   private
 
   def authenticate_mattermost
-    auth_present = params[:token] && params[:team_domain]
-    valid_token = params[:token] == ENV['MATTERMOST_TOKEN']
-    valid_team = params[:team_domain] == ENV['MATTERMOST_DOMAIN']
-
-    head :unauthorized unless auth_present && valid_token && valid_team
+    head :unauthorized unless params[:token] &&
+      params[:team_domain] &&
+      ActiveSupport::SecurityUtils.secure_compare(
+        params[:token], ENV['MATTERMOST_TOKEN']
+      ) &&
+      ActiveSupport::SecurityUtils.secure_compare(
+        params[:team_domain], ENV['MATTERMOST_DOMAIN']
+      )
   end
 
   def command_params
