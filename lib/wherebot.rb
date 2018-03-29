@@ -47,18 +47,20 @@ class Wherebot
     end
 
     def create
-      wm = WhereMessage.find_or_create_by(
+      wm = WhereMessage.new(
         provenance: WHEREBOT_ORIGIN,
         sent_at: date,
+        body: body,
         user: User.find_by(email: from)
       )
 
-      if wm.update(body: body)
+      if wm.save
         destroy_message
+        true
       else
         store_failure(wm)
+        false
       end
-
     end
 
     def body
