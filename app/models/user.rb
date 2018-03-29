@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_one :api_key, foreign_key: :owner_id
   has_many :fabs
   has_many :where_messages
+  has_one :last_whereabouts, -> { order(sent_at: :desc) }, class_name: "WhereMessage"
   has_one :current_period_fab,
     -> { where(period: Fab.get_start_of_current_fab_period..Fab.get_start_of_current_fab_period + 7.days) },
     class_name: "Fab"
@@ -108,9 +109,5 @@ class User < ActiveRecord::Base
 
   def username
     email.split("@").first
-  end
-
-  def last_whereabouts
-    where_messages.order('sent_at DESC').first
   end
 end
