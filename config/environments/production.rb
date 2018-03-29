@@ -110,12 +110,6 @@ Rails.application.configure do
     config.paperclip_defaults = paperclip_config
   end
 
-  # allow Mattermost slash commands
-  config.mattermost_settings = {
-    domain: ENV['MATTERMOST_DOMAIN'],
-    token: ENV['MATTERMOST_TOKEN']
-  }
-
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
