@@ -18,6 +18,14 @@ RSpec.feature "The list of all users' most recent whereabouts", type: :feature d
 
   after { Warden.test_reset! }
 
+  scenario "User sees the Whereabouts headline" do
+    expect(page.find("#hero h1")).to have_content(
+      "Where are your coworkers located on the time/space continuum?"
+    )
+    expect(page.find("#front img")["src"]).to match(/whereabouts-text-white/)
+    expect(page.find("#front img")["alt"]).to eq("Whereabouts")
+  end
+
   scenario "User can see everyone's most recent location" do
     expect(page).to have_content(where1.user.name)
     expect(page).to have_content(where1.body)

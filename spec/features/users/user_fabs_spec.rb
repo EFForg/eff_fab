@@ -11,6 +11,17 @@ feature 'User fabs page', :devise do
     Warden.test_reset!
   end
 
+  scenario "User sees the FAB headline" do
+    log_me_in FactoryGirl.create(:user)
+    visit user_fabs_path(@me)
+
+    expect(page.find("#hero h1")).to have_content(
+      "Where are your coworkers located on the time/space continuum, and what are they doing now?"
+    )
+    expect(page.find("#front img")["src"]).to match(/forward-text-white/)
+    expect(page.find("#front img")["alt"]).to eq("Forward & Back")
+  end
+
   # Scenario: User sees own profile
   #   Given I am signed in
   #   When I visit the user profile page
