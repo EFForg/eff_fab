@@ -1,5 +1,5 @@
 <div id="where-user-list">
-  <h2>Where in the world is <%= @user.name %>?</h2>
+  <h2>Where in the world is <%= link_to @user.name, user_path(@user) %>?</h2>
 
   <% if @wheres.empty? %>
     <div class='where-empty-state'><%= I18n.t('shruggie') %></div>
