@@ -23,7 +23,7 @@ describe Api::V1::MattermostController do
 
     before do
       ENV['MATTERMOST_DOMAIN'] = mattermost_team
-      ENV['MATTERMOST_TOKEN'] = auth_token
+      ENV['MATTERMOST_TOKEN_WHERE'] = auth_token
     end
 
     it "fails" do
@@ -33,7 +33,9 @@ describe Api::V1::MattermostController do
     end
 
     context "when Mattermost's token is present" do
-      let(:command_args) { { user_name: username, text: text, command: command } }
+      let(:command_args) do
+        { user_name: username, text: text, command: command, token: auth_token }
+      end
       let(:new_command) { Commands.run(command_args) }
       let(:responder) { double(:responder, response: command_response) }
       let(:command_response) { { 'response_text' => 'foo', 'response_type' => 'bar' } }

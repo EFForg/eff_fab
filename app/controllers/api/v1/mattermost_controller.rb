@@ -15,14 +15,11 @@ class Api::V1::MattermostController < Api::ApplicationController
     head :unauthorized unless params[:token] &&
       params[:team_domain] &&
       ActiveSupport::SecurityUtils.secure_compare(
-        params[:token], ENV['MATTERMOST_TOKEN']
-      ) &&
-      ActiveSupport::SecurityUtils.secure_compare(
         params[:team_domain], ENV['MATTERMOST_DOMAIN']
       )
   end
 
   def command_params
-    params.permit(:user_name, :command, :text)
+    params.permit(:user_name, :command, :text, :token)
   end
 end

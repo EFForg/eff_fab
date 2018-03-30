@@ -2,9 +2,17 @@ require 'commands'
 
 RSpec.describe Commands::WhereIs do
   let(:user) { FactoryGirl.create(:user, email: "cool.kitten@eff.org") }
-  let(:command) { described_class.new(username: user.username) }
+  let(:extra_args) { {} }
+  let(:args) { { username: user.username, command: 'where_is' }.merge(extra_args) }
+  let(:command) { described_class.new(args) }
+
+  before do
+    ENV['MATTERMOST_TOKEN_WHEREIS'] = 'valid_token'
+  end
 
   describe ".response" do
+    subject(:response_body) { command.response }
+
     before do
       2.times do
         user.where_messages.create(
@@ -15,26 +23,32 @@ RSpec.describe Commands::WhereIs do
       end
     end
 
-    subject(:response_body) { command.response }
-
-    it "responds with the most recent where" do
-      expect(response_body[:text]).to eq(
-        "#{user.name}'s last known whereabouts are: #{user.last_whereabouts.body}"
-      )
+    it "responds with failure" do
+      expect(response_body.keys).to eq([:failure])
     end
 
-    it "responds with the necessary keys" do
-      expect(response_body.keys).to match_array(
-        [:response_type, :text, :username]
-      )
-    end
+    context "with valid token" do
+      let(:extra_args) { { token: 'valid_token' } }
 
-    it "sets the response_type" do
-      expect(response_body[:response_type]).to eq("ephemeral")
-    end
+      it "responds with the most recent where" do
+        expect(response_body[:text]).to eq(
+          "#{user.name}'s last known whereabouts are: #{user.last_whereabouts.body}"
+        )
+      end
 
-    it "sets the username" do
-      expect(response_body[:username]).to eq("Wherebot")
+      it "responds with the necessary keys" do
+        expect(response_body.keys).to match_array(
+          [:response_type, :text, :username]
+        )
+      end
+
+      it "sets the response_type" do
+        expect(response_body[:response_type]).to eq("ephemeral")
+      end
+
+      it "sets the username" do
+        expect(response_body[:username]).to eq("Wherebot")
+      end
     end
   end
 end
