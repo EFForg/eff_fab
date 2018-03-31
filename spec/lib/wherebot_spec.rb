@@ -129,6 +129,22 @@ RSpec.describe Wherebot do
             ]
           end
         end
+
+        context "when something goes horribly wrong" do
+          before do
+            allow_any_instance_of(WhereMessage)
+              .to receive(:save).and_raise("oh no you don't!")
+          end
+
+          it "persists, nonetheless" do
+            expect { wherebot_message.create }.not_to raise_error
+          end
+
+          it "records the failure" do
+            wherebot_message.create
+            expect(bodies).to include("oh no you don't!")
+          end
+        end
       end
 
       # I don't get RSpec 3's pending logic.

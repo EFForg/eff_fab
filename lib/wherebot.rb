@@ -61,6 +61,8 @@ class Wherebot
         store_failure(wm)
         false
       end
+    rescue => e
+      store_failure({error: e.class.to_s, body: e.message})
     end
 
     def body
