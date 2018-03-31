@@ -4,14 +4,16 @@
   <% if @wheres.empty? %>
     <div class='where-empty-state'><%= I18n.t('shruggie') %></div>
   <% else %>
-    <table class="striped-table">
+    <table class="tablesorter striped-table">
       <thead>
-        <th>
-          When?
-          <br />
-          <span class='description'>All times shown in PDT / PST.</span>
-        </th>
-        <th>Where?</th>
+        <tr>
+          <th>
+            When?
+            <br />
+            <span class='description'>All times shown in PDT / PST.</span>
+          </th>
+          <th>Where?</th>
+        </tr>
       </thead>
       <tbody>
         <% @wheres.each do |where| %>
