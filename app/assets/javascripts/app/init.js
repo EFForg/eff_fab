@@ -39,3 +39,9 @@ function instantiateOrResetParalax() {
 		tribbalax.reInitializeParalax();
 	}
 }
+
+$(function() {
+  $(".tablesorter").tablesorter({
+    theme: 'materialize'
+  });
+});

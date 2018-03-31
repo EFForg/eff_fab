@@ -1,10 +1,12 @@
 <div id="where-list">
-  <table class="striped-table">
+  <table class="tablesorter striped-table">
     <thead>
-      <th>Name</th>
-      <th>Team</th>
-      <th>Where</th>
-      <th>Email</th>
+      <tr>
+        <th class="sortable">Name</th>
+        <th class="sortable">Team</th>
+        <th>Where</th>
+        <th class="sortable">Email</th>
+      </tr>
     </thead>
     <tbody>
       <% @users.each do |user| %>
