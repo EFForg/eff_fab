@@ -42,6 +42,7 @@ function instantiateOrResetParalax() {
 
 $(function() {
   $(".tablesorter").tablesorter({
-    theme: 'materialize'
+    theme: 'materialize',
+    widgets: ['filter']
   });
 });
