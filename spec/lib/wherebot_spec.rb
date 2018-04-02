@@ -102,6 +102,27 @@ RSpec.describe Wherebot do
         end
       end
 
+      context "when email matches an existing record" do
+        # probably, the body method has changed, so the same email has a new body
+        let(:old_body) { "probably not as good" }
+        let!(:old_email) do
+          FactoryGirl.create(
+            :where_message, body: old_body, sent_at: mail.date, user: user,
+            provenance: Wherebot::WHEREBOT_ORIGIN
+          )
+        end
+
+        it "does not create a new record" do
+          expect { create }.not_to change(WhereMessage, :count)
+        end
+
+        it "updates the body" do
+          create
+          expect(old_email.body).not_to eq(old_email.reload.body)
+          expect(old_email.reload.body).to include(mail.body.decoded)
+        end
+      end
+
       context "when email can't be saved" do
         let(:failures) { 'WHERE_FAILURES' }
         let(:mail2) { Mail.new(body: "update", subject: "where") }
