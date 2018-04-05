@@ -40,9 +40,11 @@ function instantiateOrResetParalax() {
 	}
 }
 
-$(function() {
+function sortTables() {
   $(".tablesorter").tablesorter({
     theme: 'materialize',
     widgets: ['filter']
   });
-});
+};
+
+$(document).on('turbolinks:load', sortTables);
