@@ -25,8 +25,11 @@ body {
     min-width: 16rem;
     padding: 10px 15px;
     border-bottom: 1px solid #ddd;
+    &.sent-at {
+      width: 16rem;
+    }
     div {
-      /* for some reason, the styles on raw divs override anything less specific*/
+      /* for some reason, the styles on raw divs override anything less specific */
       text-align: left;
     }
   }
