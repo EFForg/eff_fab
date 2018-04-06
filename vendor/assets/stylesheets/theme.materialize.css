@@ -29,11 +29,10 @@
 }
 
 /* sort icons */
-/* Custom to FAB: align left, not right*/
 .tablesorter-materialize thead .tablesorter-header {
 	background-repeat: no-repeat;
-  background-position: 4% 50%;
-  padding: 4px 4px 4px 24px;
+	background-position: center right;
+	padding: 4px 18px 4px 4px;
 	white-space: normal;
 	cursor: pointer;
 }
