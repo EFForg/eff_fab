@@ -29,6 +29,13 @@ module EffFab
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
+    # allow Mattermost slash commands
+    config.mattermost_settings = {
+      domain: ENV['MATTERMOST_DOMAIN'],
+      where_token: ENV['MATTERMOST_TOKEN_WHERE'],
+      whereis_token: ENV['MATTERMOST_TOKEN_WHEREIS']
+    }
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

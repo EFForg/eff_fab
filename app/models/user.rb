@@ -106,4 +106,8 @@ class User < ActiveRecord::Base
     api_key.destroy if api_key
     create_api_key
   end
+
+  def username
+    email.split("@").first
+  end
 end
