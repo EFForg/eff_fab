@@ -3,7 +3,7 @@ require 'commands'
 RSpec.describe Commands::WhereIs do
   let(:user) { FactoryGirl.create(:user, email: "cool.kitten@eff.org") }
   let(:extra_args) { {} }
-  let(:args) { { username: user.username, command: 'where_is' }.merge(extra_args) }
+  let(:args) { { user_name: user.username, command: 'where_is' }.merge(extra_args) }
   let(:command) { described_class.new(args) }
 
   before do

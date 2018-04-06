@@ -1,13 +1,14 @@
 class Api::V1::MattermostController < Api::ApplicationController
   before_action :authenticate_mattermost
 
-  def create
-    if params[:command]
-      render json: Commands.run(command_params).response
-    else
-      head :unauthorized
-    end
+  def where
+    render json: Commands::Where.new(command_params).response
   end
+
+  def where_is
+    render json: Commands::WhereIs.new(command_params).response
+  end
+
 
   private
 
@@ -20,6 +21,6 @@ class Api::V1::MattermostController < Api::ApplicationController
   end
 
   def command_params
-    params.permit(:user_name, :command, :text, :token)
+    params.permit(:user_name, :text, :token)
   end
 end

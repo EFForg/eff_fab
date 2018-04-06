@@ -3,7 +3,7 @@ class Commands
   RESPONSE_TYPE =  { private: "ephemeral" }
 
   def initialize(args)
-    puts 'initialising'
+    @username = args[:user_name]
     @token = args[:token]
     @command = args[:command]
   end
@@ -28,40 +28,24 @@ class Commands
     RESPONSE_TYPE[:private]
   end
 
+  def command
+    raise NoMethodError, "Subclass must declare its command"
+  end
+
   private
 
   def authentic?
-    return false unless @command && @token
+    return false unless @token
 
     ActiveSupport::SecurityUtils.secure_compare(
       @token, ENV["MATTERMOST_TOKEN_#{command.upcase}"]
     )
   end
-
-  def command
-    command = @command
-    command = command.remove('/')
-    command.camelcase
-  end
-
-  class << self
-    def run(args)
-      subclass(args[:command]).new(args)
-    end
-
-    private
-
-    def subclass(name)
-      name = name[1..-1] if !name[0].match(/[a-z]/i)
-      "#{self.name}::#{name.titlecase}".constantize
-    end
-  end
 end
 
 class Commands::WhereIs < Commands
-  def initialize(args)
-    @username = args[:username]
-    super
+  def command
+    "WhereIs"
   end
 
   def message
@@ -76,9 +60,12 @@ end
 
 class Commands::Where < Commands
   def initialize(args)
-    @username = args[:user_name]
     @body = args[:text]
     super
+  end
+
+  def command
+    "Where"
   end
 
   def message
