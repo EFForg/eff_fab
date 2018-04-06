@@ -33,8 +33,7 @@ module ApplicationHelper
     return nil unless time
 
     formatted_time = time.in_time_zone("Pacific Time (US & Canada)")
-      .strftime("%a, %b %e, %Y %l:%M %p %Z")
-      .gsub("  ", " ")
+      .strftime("%a, %b %e, %Y %-l:%M %p %Z")
     time_ago = distance_of_time_in_words(time, Time.current)
     "#{time_ago} ago (#{formatted_time})"
   end
