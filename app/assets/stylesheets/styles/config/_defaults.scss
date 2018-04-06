@@ -15,3 +15,39 @@ body {
   position: relative;
   background-color: $body-bg-color;
 }
+
+.striped-table {
+  text-align: left;
+  width: 100%;
+  margin: 20px 0px;
+  border-collapse: collapse;
+  td, th {
+    min-width: 16rem;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    &.sent-at {
+      width: 18rem;
+    }
+    div {
+      /* for some reason, the styles on raw divs override anything less specific */
+      text-align: left;
+    }
+  }
+  thead {
+    background: #ddd;
+  }
+  tbody tr:nth-child(odd) {
+    background: white;
+  }
+}
+
+.description {
+  text-align: left;
+  color: #a0a0a0;
+  font-size: 0.8rem;
+}
+
+.where-empty-state {
+  font-size: 3rem;
+  padding: 20px;
+}

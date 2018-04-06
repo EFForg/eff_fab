@@ -23,7 +23,10 @@ Rails.application.routes.draw do
     member do
       post 'generate_access_token'
     end
+    resources :wheres, only: [:index], to: "wheres#user_list"
   end
+
+  resources :wheres, only: :index
 
   namespace :api do
     namespace :v1 do

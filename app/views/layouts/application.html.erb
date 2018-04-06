@@ -11,8 +11,9 @@
 
 <body id="<%= page_identifier %>">
   <div id="hero"><a href="/"><img id="logo" src="<%= asset_path('EFF-logo-plain.svg') %>" type="image/svg+xml"></a>
-    <div id="front"><img id="title" src="<%= asset_path('forward-text-white.svg') %>" type="image/svg+xml">
-      <h1>Where are your coworkers located on the time/space continuum, and what are they doing now? </h1>
+    <div id="front">
+      <img id="title" src="<%= @hero_image %>" type="image/svg+xml" alt="<%= @hero_title %>">
+      <h1><%= @hero_text %></h1>
     </div>
     <div id="hero-gradient"></div>
     <div id="hero-bg" style="background-image: url('<%= banner_image_path %>');"></div>

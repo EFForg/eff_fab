@@ -39,3 +39,12 @@ function instantiateOrResetParalax() {
 		tribbalax.reInitializeParalax();
 	}
 }
+
+function sortTables() {
+  $(".tablesorter").tablesorter({
+    theme: 'materialize',
+    widgets: ['filter']
+  });
+};
+
+$(document).on('turbolinks:load', sortTables);

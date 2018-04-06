@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :login_by_basic_auth
+  before_action :set_hero
 
   def admin_only
     unless current_user.try(:admin?) || current_user.try(:admin_user_mode?)
@@ -23,4 +24,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  private
+
+  def set_hero
+    @hero_text = "Where are your coworkers located on the time/space continuum, and what are they doing now?"
+    @hero_title = "Forward & Back"
+    @hero_image = ActionController::Base.helpers.asset_path('forward-text-white.svg')
+  end
 end

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    name "Test User"
+    name { Faker::Name.name }
     sequence(:email) {|n| "person_#{n}@eff.org" }
     password "please123"
 
@@ -32,7 +32,7 @@ FactoryGirl.define do
       # setup fab and note
       fab = user.fabs.find_or_build_this_periods_fab
       n = fab.notes[4]
-      n.body = "I have a note"
+      n.body = Faker::Company.catch_phrase
       n.save
       fab.save
     end
