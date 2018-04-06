@@ -31,9 +31,11 @@ RSpec.describe Commands::WhereIs do
       let(:extra_args) { { token: 'valid_token' } }
 
       it "responds with the most recent where" do
-        expect(response_body[:text]).to eq(
-          "#{user.name}'s last known whereabouts are: #{user.last_whereabouts.body}"
-        )
+        time = user.last_whereabouts.sent_at
+        expect(response_body[:text]).to include(time.strftime('%-l:%M%P'))
+        expect(response_body[:text]).to include(time.strftime('%m/%d/%y'))
+        expect(response_body[:text]).to include(user.name)
+        expect(response_body[:text]).to include(user.last_whereabouts.body)
       end
 
       it "responds with the necessary keys" do

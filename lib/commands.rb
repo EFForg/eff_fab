@@ -66,7 +66,8 @@ class Commands::WhereIs < Commands
 
   def message
     if target_user.last_whereabouts.present?
-      "#{target_user.name}'s last known whereabouts are: #{target_user.last_whereabouts.body}"
+      time = target_user.last_whereabouts.sent_at
+      "At #{time.strftime('%-l:%M%P')} on #{time.strftime('%m/%d/%y')}, #{target_user.name} sent \"#{target_user.last_whereabouts.body}\""
     else
       "#{target_user.name} hasn't set a where recently."
     end
