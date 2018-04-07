@@ -27,8 +27,8 @@ RSpec.describe FabMailer, type: :mailer do
 
 
       expect(mail.subject).to match("[FAB] Some members of your team are fab flunking!")
-      expect(mail.body.encoded).to match(other1.name)
-      expect(mail.body.encoded).to match(other2.name)
+      expect(mail.body).to match(other1.name)
+      expect(mail.body).to match(other2.name)
     end
   end
 
