@@ -142,10 +142,14 @@ RSpec.describe Wherebot do
         end
 
         context "when env variable already exists" do
+          before do
+            ENV[failures] = [{'body': wherebot_message.body}].to_json
+          end
+
           it "appends to the env variable" do
             expect { wherebot_message2.create }.to change { ENV[failures] }
             expect(bodies).to match_array [
-              message_body(mail.subject, mail.body),
+              wherebot_message.body,
               message_body(mail2.subject, mail2.body)
             ]
           end
