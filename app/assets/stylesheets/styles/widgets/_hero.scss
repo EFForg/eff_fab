@@ -57,7 +57,6 @@
   background-repeat: no-repeat;
   background-size: cover;
 
-
   &:before {
     content: '';
     position: absolute;
@@ -68,21 +67,15 @@
     background-color: rgba(0,0,0,0.75);
   }
 
-
 }
-
-
 
 #hero-gradient {
   height: 100%;
   width: 100%;
-  //background-color: rgba(0,102,153,0.7);
   z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
-
-
   background: rgba(0,170,255,0.45);
   background: linear-gradient(135deg, rgba(255,175,75,0.45) 0%, rgba(0,170,255,0.45) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#00aaff', GradientType=1 );

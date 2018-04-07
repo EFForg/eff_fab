@@ -40,16 +40,13 @@ body.modal {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
-		li {
-			@include susy-breakpoint($md) {
+    li {
+      @include susy-breakpoint($md) {
+        @include span(6);
+      }
+      line-height: 3em;
+      text-transform: uppercase;
 
-
-				@include span(6);
-	
-			}
-			line-height: 3em;
-			text-transform: uppercase;
-
-		}
+    }
 	}
 }

@@ -3,9 +3,15 @@
 $susy: 12 1/4 fluid float inside;
 @include layout($susy);
 
-// breakpoints
-
+// Font
 $default-font-size: 16px;
+$font-size-normal: 13px;
+$font-size-nudge: 14px;
+$font-size-big: 20px;
+$font-color-normal: #666666;
+$font-color-alt: #000;
+$font-family-normal: Calibri, sans-serif;
+$font-family-alt: DINWeb-CondBold,​Arial,​sans-serif;
 
 $xs: min-width 12em;
 $sm: min-width 23em;
@@ -15,12 +21,25 @@ $lg: min-width 66em;
 $xl: min-width 80em;
 
 // nav
-
-
+$nav-bg-color: rgba(255,255,255,0.95);
+$nav-height: 60px; //3.14159265358979323846264em
+$nav-letter-spacing: 0.1em;
+$nav-offset: 500px;
+$nav-bg-color: rgba(255,255,255,0.95);
+$nav-font: 'Montserrat';
 
 // colors
-
 $blue: #007eff;
 $body-bg-color: #f6f6f6;
 $content-bg-color: #fcfcfc;
 $content-bg-color-mobile: $body-bg-color;
+$sidebar-color: #545962;
+
+// Links
+$link-color: rgba(78,116,139,1);
+$link-disabled-color: #4e748b;
+$link-color-hover: #f00;
+$link-bg-color-hover: #eff;
+
+$container-width: 510px;
+$menu-width: 260px;
