@@ -1,14 +1,4 @@
-<%
-  t = @teams.nil? ? nil : @teams.map(&:updated_at).join
-  fab_controller = params[:controller] == "users"
-  list_action = params[:action] == "index"
-  nav_horoscope = [
-    fab_controller, list_action, current_user.try(:admin?), user_signed_in?, t
-  ]
-  on_fabs_list = (fab_controller and list_action)
-%>
-
-<% cache(Digest::MD5.hexdigest(nav_horoscope.join)) do %>
+<% cache(Digest::MD5.hexdigest(nav_cache_key.join)) do %>
 
   <nav>
     <img src="<%= asset_path('EFF-logo-plain.svg') %>" type="image/svg+xml">
@@ -17,7 +7,7 @@
 
       <% if on_fabs_list %>
 
-        <% cache(Digest::MD5.hexdigest(['leet-filter-select', t].join)) do %>
+        <% cache(Digest::MD5.hexdigest(['leet-filter-select', teams_key].join)) do %>
           <li id="first-li-containing-selected-team-and-teams-ul">
             Team: <a id="leetFilterSelectedDisplay">All teams</a>
             <ul>
@@ -37,18 +27,8 @@
 
       <% if user_signed_in? %>
         <li><%= link_to "View Whereabouts", wheres_path %></li>
-
-        <li>
-          <%= link_to user_fabs_path(current_user) do %>
-            Edit fab
-          <% end %>
-        </li>
-
-        <li>
-          <%= link_to edit_user_path(current_user) do %>
-            Edit profile
-          <% end %>
-        </li>
+        <li><%= link_to "Edit fab", user_fabs_path(current_user) %></li>
+        <li><%= link_to "Edit profile", edit_user_path(current_user) %></li>
 
         <% if current_user.try(:admin?)%>
           <li><%= link_to "Administer", "/admin" %></li>
@@ -72,7 +52,7 @@
 
   <% if on_fabs_list %>
 
-    <% cache(Digest::MD5.hexdigest(["leet-filter-hamburger", t].join)) do %>
+    <% cache(Digest::MD5.hexdigest(["leet-filter-hamburger", teams_key].join)) do %>
       <div id="drawer">
         <ul>
           <% @teams.each do |team| %>
