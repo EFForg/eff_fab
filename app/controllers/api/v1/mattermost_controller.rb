@@ -12,7 +12,6 @@ class Api::V1::MattermostController < Api::ApplicationController
     render json: Commands::WhereIs.new(command_params).response
   end
 
-
   private
 
   def authenticate_mattermost
