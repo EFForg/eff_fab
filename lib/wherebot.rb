@@ -21,6 +21,10 @@ class Wherebot
       clean_up(imap, destructive)
     end
 
+    def forget_old_messages
+      WhereMessage.where('sent_at < ?', 30.days.ago).destroy_all
+    end
+
     private
 
     def sign_into_wheremail(imap)

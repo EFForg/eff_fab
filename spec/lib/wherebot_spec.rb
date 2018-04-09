@@ -58,6 +58,17 @@ RSpec.describe Wherebot do
     end
   end
 
+  describe "forget_old_messages" do
+    let!(:new) { FactoryGirl.create(:where_message, sent_at: 29.days.ago) }
+    let!(:old) { FactoryGirl.create(:where_message, sent_at: 31.days.ago) }
+
+    it "destroys old where messages, but not new ones" do
+      expect(WhereMessage.where("sent_at < ?", 30.days.ago)).to include(old)
+      expect { Wherebot.forget_old_messages }.to change(WhereMessage, :count).by(-1)
+      expect(WhereMessage.where("sent_at < ?", 30.days.ago)).to be_empty
+    end
+  end
+
   describe 'Wherebot::Message' do
     let(:user) { FactoryGirl.create(:user) }
     let(:mail_subject) { "#{user.name} on the way!" }
