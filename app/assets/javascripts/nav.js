@@ -1,7 +1,7 @@
 function selectChange() {
 	var select = document.getElementById("nav-select");
   select = select.options[select.selectedIndex];
-	leetFilter.selectCategoryByName(select.value);
+	fabFilter.selectCategoryByName(select.value);
 }
 
 // for select html elements, we need to override their onkeydown and onkeyup

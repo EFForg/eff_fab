@@ -1,5 +1,5 @@
 // This class is for making everything filterable and stuff....
-var LeetFilter = function(choiceWidget) {
+var FabFilter = function(choiceWidget) {
   var _choiceWidget = choiceWidget;
   var clearFiltersName = choiceWidget.getClearFiltersName();
 
@@ -46,9 +46,9 @@ var LeetFilter = function(choiceWidget) {
     // Clear the filters
     if (categoryNameClassy == clearFiltersName) {
       clearMarksOnFilterButtons();
-      $(".leet-filter-candidate").show();
+      $(".fab-filter-candidate").show();
     } else { // apply a filter
-      var element = $(".leet-filter-candidate." + categoryNameClassy);
+      var element = $(".fab-filter-candidate." + categoryNameClassy);
 
       clearMarksOnFilterButtons();
       markFilterButtonAsSelected(element);
@@ -61,29 +61,29 @@ var LeetFilter = function(choiceWidget) {
 
   this.clearFilters = function() {
     _choiceWidget.setChoiceByName(clearFiltersName);
-    $(".leet-filter-candidate").show();
+    $(".fab-filter-candidate").show();
     clearMarksOnFilterButtons();
   };
 
   // hide all potential targets
   function hideAllFilterCandidates() {
-    $(".leet-filter-candidate").hide();
+    $(".fab-filter-candidate").hide();
   }
 
   // show the non filtered thing...
   function showSelectionTarget(categoryName) {
-    $(".leet-filter-candidate." + categoryName).show();
+    $(".fab-filter-candidate." + categoryName).show();
   }
 
   // Supply an element and it will have a selected class added to it for
   // highlighting purposes of buttons
   function markFilterButtonAsSelected(element) {
-    $(element).addClass('leet-filter-button-selected');
+    $(element).addClass('fab-filter-button-selected');
   }
 
   // Set any filtering buttons to not be highlighted
   function clearMarksOnFilterButtons() {
-    $('.leet-filter-button-selected').removeClass('leet-filter-button-selected');
+    $('.fab-filter-button-selected').removeClass('fab-filter-button-selected');
   }
 
 };
@@ -102,7 +102,7 @@ var LeetFilter = function(choiceWidget) {
 // to filter teams, be it a dropdown select box or a series of buttons.
 // This object is responsible for currency management
 var ChoiceWidget = function() {
-  var selectorForCategorySections = "leet-filter-candidate";
+  var selectorForCategorySections = "fab-filter-candidate";
   var clearFiltersName = "All teams";
 
   var _currentCategory = FilterTool.classifyTeamName(clearFiltersName);
@@ -112,13 +112,13 @@ var ChoiceWidget = function() {
 
   // for instance, a dropbox would set an int here
   function setSelectedCategoryInDomUnitByIndex(val) {
-    // if (document.getElementById("leetFilterSelectedDisplay") === null) return
+    // if (document.getElementById("fabFilterSelectedDisplay") === null) return
 
     // Do the input box
     // document.getElementById("nav-select").options.selectedIndex = val;
 
     // Do the new layout UL thing
-    document.getElementById("leetFilterSelectedDisplay").innerHTML = filterCategoriesDisplayName[val];
+    document.getElementById("fabFilterSelectedDisplay").innerHTML = filterCategoriesDisplayName[val];
   }
 
 
@@ -136,10 +136,10 @@ var ChoiceWidget = function() {
 
 
   this.getChoicesArray = function() {
-    var leetFilterCandidates = document.getElementsByClassName(selectorForCategorySections);
+    var fabFilterCandidates = document.getElementsByClassName(selectorForCategorySections);
 
-    var arrayOfLeetness = [].slice.call(leetFilterCandidates);
-    var categories = arrayOfLeetness.map(function(elements) {
+    var arrayOfFabness = [].slice.call(fabFilterCandidates);
+    var categories = arrayOfFabness.map(function(elements) {
       return FilterTool.classifyTeamName(elements.dataset.filterName);
     });
 
@@ -150,10 +150,10 @@ var ChoiceWidget = function() {
   };
 
   this.getChoicesDisplayname = function() {
-    var leetFilterCandidates = document.getElementsByClassName(selectorForCategorySections);
+    var fabFilterCandidates = document.getElementsByClassName(selectorForCategorySections);
 
-    var arrayOfLeetness = [].slice.call(leetFilterCandidates);
-    var categories = arrayOfLeetness.map(function(elements) {
+    var arrayOfFabness = [].slice.call(fabFilterCandidates);
+    var categories = arrayOfFabness.map(function(elements) {
       return elements.dataset.filterName;
     });
 
@@ -230,4 +230,4 @@ var FilterTool = {
 
 
 window.choiceWidget = new ChoiceWidget();
-window.leetFilter = new LeetFilter(choiceWidget);
+window.fabFilter = new FabFilter(choiceWidget);

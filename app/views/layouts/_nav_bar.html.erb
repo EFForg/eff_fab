@@ -7,14 +7,14 @@
 
       <% if on_fabs_list %>
 
-        <% cache(Digest::MD5.hexdigest(['leet-filter-select', teams_key].join)) do %>
+<% cache(Digest::MD5.hexdigest(['fab-filter-select', teams_key].join)) do %>
           <li id="first-li-containing-selected-team-and-teams-ul">
-            Team: <a id="leetFilterSelectedDisplay">All teams</a>
+            Team: <a id="fabFilterSelectedDisplay">All teams</a>
             <ul>
-              <a onclick="leetFilter.clearFilters();"><li>All teams</li></a>
+              <a onclick="fabFilter.clearFilters();"><li>All teams</li></a>
 
               <% @teams.each do |team| %>
-                <a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><li><%= team.name %></li></a>
+                <a onclick="fabFilter.selectCategoryByName('<%= team.name %>');"><li><%= team.name %></li></a>
               <% end %>
 
             </ul>
@@ -52,11 +52,11 @@
 
   <% if on_fabs_list %>
 
-    <% cache(Digest::MD5.hexdigest(["leet-filter-hamburger", teams_key].join)) do %>
+    <% cache(Digest::MD5.hexdigest(["fab-filter-hamburger", teams_key].join)) do %>
       <div id="drawer">
         <ul>
           <% @teams.each do |team| %>
-            <li><a onclick="leetFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
+            <li><a onclick="fabFilter.selectCategoryByName('<%= team.name %>');"><%= team.name %></a>
           <% end %>
         </ul>
       </div>
