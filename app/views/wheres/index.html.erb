@@ -5,7 +5,7 @@
         <th class="sortable">Name</th>
         <th class="sortable">Team</th>
         <th>Where</th>
-        <th class="sortable">Email</th>
+        <th class="sortable">Contact</th>
       </tr>
     </thead>
     <tbody>
@@ -18,7 +18,11 @@
             <%= where.body %>
             <div class='description'><%= time_since(where.sent_at) %></span>
           </td>
-          <td><%= mail_to(user.email, user.email, subject: reply_subject(where)) %></td>
+          <td>
+            <%= mail_to(user.email, "Email: #{user.email}", subject: reply_subject(where)) %>
+            <br />
+            <%= link_to "Mattermost: @#{user.username}", mattermost_dm_link(user), target: "_blank" %>
+          </td>
         </tr>
       <% end %>
     </tbody>
