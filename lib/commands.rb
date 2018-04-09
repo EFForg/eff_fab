@@ -70,7 +70,7 @@ class Commands::Where < Commands
 
   def message
     if create_where
-      "Your whereabouts are now set to #{@body}."
+      "Your whereabouts are now set to \"#{@body}\"."
     else
       "I couldn't save your message. Better send it it to where@eff.org :sweat_smile:"
     end
