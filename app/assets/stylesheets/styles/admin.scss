@@ -1,0 +1,49 @@
+.elegant {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+
+  li {
+    text-align:left;
+  }
+
+  .roll-update {
+    margin-top:10px;
+  }
+
+}
+
+.elegant a, .elegant a:visited {
+  text-decoration: none;
+  color: $font-color-normal;
+}
+
+.elegant a:hover {
+  color: blue;
+  background-color: $link-bg-color-hover;
+}
+
+.faked-link {
+  color: $font-color-normal;
+  cursor: pointer;
+
+  & > form > span {
+    margin-left: -1px;
+  }
+
+  button, input[type=submit], input[type=button] {
+    color:inherit;
+    margin-left: -2px;
+    background:none!important;
+    border:none;
+    padding:0!important;
+    font: inherit;
+    cursor: inherit;
+  }
+
+  &:hover {
+    color: blue;
+    background-color: $link-bg-color-hover;
+  }
+
+}

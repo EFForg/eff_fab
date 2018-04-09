@@ -2,7 +2,6 @@
 @import "config/defaults";
 
 @import "config/fonts";
-@import "config/typography";
 
 @import "widgets/nav/hamburger";
 @import "widgets/nav/fixed";
@@ -12,21 +11,7 @@
 
 @import "vendor/ionicons";
 
-$link-color: rgba(78,116,139,1);
-
-a {
-  color: $link-color;
-  &:visited {
-    color: $link-color;
-  }
-  text-decoration: none;
-}
-
-div {
-  text-align: center;
-}
-
-#logo { // logo
+#logo {
   z-index: 5;
   position: relative;
   display: none;
@@ -43,7 +28,6 @@ div {
     position: absolute;
   }
 }
-
 
 #front {
   z-index: 5;
@@ -63,8 +47,6 @@ div {
       @include container(70%);
       margin-top: 1em;
     }
-
-
   }
 
   #title {
@@ -78,7 +60,6 @@ div {
   }
 }
 
-
 #content {
   height: 100%;
   width: 100%;
@@ -90,17 +71,8 @@ div {
     background-color: $content-bg-color;
     margin-top: 30px;
   }
-
-  section {
-  }
 }
 
-// #container {
-//   @include container(95%);
-//   @include susy-breakpoint($md) {
-//     @include container(70%);
-//   }
-// }
 .fab-user {
   display: block;
   @include container(95%);
@@ -110,7 +82,6 @@ div {
   background-color: $content-bg-color;
   padding-top: 2em;
   padding-bottom: 1.5em;
-  //text-align: center;
   font-size: 24px;
   margin-bottom: 2em;
   figcaption {
@@ -178,7 +149,6 @@ div {
     }
   }
 
-
   div.back,div.forward {
     h3 {
       font-family: 'Montserrat';
@@ -186,7 +156,6 @@ div {
       font-weight: 400;
       padding: 0;
       margin: 1em 0 0;
-
     }
 
     h4 {
@@ -197,7 +166,6 @@ div {
       font-weight: 300;
     }
 
-
     text-align: center;
     @include span(12);
     @include susy-breakpoint($md) {
@@ -206,9 +174,6 @@ div {
     }
   }
 
-  // div.back {
-  //   margin-top: 1em;
-  // }
   ul {
     list-style-type: none;
     display:inline-block;
@@ -233,30 +198,6 @@ div {
 
 #container {
   margin-top: 20px;
-}
-
-
-
-
-
-
-.rotating-thing img {
-  width: 100%;
-}
-
-.f-and-b-header {
-  width: 60%;
-  height: 60px;
-  background: image-url('forward-text.svg') no-repeat top center;
-  fill: black;
-
-  margin-left: auto;
-  margin-right: auto;
-  display:block;
-  background-size: contain;
-}
-
-.subheader {
 }
 
 .nav-container nav {
@@ -307,44 +248,17 @@ div {
   padding-right: 10px;
 }
 
-
-// This media query allows us to change the presentation of the page depending
-// on how wide the window is.
-// STYLING COMMON TO BOTH TABLET AND DESKTOP
-// @media (min-width: $narrow-width){
-//   .fab-note-inputs {
-//     float:left;
-//     width:50%;
-//     margin-right: 0%;
-//     margin-top: 10px;
-//   }
-
-//   .fab-note-inputs:nth-child(2) div{
-//     text-align: right;
-//   }
-
-//   .fab-note-inputs h6 {
-//     margin: 4px 0 4px 0;
-//     font-size: $font-size-nudge;
-//   }
-
-//   .fab-note-inputs:nth-child(2) h6 {
-//     padding-left:3%;
-//   }
-// }
-
-
 .nested-fields {
-    text-align: center;
+  text-align: center;
+  @include susy-breakpoint($md) {
+    text-align: left;
+  }
+  input {
+    width: 95%;
     @include susy-breakpoint($md) {
-      text-align: left;
+      width: 75%;
     }
-    input {
-      width: 95%;
-      @include susy-breakpoint($md) {
-        width: 75%;
-      }
-    }
+  }
 }
 
 .fab-note-inputs {
@@ -378,8 +292,6 @@ div {
   }
 }
 
-
-
 h3 a {
   color: $font-color-alt;
   text-decoration: none;
@@ -391,9 +303,6 @@ h3 a {
     background-color: $link-bg-color-hover;
   }
 }
-
-
-
 
 .fab-backward-btn, .fab-forward-btn {
   font-family: Lato;
@@ -415,6 +324,17 @@ h3 a {
 }
 .fab-backward-btn {
   left: 10%;
+}
+
+.fab-backward-btn:hover,
+.fab-forward-btn:hover {
+  cursor: pointer;
+}
+
+.fab-backward-btn.disabled,
+.fab-forward-btn.disabled {
+  cursor: default;
+  color: $link-disabled-color;
 }
 
 
@@ -462,7 +382,7 @@ form#new_user {
   margin-bottom: 1em;
   padding: 2em;
 
-  input[type="submit"] {  
+  input[type="submit"] {
     margin-top: 1em;
     font-size: 0.8em;
     color: $link-color;
@@ -492,3 +412,8 @@ form#new_user {
     margin-right: 8px;
   }
 }
+
+.clear {
+  clear:both;
+}
+
