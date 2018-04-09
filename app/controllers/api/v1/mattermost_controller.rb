@@ -1,4 +1,6 @@
 class Api::V1::MattermostController < Api::ApplicationController
+  require 'commands'
+
   before_action :authenticate_mattermost
 
   def where
