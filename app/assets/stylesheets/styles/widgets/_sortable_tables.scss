@@ -7,3 +7,8 @@
 .tablesorter-materialize .tablesorter-filter-row select.tablesorter-filter {
   width: 100%;
 }
+
+#where-user-list .tablesorter td,
+#where-user-list .tablesorter th {
+  min-width: 16rem;
+}
