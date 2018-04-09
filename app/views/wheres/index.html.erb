@@ -18,7 +18,11 @@
             <%= where.body %>
             <div class='description'><%= time_since(where.sent_at) %></span>
           </td>
-          <td><%= mail_to(user.email, user.email, subject: reply_subject(where)) %></td>
+          <td>
+            <%= mail_to(user.email, user.email, subject: reply_subject(where)) %>
+            <br />
+            <%= link_to("Mattermost", mattermost_dm_link(user)) %>
+          </td>
         </tr>
       <% end %>
     </tbody>

@@ -6,4 +6,8 @@ module WhereHelper
   def reply_subject(where)
     "Re: #{where.body.split("\n").first}"
   end
+
+  def mattermost_dm_link(user)
+    "https://mattermost.eff.org/eff/messages/@#{user.username}"
+  end
 end
