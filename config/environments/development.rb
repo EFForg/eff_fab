@@ -46,13 +46,6 @@ Rails.application.configure do
   # Send email in development mode?
   config.action_mailer.perform_deliveries = true
 
-  config.imap_settings = {
-    port: ENV['INCOMING_MAIL_PORT'],
-    address: ENV['INCOMING_MAIL_SERVER'],
-    user_name: ENV['WHEREBOT_USER_NAME'],
-    password: ENV['WHEREBOT_PASSWORD']
-  }
-
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
