@@ -1,6 +1,7 @@
 class Api::V1::MattermostController < Api::ApplicationController
   require 'commands'
 
+  skip_before_action :login_by_basic_auth
   before_action :authenticate_mattermost
 
   def where
