@@ -62,11 +62,11 @@ class Wherebot
         destroy_message
         true
       else
-        store_failure(wm)
+        Rails.logger.error e
         false
       end
     rescue => e
-      store_failure({error: e.class.to_s, body: e.message})
+      Rails.logger.error e
     end
 
     def body
@@ -141,14 +141,6 @@ class Wherebot
 
       @imap.copy(@id, TRASH)
       @imap.store(@id, "+FLAGS", [:Deleted])
-    end
-
-    def store_failure(message)
-      storage = ENV['WHERE_FAILURES'].try(:dup).to_s
-      json = JSON.parse(message.to_json)
-      storage = storage.empty? ? [json] : JSON.parse(storage) << json
-
-      ENV['WHERE_FAILURES'] = storage.to_json
     end
   end
 end

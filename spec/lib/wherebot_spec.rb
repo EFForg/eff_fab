@@ -135,35 +135,13 @@ RSpec.describe Wherebot do
       end
 
       context "when email can't be saved" do
-        let(:failures) { 'WHERE_FAILURES' }
-        let(:mail2) { Mail.new(body: "update", subject: "where") }
-        let(:wherebot_message2) { Wherebot::Message.new(double(:imap), mail_id) }
-        let(:bodies) { JSON.parse(ENV[failures]).map { |i| i['body'] } }
-
         before do
-          allow(wherebot_message2).to receive(:mail).and_return(mail2)
           allow_any_instance_of(WhereMessage).to receive(:save).and_return(false)
         end
 
-        it "saves email to an env variable" do
-          expect { wherebot_message.create }.to change { ENV[failures] }
-          expect(bodies).to  match_array [
-            message_body(mail_subject, message)
-          ]
-        end
-
-        context "when env variable already exists" do
-          before do
-            ENV[failures] = [{'body': wherebot_message.body}].to_json
-          end
-
-          it "appends to the env variable" do
-            expect { wherebot_message2.create }.to change { ENV[failures] }
-            expect(bodies).to match_array [
-              wherebot_message.body,
-              message_body(mail2.subject, mail2.body)
-            ]
-          end
+        it "records the failure" do
+          expect(Rails.logger).to receive(:error)
+          wherebot_message.create
         end
 
         context "when something goes horribly wrong" do
@@ -177,8 +155,8 @@ RSpec.describe Wherebot do
           end
 
           it "records the failure" do
+            expect(Rails.logger).to receive(:error)
             wherebot_message.create
-            expect(bodies).to include("oh no you don't!")
           end
         end
       end
