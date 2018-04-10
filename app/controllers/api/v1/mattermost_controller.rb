@@ -1,4 +1,7 @@
 class Api::V1::MattermostController < Api::ApplicationController
+  require_dependency 'commands'
+
+  skip_before_action :login_by_basic_auth
   before_action :authenticate_mattermost
 
   def where
@@ -8,7 +11,6 @@ class Api::V1::MattermostController < Api::ApplicationController
   def where_is
     render json: Commands::WhereIs.new(command_params).response
   end
-
 
   private
 

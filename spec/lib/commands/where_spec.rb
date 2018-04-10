@@ -40,7 +40,7 @@ RSpec.describe Commands::Where do
 
       it "sets the text" do
         expect(response_body[:text]).to eq(
-          "Your whereabouts are now set to #{body}."
+          "Your whereabouts are now set to \"#{body}\"."
         )
       end
 
