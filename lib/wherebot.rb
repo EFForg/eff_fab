@@ -52,9 +52,7 @@ class Wherebot
 
     def create
       wm = WhereMessage.find_or_initialize_by(
-        provenance: WHEREBOT_ORIGIN,
-        sent_at: date,
-        user: User.find_by(email: from)
+        provenance: WHEREBOT_ORIGIN, sent_at: date, user: user
       )
       wm.body = body
 
@@ -82,6 +80,13 @@ class Wherebot
 
     def mail
       @mail ||= Mail.new(@imap.fetch(@id, 'BODY.PEEK[]')[0].attr['BODY[]'])
+    end
+
+    def user
+      User.find_by(email: from) ||
+        User.where("personal_emails like ?", "%#{from.first}%").find do |user|
+          (user.personal_emails & from).any?
+        end
     end
 
     def get_text

@@ -161,15 +161,17 @@ RSpec.describe Wherebot do
         end
       end
 
-      # I don't get RSpec 3's pending logic.
-      # TODO: Uncomment this when personal emails exist.
-      #context "sent from a personal email" do
-        #let(:user) { FactoryGirl.create(:user, personal_emails: ['also_me@me.com']) }
-        #
-        #it "assigns where_message to the correct user" do
-          #expect { update_wheres }.to change(user.where_messages, :count).by(1)
-        #end
-      #end
+      context "sent from a personal email" do
+        let(:email) { 'also_me@me.com' }
+        let!(:user) { FactoryGirl.create(:user, personal_emails: ["pre_#{email}"]) }
+        let!(:user2) { FactoryGirl.create(:user, personal_emails: [email]) }
+        let!(:user3) { FactoryGirl.create(:user, personal_emails: ["3_#{email}"]) }
+        let(:mail) { Mail.new(subject: mail_subject, from: [email]) }
+
+        it "assigns where_message to the correct user" do
+          expect { create }.to change(user2.where_messages, :count).by(1)
+        end
+      end
     end
 
     describe '.body' do
