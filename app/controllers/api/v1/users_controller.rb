@@ -3,10 +3,8 @@ class Api::V1::UsersController < Api::ApplicationController
 
   # POST /api/v1/users
   def create
-    @user = User.new(secure_params.merge(
-      password: User.generate_password,
-      email: email
-    ))
+    @user = User.where(email: email).first_or_initialize
+    @user.update(secure_params.merge(password: User.generate_password))
 
     if @user.save
       render json: { success: true, user: @user.to_json }, status: :created

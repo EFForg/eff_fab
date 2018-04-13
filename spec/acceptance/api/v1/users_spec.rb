@@ -66,6 +66,19 @@ resource "Onboarding New Employees" do
           expect(status).to eq(201)
         end
       end
+
+      context "when user already exists" do
+        let!(:user) { FactoryGirl.create(:user, email: "#{username}@eff.org") }
+        let(:new_name) { Faker::Name.name }
+        let(:raw_post) do
+          {  name: new_name, username: username }
+        end
+
+        example "Update users who already exist in the database" do
+          expect { do_request }.not_to change(User, :count)
+          expect(user.reload.name).to eq(new_name)
+        end
+      end
     end
   end
 end
