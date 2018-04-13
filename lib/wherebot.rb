@@ -22,7 +22,15 @@ class Wherebot
     end
 
     def forget_old_messages
-      WhereMessage.where('sent_at < ?', 30.days.ago).destroy_all
+      old = WhereMessage.where('sent_at < ?', 30.days.ago)
+
+      if old.present?
+        puts "destroying #{old.count} old messages."
+      else
+        puts "no old messages."
+      end
+
+      old.destroy_all
     end
 
     private
