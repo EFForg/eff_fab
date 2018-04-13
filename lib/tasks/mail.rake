@@ -22,4 +22,9 @@ namespace :mail do
   task :update_wheres, [:destructive] => :environment do |t, args|
     Wherebot.update_wheres(destructive: args[:whatever_arg_that_is])
   end
+
+  desc "Destroy old where messages"
+  task destroy_old_wheres: :environment do |t, args|
+    Wherebot.forget_old_messages
+  end
 end
