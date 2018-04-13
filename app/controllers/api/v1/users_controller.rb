@@ -28,7 +28,7 @@ class Api::V1::UsersController < Api::ApplicationController
 
   private
   def secure_params
-    params.require(:user).permit(
+    params.permit(
       :name, :email, :role, :title, :avatar, :team_id, :staff,
       { personal_emails: [] },
       { fabs_attributes: [:id, :gif_tag_file_name] }
@@ -36,6 +36,6 @@ class Api::V1::UsersController < Api::ApplicationController
   end
 
   def email
-    secure_params[:email] || "#{params[:user][:username]}@eff.org"
+    secure_params[:email] || "#{params[:username]}@eff.org"
   end
 end

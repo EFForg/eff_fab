@@ -7,19 +7,19 @@ resource "Onboarding New Employees" do
   post "api/v1/users" do
     let(:body) { JSON.parse(response_body) }
 
-    parameter :username, "The EFF-wide username. The part before '@' in their email", scope: :user
-    parameter :email, "Their EFF email. Either email or username must be present.", scope: :user
-    parameter :personal_emails, "Any extra email addresses they use", scope: :user
-    parameter :staff, "Should they get a FAB? Defaults to true.", scope: :user
-    parameter :name, "Their actual human name", scope: :user
-    parameter :role, "#{User::roles.keys.to_sentence(last_word_connector: ' or ')}. Defaults to user.", scope: :user
-    parameter :title, "What does this person do at EFF?", scope: :user
+    parameter :username, "The EFF-wide username. The part before '@' in their email"
+    parameter :email, "Their EFF email. Either email or username must be present."
+    parameter :personal_emails, "Any extra email addresses they use"
+    parameter :staff, "Should they get a FAB? Defaults to true."
+    parameter :name, "Their actual human name"
+    parameter :role, "#{User::roles.keys.to_sentence(last_word_connector: ' or ')}. Defaults to user."
+    parameter :title, "What does this person do at EFF?"
 
     let(:user) { User.last }
     let(:username) { "#{Faker::Name.first_name}.#{Faker::Name.last_name}".downcase }
     let(:extra_attrs) { {} }
     let(:raw_post) do
-      {  user: { name: "Test User", username: username }.merge(extra_attrs) }
+      {  name: "Test User", username: username }.merge(extra_attrs)
     end
 
     example "Without authentication, fails" do
@@ -77,7 +77,7 @@ resource "Offboarding previous employees" do
 
     let!(:user) { FactoryGirl.create(:user, email: "Faker::Internet.user_name@eff.org") }
     let(:username) { user.email.split('@').first }
-    let(:raw_post) { {  user: { username: username } } }
+    let(:raw_post) { { username: username } }
 
     example 'Without authentication, fails' do
       expect { do_request }.not_to change(User, :count)
