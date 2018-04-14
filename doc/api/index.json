@@ -12,15 +12,15 @@
           "method": "post"
         },
         {
-          "description": "Onboard a bare-bones user",
-          "link": "onboarding_new_employees/onboard_a_bare-bones_user.json",
+          "description": "Onboard a user",
+          "link": "onboarding_new_employees/onboard_a_user.json",
           "groups": "all",
           "route": "api/v1/users",
           "method": "post"
         },
         {
-          "description": "Onboard a user with extra info",
-          "link": "onboarding_new_employees/onboard_a_user_with_extra_info.json",
+          "description": "Update a user who already exists in the database",
+          "link": "onboarding_new_employees/update_a_user_who_already_exists_in_the_database.json",
           "groups": "all",
           "route": "api/v1/users",
           "method": "post"
@@ -39,8 +39,8 @@
           "method": "delete"
         },
         {
-          "description": "With authentication, succeeds",
-          "link": "offboarding_previous_employees/with_authentication,_succeeds.json",
+          "description": "Removes a user from the database",
+          "link": "offboarding_previous_employees/removes_a_user_from_the_database.json",
           "groups": "all",
           "route": "/api/v1/users",
           "method": "delete"
