@@ -15,11 +15,14 @@ class Api::V1::MattermostController < Api::ApplicationController
   private
 
   def authenticate_mattermost
-    head :unauthorized unless params[:token] &&
-      params[:team_domain] &&
+    head :unauthorized unless params[:team_id] && params[:team_domain] &&
+      ActiveSupport::SecurityUtils.secure_compare(
+        params[:team_id], ENV['MATTERMOST_TEAM_ID']
+      ) &&
       ActiveSupport::SecurityUtils.secure_compare(
         params[:team_domain], ENV['MATTERMOST_DOMAIN']
-      )
+      ) &&
+      ENV['MATTERMOST_IPS'].include?(request.remote_ip)
   end
 
   def command_params
