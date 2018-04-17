@@ -6,25 +6,13 @@ describe Api::V1::MattermostController do
   let(:username) { user.email.split("@").first }
   let(:text) { Faker::ChuckNorris.fact.parameterize('+') }
   let(:auth_token) { "let_me_in_ok" }
-  let(:mattermost_team) { "the_real_deal" }
-  let(:team_id) { "something_real" }
   let(:mattermost_ip) { '127.238.349' }
   let(:slash_params) do
     # https://docs.mattermost.com/developer/slash-commands.html
-    # Also passes channel_id, channel_name, user_id and response_url
-    {
-      command: command,
-      team_domain: mattermost_team,
-      team_id: team_id,
-      text: text,
-      token: auth_token,
-      user_name: username
-    }.merge(format: :json)
+    { command: command, text: text, token: auth_token, user_name: username, format: :json }
   end
 
   before do
-    ENV['MATTERMOST_DOMAIN'] = mattermost_team
-    ENV['MATTERMOST_TEAM_ID'] = team_id
     ENV['MATTERMOST_TOKEN_WHERE'] = auth_token
     ENV['MATTERMOST_TOKEN_WHEREIS'] = auth_token
     ENV['MATTERMOST_IPS'] = "#{mattermost_ip} some.other.ip"
@@ -49,18 +37,6 @@ describe Api::V1::MattermostController do
       # Mattermost needs these two keys to render a response
       expect(JSON.parse(response.body).keys).to include("response_type")
       expect(JSON.parse(response.body).keys).to include("text")
-    end
-
-    context "without team name" do
-      before { slash_params[:team_domain] = "something_bogus" }
-
-      include_examples "fails"
-    end
-
-    context "without team id" do
-      before { slash_params[:team_id] = "something_bogus" }
-
-      include_examples "fails"
     end
 
     context "from a non-mattermost IP" do
