@@ -4,7 +4,7 @@
   "http_method": "POST",
   "route": "api/v1/users",
   "description": "Onboard a user",
-  "explanation": "Authentication requires sending an 'Authorization' header\n          with an admin user's API token.  Admins can create and view an API\n          token by visiting a user's profile.\n          A username or email must be present; all other info is optional.",
+  "explanation": "Authentication requires sending an 'APIAuthorization' header\n          with an admin user's API token, in addition to the basic auth.\n          Admins can create and view an API token by visiting a user's profile.\n          A username or email must be present; all other info is optional.",
   "parameters": [
     {
       "name": "username",
@@ -45,7 +45,7 @@
       "request_body": "name=Test+User&username=rachael.jenkins&personal_emails[]=miracle_conn%40hand.info&personal_emails[]=aaron_gaylord%40grant.info&staff=false&role=admin&title=Pizzamancer",
       "request_headers": {
         "Accept": "application/json",
-        "Authorization": "592a135554253c78e31aca4fce548d16"
+        "Apiauthorization": "88de97ddeed9c4f4bc94d17a18aed73d"
       },
       "request_query_parameters": {
       },

@@ -4,7 +4,7 @@
   "http_method": "DELETE",
   "route": "/api/v1/users",
   "description": "Without authentication, fails",
-  "explanation": "If the Authorization header is missing, or does not correspond\n        to an admin's API token, the request will fail.",
+  "explanation": "If the APIAuthorization header is missing, or does not correspond\n        to an admin's API token, the request will fail. Admins can generate and view\n        a user's API token through their profile.",
   "parameters": [
     {
       "scope": "user",

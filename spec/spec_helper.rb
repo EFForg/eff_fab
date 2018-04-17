@@ -100,5 +100,5 @@ end
 RspecApiDocumentation.configure do |config|
   config.format = :json
   config.keep_source_order = true
-  config.request_headers_to_include = %w(Accept Authorization)
+  config.request_headers_to_include = %w(Accept Authorization APIAuthorization)
 end

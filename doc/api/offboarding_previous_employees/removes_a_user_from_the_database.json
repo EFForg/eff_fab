@@ -4,7 +4,7 @@
   "http_method": "DELETE",
   "route": "/api/v1/users",
   "description": "Removes a user from the database",
-  "explanation": "If an Authorization header containing a valid admin's API\n          token is present, the specified user will be removed from the app.\n          Either username or email must be present to identify the user.",
+  "explanation": "If basic auth in addition to an APIAuthorization header containing\n          a valid admin's API token is present, the specified user will be removed from\n          the app.  Either username or email must be present to identify the user.",
   "parameters": [
     {
       "scope": "user",
@@ -26,7 +26,7 @@
       "request_path": "/api/v1/users",
       "request_body": "username=leopoldo_reilly",
       "request_headers": {
-        "Authorization": "5d0ed576544ff64c68d317048a491d9a"
+        "Apiauthorization": "20d493e7279f41f553dbf45df409b1df"
       },
       "request_query_parameters": {
       },

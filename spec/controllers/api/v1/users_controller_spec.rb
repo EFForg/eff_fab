@@ -10,7 +10,7 @@ describe Api::V1::UsersController do
   end
 
   before {
-    @request.headers['Authorization'] = admin.access_token
+    @request.headers['APIAuthorization'] = admin.access_token
   }
 
   describe "POST #create" do

@@ -13,7 +13,7 @@ resource "Onboarding New Employees" do
     let(:username) { "#{Faker::Name.first_name}.#{Faker::Name.last_name}".downcase }
 
     example 'Without authentication, fails' do
-      explanation "If the Authorization header is missing, or does not correspond
+      explanation "If the APIAuthorization header is missing, or does not correspond
         to an admin's API token, the request will fail.  Admins can generate and view
         a user's API token through their profile."
       expect { do_request }.not_to change(User, :count)
@@ -42,12 +42,12 @@ resource "Onboarding New Employees" do
         }
       end
 
-      header "Authorization", :auth
+      header "APIAuthorization", :auth
 
       example "Onboard a user" do
-        explanation "Authentication requires sending an 'Authorization' header
-          with an admin user's API token.  Admins can create and view an API
-          token by visiting a user's profile.
+        explanation "Authentication requires sending an 'APIAuthorization' header
+          with an admin user's API token, in addition to the basic auth.
+          Admins can create and view an API token by visiting a user's profile.
           A username or email must be present; all other info is optional."
         expect { do_request }.to change(User, :count).by(1)
         expect(user.personal_emails).to match_array(extra_emails)
@@ -80,7 +80,7 @@ resource "Offboarding previous employees" do
     let(:raw_post) { { username: username } }
 
     example 'Without authentication, fails' do
-      explanation "If the Authorization header is missing, or does not correspond
+      explanation "If the APIAuthorization header is missing, or does not correspond
         to an admin's API token, the request will fail. Admins can generate and view
         a user's API token through their profile."
       expect { do_request }.not_to change(User, :count)
@@ -94,12 +94,12 @@ resource "Offboarding previous employees" do
       let!(:admin) { FactoryGirl.create(:user_admin, :with_api_key) }
       let(:auth) { admin.access_token }
 
-      header "Authorization", :auth
+      header "APIAuthorization", :auth
 
       example "Removes a user from the database" do
-        explanation "If an Authorization header containing a valid admin's API
-          token is present, the specified user will be removed from the app.
-          Either username or email must be present to identify the user."
+        explanation "If basic auth in addition to an APIAuthorization header containing
+          a valid admin's API token is present, the specified user will be removed from
+          the app.  Either username or email must be present to identify the user."
         expect { do_request }.to change(User, :count).by(-1)
         expect(status).to eq(200)
       end
