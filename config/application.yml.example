@@ -31,6 +31,12 @@ mail_enable_starttls_auto: 'true'
 mail_user_name: ''
 mail_password: ''
 
+########################
+#      Mattermost      #
+########################
+MATTERMOST_TOKEN_WHERE: ""
+MATTERMOST_TOKEN_WHEREIS: ""
+MATTERMOST_IPS: ""
 
 ########################
 #     File Storage     #
