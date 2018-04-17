@@ -3,9 +3,10 @@ class Api::V1::UsersController < Api::ApplicationController
 
   # POST /api/v1/users
   def create
-    @user = User.new(secure_params.merge(
+    @user = User.where(email: email).first_or_initialize
+    @user.update(secure_params.merge(
       password: User.generate_password,
-      email: email
+      personal_emails: @user.personal_emails.concat(secure_params[:personal_emails])
     ))
 
     if @user.save
@@ -28,7 +29,7 @@ class Api::V1::UsersController < Api::ApplicationController
 
   private
   def secure_params
-    params.require(:user).permit(
+    params.permit(
       :name, :email, :role, :title, :avatar, :team_id, :staff,
       { personal_emails: [] },
       { fabs_attributes: [:id, :gif_tag_file_name] }
@@ -36,6 +37,6 @@ class Api::V1::UsersController < Api::ApplicationController
   end
 
   def email
-    secure_params[:email] || "#{params[:user][:username]}@eff.org"
+    secure_params[:email] || "#{params[:username]}@eff.org"
   end
 end

@@ -4,13 +4,8 @@
   "http_method": "DELETE",
   "route": "/api/v1/users",
   "description": "Without authentication, fails",
-  "explanation": null,
+  "explanation": "If the Authorization header is missing, or does not correspond\n        to an admin's API token, the request will fail.",
   "parameters": [
-    {
-      "scope": "user",
-      "name": "email",
-      "description": "The user's EFF email.  Either email or username must be present."
-    },
     {
       "scope": "user",
       "name": "username",
@@ -24,11 +19,8 @@
     {
       "request_method": "DELETE",
       "request_path": "/api/v1/users",
-      "request_body": "user[username]=faker%3A%3Ainternet.user_name",
+      "request_body": "username=modesto.turner",
       "request_headers": {
-        "Host": "example.org",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cookie": ""
       },
       "request_query_parameters": {
       },
