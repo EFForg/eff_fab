@@ -22,7 +22,7 @@ class Api::V1::MattermostController < Api::ApplicationController
       ActiveSupport::SecurityUtils.secure_compare(
         params[:team_domain], ENV['MATTERMOST_DOMAIN']
       ) &&
-      ENV['MATTERMOST_IPS'].include?(request.remote_ip)
+      ENV['MATTERMOST_IPS'].split.include?(request.remote_ip)
   end
 
   def command_params

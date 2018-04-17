@@ -27,7 +27,7 @@ describe Api::V1::MattermostController do
     ENV['MATTERMOST_TEAM_ID'] = team_id
     ENV['MATTERMOST_TOKEN_WHERE'] = auth_token
     ENV['MATTERMOST_TOKEN_WHEREIS'] = auth_token
-    ENV['MATTERMOST_IPS'] = "[#{mattermost_ip}]"
+    ENV['MATTERMOST_IPS'] = "#{mattermost_ip} some.other.ip"
     allow_any_instance_of(ActionDispatch::Request).to receive(:remote_ip)
       .and_return(mattermost_ip)
   end
