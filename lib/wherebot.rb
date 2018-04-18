@@ -8,34 +8,62 @@ class Wherebot
 
   class << self
     def update_wheres(destructive: false)
-      imap = Net::IMAP.new(
-        ENV['INCOMING_MAIL_SERVER'], ENV['INCOMING_MAIL_PORT'], true
-      )
-
-      sign_into_wheremail(imap)
-
-      imap.search(["UNSEEN"]).each do |id|
-        Wherebot::Message.new(imap, id, destructive).create
-      end
-
-      clean_up(imap, destructive)
+      @destructive = destructive
+      create_new_imap
+      sign_into_wheremail
+      import_emails
+      clean_up
     end
 
     def forget_old_messages
-      WhereMessage.where('sent_at < ?', 30.days.ago).destroy_all
+      old = WhereMessage.where('sent_at < ?', 30.days.ago)
+
+      if old.present?
+        puts "destroying #{old.count} old messages."
+      else
+        puts "no old messages."
+      end
+
+      old.destroy_all
     end
 
     private
 
-    def sign_into_wheremail(imap)
-      imap.login(ENV['WHEREBOT_USER_NAME'], ENV['WHEREBOT_PASSWORD'])
-      imap.examine(INBOX)
+    def create_new_imap
+      # create a fresh new instance of IMAP for the current import.
+      @imap = Net::IMAP.new(
+        ENV['INCOMING_MAIL_SERVER'], ENV['INCOMING_MAIL_PORT'], true
+      )
+      puts "connected to IMAP" if @imap.is_a?(Net::IMAP)
+      @imap
     end
 
-    def clean_up(imap, destructive)
-      imap.expunge if destructive
-      imap.logout
-      imap.disconnect
+    def sign_into_wheremail
+      @imap.login(ENV['WHEREBOT_USER_NAME'], ENV['WHEREBOT_PASSWORD'])
+      puts "logged into Wheremail"
+      @imap.examine(INBOX)
+    end
+
+    def import_emails
+      new = @imap.search(["UNSEEN"])
+      total = new.count
+      done = 0
+
+      puts "importing #{total} new messages"
+      new.each do |id|
+        Wherebot::Message.new(@imap, id, @destructive).create
+        done += 1
+        percent = done * 100.0 / total
+        puts "#{percent.floor}%" if percent > 1 && (percent % 10) == 0
+      end
+
+      puts "import complete!"
+    end
+
+    def clean_up
+      @imap.expunge if @destructive
+      @imap.logout
+      @imap.disconnect
     end
   end
 
