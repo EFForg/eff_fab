@@ -2,72 +2,64 @@ require 'rails_helper'
 require 'commands'
 
 describe Api::V1::MattermostController do
-  let(:body) { JSON.parse(response.body) }
   let!(:user) { FactoryGirl.create(:user, email: "cool.kittens@eff.org") }
   let(:username) { user.email.split("@").first }
   let(:text) { Faker::ChuckNorris.fact.parameterize('+') }
   let(:auth_token) { "let_me_in_ok" }
-  let(:mattermost_team) { "the_real_deal" }
-  let(:extra_params) { {} }
+  let(:mattermost_ip) { '127.238.349' }
   let(:slash_params) do
     # https://docs.mattermost.com/developer/slash-commands.html
-    {
-      format: :json, text: text, user_name: username
-    }.merge(extra_params)
+    { command: command, text: text, token: auth_token, user_name: username, format: :json }
   end
-  # Mattermost needs these two keys to render a response
-  let(:mattermost_keys) { ["response_type", "text"] }
 
   before do
-    ENV['MATTERMOST_DOMAIN'] = mattermost_team
     ENV['MATTERMOST_TOKEN_WHERE'] = auth_token
     ENV['MATTERMOST_TOKEN_WHEREIS'] = auth_token
+    ENV['MATTERMOST_IPS'] = "#{mattermost_ip} some.other.ip"
+    allow_any_instance_of(ActionDispatch::Request).to receive(:remote_ip)
+      .and_return(mattermost_ip)
+  end
+
+  shared_examples "fails" do
+    it "fails" do
+      create
+      expect(response.status).to eq(401)
+    end
+  end
+
+  shared_examples "mattermost command" do
+    it "executes the correct command and returns info Mattermost expects" do
+      expect(command).to receive(:new).with(
+        { user_name: username, text: text, token: auth_token }
+      ).and_call_original
+      create
+
+      # Mattermost needs these two keys to render a response
+      expect(JSON.parse(response.body).keys).to include("response_type")
+      expect(JSON.parse(response.body).keys).to include("text")
+    end
+
+    context "from a non-mattermost IP" do
+      before do
+        allow_any_instance_of(ActionDispatch::Request).to receive(:remote_ip)
+          .and_return("1.2.3.4")
+      end
+
+      include_examples "fails"
+    end
   end
 
   describe "#where" do
+    let(:command) { Commands::Where }
     subject(:create) { post :where, slash_params }
 
-    it "fails" do
-      create
-      expect(response.status).to eq(401)
-    end
-
-    context "when Mattermost's token is present" do
-      let(:command_args) { { user_name: username, text: text, token: auth_token } }
-      let(:extra_params) { { token: auth_token, team_domain: mattermost_team } }
-
-      it "delegates to the correct Commands subclass" do
-        expect(Commands::Where).to receive(:new).with(command_args)
-          .and_call_original
-        create
-
-        # Mattermost needs these two keys to render a response
-        expect(body.keys).to include("response_type", "text")
-      end
-    end
+    include_examples "mattermost command"
   end
 
   describe "#where_is" do
+    let(:command) { Commands::WhereIs }
     subject(:create) { post :where_is, slash_params }
 
-    it "fails" do
-      create
-      expect(response.status).to eq(401)
-    end
-
-    context "when Mattermost's token is present" do
-      let(:command_args) { { user_name: username, text: text, token: auth_token } }
-      let(:extra_params) { { token: auth_token, team_domain: mattermost_team } }
-
-      it "delegates to the correct Commands subclass" do
-        expect(Commands::WhereIs).to receive(:new).with(command_args)
-          .and_call_original
-        create
-
-        mattermost_keys.each do |key|
-          expect(body.keys).to include(key)
-        end
-      end
-    end
+    include_examples "mattermost command"
   end
 end
