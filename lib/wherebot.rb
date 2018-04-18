@@ -9,7 +9,7 @@ class Wherebot
   class << self
     def update_wheres(destructive: false)
       @destructive = destructive
-      open_imap
+      create_new_imap
       sign_into_wheremail
       import_emails
       clean_up
@@ -29,7 +29,8 @@ class Wherebot
 
     private
 
-    def open_imap
+    def create_new_imap
+      # create a fresh new instance of IMAP for the current import.
       @imap = Net::IMAP.new(
         ENV['INCOMING_MAIL_SERVER'], ENV['INCOMING_MAIL_PORT'], true
       )
