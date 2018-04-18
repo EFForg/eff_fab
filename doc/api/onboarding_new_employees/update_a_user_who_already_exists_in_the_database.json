@@ -45,7 +45,7 @@
       "request_body": "name=Test+User&username=colleen.stracke&personal_emails[]=maximillian.pacocha%40wildermanheidenreich.info&personal_emails[]=virginie%40nikolaus.org&staff=false&role=admin&title=Pizzamancer",
       "request_headers": {
         "Accept": "application/json",
-        "Authorization": "c3a88a1bf035ec4d412f074999a5ab02"
+        "Apiauthorization": "ea028a7e0f3ef20f04ed7f2e749c3dd4"
       },
       "request_query_parameters": {
       },
