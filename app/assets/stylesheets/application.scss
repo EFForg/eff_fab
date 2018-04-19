@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require_self
+ *= require "theme.materialize.css"
  *  require_tree .
  */
 
@@ -20,4 +21,3 @@
 @import "susy/susy";
 @import "styles/main.scss";
 @import "styles/admin.scss";
-@import "theme.materialize.css";
