@@ -47,9 +47,9 @@ amazon_access_key_id:
 amazon_secret_access_key:
 amazon_region: 'us-west-1' # this is part of the subdomain url to your bucket
 amazon_bucket_name: 'eff-fab'
-
 amazon_s3_host_name: # You can specify a domain covered by fastly for speed bonus + anonymity. or this will be determined from region and bucket.
 
+SENTRY_DSN: ''
 
 ########################
 # Environment Specific #
