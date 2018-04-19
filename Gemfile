@@ -17,6 +17,7 @@ gem 'rspec_api_documentation'
 gem "apitome"
 gem 'rails-html-sanitizer', ">= 1.0.4" # address CVE-2018-3741
 gem 'jquery-tablesorter'
+gem "sentry-raven"
 
 group :development, :test do
   gem 'byebug'

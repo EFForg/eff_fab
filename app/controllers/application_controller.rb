@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :login_by_basic_auth
+  before_action :set_raven_context
   before_action :set_hero
 
   def admin_only
@@ -30,5 +31,11 @@ class ApplicationController < ActionController::Base
     @hero_text = "Where are your coworkers located on the time/space continuum, and what are they doing now?"
     @hero_title = "Forward & Back"
     @hero_image = ActionController::Base.helpers.asset_path('forward-text-white.svg')
+  end
+
+  def set_raven_context
+    return unless Rails.env.production?
+    Raven.user_context(id: current_user.id)
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 end
