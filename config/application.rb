@@ -29,20 +29,6 @@ module EffFab
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
-    # allow Mattermost slash commands
-    config.mattermost_settings = {
-      domain: ENV['MATTERMOST_DOMAIN'],
-      where_token: ENV['MATTERMOST_TOKEN_WHERE'],
-      whereis_token: ENV['MATTERMOST_TOKEN_WHEREIS']
-    }
-    #TODO: remove this when we move to dotenv
-    config.imap_settings = {
-      port: ENV['INCOMING_MAIL_PORT'],
-      server: ENV['INCOMING_MAIL_SERVER'],
-      username: ENV['WHEREBOT_USER_NAME'],
-      password: ENV['WHEREBOT_PASSWORD']
-    }
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
