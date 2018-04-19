@@ -21,7 +21,7 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: <%= ENV['db_adapter'] %>
+  adapter: mysql2
   encoding: <%= ENV['db_encoding'] %>
   database: <%= ENV['db_database'] %>
   username: <%= ENV['db_username'] %>

@@ -48,25 +48,7 @@ end
 
 group :production do
   gem 'rails_12factor'
-
-  # Include database gems for the adapters found in the database
-  # configuration settings key for production
-  require 'erb'
-  require 'yaml'
-  application_file = File.join(File.dirname(__FILE__), "config/application.yml")
-  if File.exist?(application_file)
-    application_config = YAML::load(ERB.new(IO.read(application_file)).result)
-    db_adapter = application_config['production']['db_adapter']
-    if db_adapter == "mysql2"
-      gem 'mysql2'
-    elsif db_adapter == "postgresql"
-      gem 'pg'
-    else
-      warn("No adapter found in config/application.yml, please configure it first")
-    end
-  else
-    warn("Please configure your config/application.yml first")
-  end
+  gem 'mysql2'
 end
 group :test do
   gem 'capybara'
