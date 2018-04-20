@@ -6,7 +6,6 @@ describe Api::V1::MattermostController do
   let(:username) { user.email.split("@").first }
   let(:text) { Faker::ChuckNorris.fact.parameterize('+') }
   let(:auth_token) { "let_me_in_ok" }
-  let(:mattermost_ip) { '127.238.349' }
   let(:slash_params) do
     # https://docs.mattermost.com/developer/slash-commands.html
     { command: command, text: text, token: auth_token, user_name: username, format: :json }
@@ -15,16 +14,6 @@ describe Api::V1::MattermostController do
   before do
     ENV['MATTERMOST_TOKEN_WHERE'] = auth_token
     ENV['MATTERMOST_TOKEN_WHEREIS'] = auth_token
-    ENV['MATTERMOST_IPS'] = "#{mattermost_ip} some.other.ip"
-    allow_any_instance_of(ActionDispatch::Request).to receive(:remote_ip)
-      .and_return(mattermost_ip)
-  end
-
-  shared_examples "fails" do
-    it "fails" do
-      create
-      expect(response.status).to eq(401)
-    end
   end
 
   shared_examples "mattermost command" do
@@ -37,15 +26,6 @@ describe Api::V1::MattermostController do
       # Mattermost needs these two keys to render a response
       expect(JSON.parse(response.body).keys).to include("response_type")
       expect(JSON.parse(response.body).keys).to include("text")
-    end
-
-    context "from a non-mattermost IP" do
-      before do
-        allow_any_instance_of(ActionDispatch::Request).to receive(:remote_ip)
-          .and_return("1.2.3.4")
-      end
-
-      include_examples "fails"
     end
   end
 

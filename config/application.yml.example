@@ -36,7 +36,6 @@ mail_password: ''
 ########################
 MATTERMOST_TOKEN_WHERE: ""
 MATTERMOST_TOKEN_WHEREIS: ""
-MATTERMOST_IPS: ""
 
 ########################
 #     File Storage     #
