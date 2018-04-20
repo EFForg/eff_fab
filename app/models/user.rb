@@ -18,9 +18,9 @@ class User < ActiveRecord::Base
   validates_associated :team
 
   belongs_to :team
-  has_one :api_key, foreign_key: :owner_id
-  has_many :fabs
-  has_many :where_messages
+  has_one :api_key, foreign_key: :owner_id, dependent: :destroy
+  has_many :fabs, dependent: :destroy
+  has_many :where_messages, dependent: :destroy
   has_one :last_whereabouts, -> { order(sent_at: :desc) }, class_name: "WhereMessage"
   has_one :current_period_fab,
     -> { where(period: Fab.get_start_of_current_fab_period..Fab.get_start_of_current_fab_period + 7.days) },
