@@ -37,6 +37,6 @@ class Api::V1::UsersController < Api::ApplicationController
   end
 
   def email
-    secure_params[:email] || "#{params[:username]}@eff.org"
+    "#{params[:username]}@eff.org"
   end
 end
