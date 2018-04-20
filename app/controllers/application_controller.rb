@@ -35,7 +35,11 @@ class ApplicationController < ActionController::Base
 
   def set_raven_context
     return unless Rails.env.production?
-    Raven.user_context(id: current_user.id)
+    if current_user
+      Raven.user_context(id: current_user.id, email: current_user.email)
+    else
+      Raven.user_context(ip_address: request.ip)
+    end
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 end
