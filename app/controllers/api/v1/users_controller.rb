@@ -6,7 +6,7 @@ class Api::V1::UsersController < Api::ApplicationController
     @user = User.where(email: email).first_or_initialize
     @user.update(secure_params.merge(
       password: User.generate_password,
-      personal_emails: @user.personal_emails.concat(secure_params[:personal_emails])
+      personal_emails: personal_emails
     ))
 
     if @user.save
@@ -28,15 +28,19 @@ class Api::V1::UsersController < Api::ApplicationController
   end
 
   private
+
   def secure_params
     params.permit(
       :name, :email, :role, :title, :avatar, :team_id, :staff,
-      { personal_emails: [] },
       { fabs_attributes: [:id, :gif_tag_file_name] }
     )
   end
 
   def email
     secure_params[:email] || "#{params[:username]}@eff.org"
+  end
+
+  def personal_emails
+    params.fetch(:personal_emails, '').split(',').flatten.compact.uniq
   end
 end
