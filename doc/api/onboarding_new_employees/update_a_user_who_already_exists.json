@@ -3,16 +3,17 @@
   "resource_explanation": null,
   "http_method": "POST",
   "route": "api/v1/users",
-  "description": "Update a user who already exists in the database",
-  "explanation": "If the username matches an existing user,\n            that user will be updated.",
+  "description": "Update a user who already exists",
+  "explanation": "If the username matches an existing user,\n          that user will be updated.",
   "parameters": [
     {
+      "required": true,
       "name": "username",
       "description": "The EFF-wide username. The part before '@' in their email"
     },
     {
       "name": "email",
-      "description": "Their EFF email. Either email or username must be present."
+      "description": "Their EFF email. Username is not required if email is present."
     },
     {
       "name": "personal_emails",
@@ -42,27 +43,27 @@
     {
       "request_method": "POST",
       "request_path": "api/v1/users",
-      "request_body": "name=Test+User&username=colleen.stracke&personal_emails[]=maximillian.pacocha%40wildermanheidenreich.info&personal_emails[]=virginie%40nikolaus.org&staff=false&role=admin&title=Pizzamancer",
+      "request_body": "name=Test+User&username=dejon.beatty&personal_emails[]=leola%40volkman.io&personal_emails[]=nikko_tromp%40auerdare.info&staff=false&role=admin&title=Pizzamancer",
       "request_headers": {
         "Accept": "application/json",
-        "Apiauthorization": "ea028a7e0f3ef20f04ed7f2e749c3dd4"
+        "Apiauthorization": "810834a332d6781980926c1ee5fb4d54"
       },
       "request_query_parameters": {
       },
       "request_content_type": "application/x-www-form-urlencoded",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\n  \"success\": true,\n  \"user\": \"{\\\"id\\\":2,\\\"email\\\":\\\"colleen.stracke@eff.org\\\",\\\"created_at\\\":\\\"2018-04-13T17:16:21.865-07:00\\\",\\\"updated_at\\\":\\\"2018-04-13T17:16:21.885-07:00\\\",\\\"name\\\":\\\"Test User\\\",\\\"role\\\":\\\"admin\\\",\\\"team_id\\\":1,\\\"title\\\":\\\"Pizzamancer\\\",\\\"avatar_file_name\\\":null,\\\"avatar_content_type\\\":null,\\\"avatar_file_size\\\":null,\\\"avatar_updated_at\\\":null,\\\"personal_emails\\\":[\\\"maximillian.pacocha@wildermanheidenreich.info\\\",\\\"virginie@nikolaus.org\\\"],\\\"staff\\\":false}\"\n}",
+      "response_body": "{\n  \"success\": true,\n  \"user\": \"{\\\"id\\\":2,\\\"email\\\":\\\"dejon.beatty@eff.org\\\",\\\"created_at\\\":\\\"2018-04-20T17:10:20.303-07:00\\\",\\\"updated_at\\\":\\\"2018-04-20T17:10:20.342-07:00\\\",\\\"name\\\":\\\"Test User\\\",\\\"role\\\":\\\"admin\\\",\\\"team_id\\\":1,\\\"title\\\":\\\"Pizzamancer\\\",\\\"avatar_file_name\\\":null,\\\"avatar_content_type\\\":null,\\\"avatar_file_size\\\":null,\\\"avatar_updated_at\\\":null,\\\"personal_emails\\\":[\\\"leola@volkman.io\\\",\\\"nikko_tromp@auerdare.info\\\"],\\\"staff\\\":false}\"\n}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "application/json; charset=utf-8",
-        "ETag": "W/\"86474e03f7acd5063d73863b88e1160d\"",
+        "ETag": "W/\"e5112d1e62f785a1bd3f846842abe2b1\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "45ec516a-7854-4ef7-b3ec-6ee3cdb14265",
-        "X-Runtime": "0.023532",
-        "Content-Length": "476"
+        "X-Request-Id": "84c2696c-2824-4c38-a489-1a0073758b44",
+        "X-Runtime": "0.042418",
+        "Content-Length": "448"
       },
       "response_content_type": "application/json; charset=utf-8",
       "curl": null

@@ -4,15 +4,16 @@
   "http_method": "POST",
   "route": "api/v1/users",
   "description": "Onboard a user",
-  "explanation": "Authentication requires sending an 'APIAuthorization' header\n          with an admin user's API token, in addition to the basic auth.\n          Admins can create and view an API token by visiting a user's profile.\n          A username or email must be present; all other info is optional.",
+  "explanation": "Authentication requires sending an 'APIAuthorization' header\n        with an admin user's API token, in addition to the basic auth.\n        Admins can create and view an API token by visiting a user's profile.\n        A username or email must be present; all other info is optional.",
   "parameters": [
     {
+      "required": true,
       "name": "username",
       "description": "The EFF-wide username. The part before '@' in their email"
     },
     {
       "name": "email",
-      "description": "Their EFF email. Either email or username must be present."
+      "description": "Their EFF email. Username is not required if email is present."
     },
     {
       "name": "personal_emails",

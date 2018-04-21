@@ -5,13 +5,6 @@
       "explanation": null,
       "examples": [
         {
-          "description": "Without authentication, fails",
-          "link": "onboarding_new_employees/without_authentication,_fails.json",
-          "groups": "all",
-          "route": "api/v1/users",
-          "method": "post"
-        },
-        {
           "description": "Onboard a user",
           "link": "onboarding_new_employees/onboard_a_user.json",
           "groups": "all",
@@ -19,8 +12,8 @@
           "method": "post"
         },
         {
-          "description": "Update a user who already exists in the database",
-          "link": "onboarding_new_employees/update_a_user_who_already_exists_in_the_database.json",
+          "description": "Update a user who already exists",
+          "link": "onboarding_new_employees/update_a_user_who_already_exists.json",
           "groups": "all",
           "route": "api/v1/users",
           "method": "post"
@@ -32,15 +25,21 @@
       "explanation": null,
       "examples": [
         {
-          "description": "Without authentication, fails",
-          "link": "offboarding_previous_employees/without_authentication,_fails.json",
+          "description": "Removes a user from the database",
+          "link": "offboarding_previous_employees/removes_a_user_from_the_database.json",
           "groups": "all",
           "route": "/api/v1/users",
           "method": "delete"
-        },
+        }
+      ]
+    },
+    {
+      "name": "What is going wrong?",
+      "explanation": null,
+      "examples": [
         {
-          "description": "Removes a user from the database",
-          "link": "offboarding_previous_employees/removes_a_user_from_the_database.json",
+          "description": "APIAuthorization header is missing or wrong",
+          "link": "what_is_going_wrong?/apiauthorization_header_is_missing_or_wrong.json",
           "groups": "all",
           "route": "/api/v1/users",
           "method": "delete"
