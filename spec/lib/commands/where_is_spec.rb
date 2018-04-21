@@ -1,17 +1,18 @@
 require 'commands'
 
 RSpec.describe Commands::WhereIs do
-  let(:user) { FactoryGirl.create(:user, email: "cool.kitten@eff.org") }
+  let(:asker) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:extra_args) { {} }
-  let(:args) { { user_name: user.username, command: 'where_is' }.merge(extra_args) }
-  let(:command) { described_class.new(args) }
-
-  before do
-    ENV['MATTERMOST_TOKEN_WHEREIS'] = 'valid_token'
+  let(:args) do
+    { user_name: asker.username, command: 'where_is', text: user.username }
+      .merge(extra_args)
   end
 
+  before { ENV['MATTERMOST_TOKEN_WHEREIS'] = 'valid_token' }
+
   describe ".response" do
-    subject(:response_body) { command.response }
+    subject(:response_body) { described_class.new(args).response }
 
     before do
       2.times do

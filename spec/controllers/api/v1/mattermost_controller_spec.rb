@@ -4,7 +4,6 @@ require 'commands'
 describe Api::V1::MattermostController do
   let!(:user) { FactoryGirl.create(:user, email: "cool.kittens@eff.org") }
   let(:username) { user.email.split("@").first }
-  let(:text) { Faker::ChuckNorris.fact.parameterize('+') }
   let(:auth_token) { "let_me_in_ok" }
   let(:slash_params) do
     # https://docs.mattermost.com/developer/slash-commands.html
@@ -30,6 +29,7 @@ describe Api::V1::MattermostController do
   end
 
   describe "#where" do
+    let(:text) { Faker::ChuckNorris.fact.parameterize('+') }
     let(:command) { Commands::Where }
     subject(:create) { post :where, slash_params }
 
@@ -37,6 +37,7 @@ describe Api::V1::MattermostController do
   end
 
   describe "#where_is" do
+    let(:text) { user.username }
     let(:command) { Commands::WhereIs }
     subject(:create) { post :where_is, slash_params }
 

@@ -3,13 +3,10 @@ class Commands
   RESPONSE_TYPE =  { private: "ephemeral" }
 
   def initialize(args)
+    @body = args[:text]
     @username = args[:user_name]
     @token = args[:token]
     @command = args[:command]
-  end
-
-  def target_user
-    @user ||= User.find_by(email: "#{@username}@eff.org")
   end
 
   def response
@@ -56,12 +53,15 @@ class Commands::WhereIs < Commands
       "#{target_user.name} hasn't set a where recently."
     end
   end
+
+  def target_user
+    @user ||= User.find_by(email: "#{@body.split(' ').first}@eff.org")
+  end
 end
 
 class Commands::Where < Commands
-  def initialize(args)
-    @body = args[:text]
-    super
+  def target_user
+    @user ||= User.find_by(email: "#{@username}@eff.org")
   end
 
   def command
