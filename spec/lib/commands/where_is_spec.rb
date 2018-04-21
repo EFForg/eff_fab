@@ -33,15 +33,16 @@ RSpec.describe Commands::WhereIs do
 
       it "responds with the most recent where" do
         time = user.last_whereabouts.sent_at
-        expect(response_body[:text]).to include(time.strftime('%-l:%M%P'))
-        expect(response_body[:text]).to include(time.strftime('%m/%d/%y'))
-        expect(response_body[:text]).to include(user.name)
-        expect(response_body[:text]).to include(user.last_whereabouts.body)
+        attachment = response_body[:attachments].first
+        expect(attachment[:title]).to include(time.strftime('%-l:%M%P'))
+        expect(attachment[:title]).to include(time.strftime('%m/%d/%y'))
+        expect(attachment[:author_name]).to include(user.name)
+        expect(attachment[:text]).to include(user.last_whereabouts.body)
       end
 
-      it "responds with the necessary keys" do
+      it "responds with a pretty attachment" do
         expect(response_body.keys).to match_array(
-          [:response_type, :text, :username]
+          [:response_type, :attachments, :username]
         )
       end
 

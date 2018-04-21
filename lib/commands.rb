@@ -12,10 +12,8 @@ class Commands
   def response
     if authentic?
       {
-        response_type: response_type,
-        username: USERNAME[:wherebot],
-        text: message
-      }
+        response_type: response_type, username: USERNAME[:wherebot]
+      }.merge(response_body)
     else
       { failure: "Could not authenticate." }
     end
@@ -27,6 +25,10 @@ class Commands
 
   def command
     raise NoMethodError, "Subclass must declare its command"
+  end
+
+  def response_body
+    raise NoMethodError, "Subclass must declare its response body"
   end
 
   private
@@ -45,15 +47,26 @@ class Commands::WhereIs < Commands
     "WhereIs"
   end
 
-  def message
+  def response_body
     if target_user.nil?
-      "I couldn't find \"#{target_username}\". Is that the right username?\n
-       A person's username is the part before \"@\" in their eff email."
+      {
+        text: "I couldn't find \"#{target_username}\". Is that the right username?\n
+               A person's username is the part before \"@\" in their eff email."
+      }
     elsif target_user.last_whereabouts.present?
       time = target_user.last_whereabouts.sent_at
-      "At #{time.strftime('%-l:%M%P')} on #{time.strftime('%m/%d/%y')}, #{target_user.name} sent \"#{target_user.last_whereabouts.body}\""
+      msg = "At #{time.strftime('%-l:%M%P')} on #{time.strftime('%m/%d/%y')}, #{target_user.name} sent \"#{target_user.last_whereabouts.body}\""
+      {
+        attachments: [{
+          fallback: msg,
+          title: "#{time.strftime('%-l:%M%P')}, #{time.strftime('%m/%d/%y')}:",
+          author_name: target_user.name,
+          text: target_user.last_whereabouts.body,
+          color: "#008800"
+        }]
+      }
     else
-      "#{target_user.name} hasn't set a where recently."
+      { text: "#{target_user.name} hasn't set a where recently." }
     end
   end
 
@@ -75,6 +88,10 @@ class Commands::Where < Commands
 
   def command
     "Where"
+  end
+
+  def response_body
+    { text: message }
   end
 
   def message
