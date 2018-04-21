@@ -66,6 +66,20 @@ RSpec.describe Commands::WhereIs do
           expect(response_body[:text]).to match(/I couldn't find "nope"/)
         end
       end
+
+      context "with no wheres" do
+        before { WhereMessage.destroy_all }
+
+        it "responds with a friendly message" do
+          expect(response_body[:text]).to match(/#{user.name} hasn't set a where/)
+        end
+
+        it "responds with the necessary keys" do
+          expect(response_body.keys).to match_array(
+            [:response_type, :text, :username]
+          )
+        end
+      end
     end
   end
 end
