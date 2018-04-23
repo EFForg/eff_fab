@@ -1,11 +1,11 @@
 require 'commands'
 
-RSpec.describe Commands::Where do
+RSpec.describe Commands::SetMyWhere do
   let(:user) { FactoryGirl.create(:user, email: "cool.kitten@eff.org") }
   let(:body) { "WFC AUW EOM" }
   let(:extra_args) { {} }
   let(:args) do
-    { user_name: user.username, text: body, command: 'where' }.merge(extra_args)
+    { user_name: user.username, text: body, command: 'set_my_where' }.merge(extra_args)
   end
   let(:command) { described_class.new(args) }
 
