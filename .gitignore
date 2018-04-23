@@ -36,6 +36,7 @@ public/assets/
 /coverage/
 /db/*.javadb/
 /db/*.sqlite3
+mysql/
 /doc/app/
 /doc/features.html
 /doc/specs.html
@@ -80,6 +81,7 @@ pickle-email-*.html
 .env
 .env.production
 .powenv
+docker-compose.yml
 
 # tilde files are usually backup files from a text editor
 *~
