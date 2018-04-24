@@ -1,17 +1,18 @@
 require 'commands'
 
 RSpec.describe Commands::WhereIs do
-  let(:user) { FactoryGirl.create(:user, email: "cool.kitten@eff.org") }
+  let(:asker) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:extra_args) { {} }
-  let(:args) { { user_name: user.username, command: 'where_is' }.merge(extra_args) }
-  let(:command) { described_class.new(args) }
-
-  before do
-    ENV['MATTERMOST_TOKEN_WHEREIS'] = 'valid_token'
+  let(:args) do
+    { user_name: asker.username, command: 'where_is', text: user.username }
+      .merge(extra_args)
   end
 
+  before { ENV['MATTERMOST_TOKEN_WHEREIS'] = 'valid_token' }
+
   describe ".response" do
-    subject(:response_body) { command.response }
+    subject(:response_body) { described_class.new(args).response }
 
     before do
       2.times do
@@ -32,15 +33,16 @@ RSpec.describe Commands::WhereIs do
 
       it "responds with the most recent where" do
         time = user.last_whereabouts.sent_at
-        expect(response_body[:text]).to include(time.strftime('%-l:%M%P'))
-        expect(response_body[:text]).to include(time.strftime('%m/%d/%y'))
-        expect(response_body[:text]).to include(user.name)
-        expect(response_body[:text]).to include(user.last_whereabouts.body)
+        attachment = response_body[:attachments].first
+        expect(attachment[:title]).to include(time.strftime('%-l:%M%P'))
+        expect(attachment[:title]).to include(time.strftime('%m/%d/%y'))
+        expect(attachment[:author_name]).to include(user.name)
+        expect(attachment[:text]).to include(user.last_whereabouts.body)
       end
 
-      it "responds with the necessary keys" do
+      it "responds with a pretty attachment" do
         expect(response_body.keys).to match_array(
-          [:response_type, :text, :username]
+          [:response_type, :attachments, :username]
         )
       end
 
@@ -50,6 +52,34 @@ RSpec.describe Commands::WhereIs do
 
       it "sets the username" do
         expect(response_body[:username]).to eq("Wherebot")
+      end
+
+      context "when user is not found" do
+        subject(:response_body) do
+          described_class.new(
+            {
+              user_name: asker.username, command: "where_is", text: "nope"
+            }.merge(extra_args)
+          ).response
+        end
+
+        it "returns a friendly message" do
+          expect(response_body[:text]).to match(/I couldn't find "nope"/)
+        end
+      end
+
+      context "with no wheres" do
+        before { WhereMessage.destroy_all }
+
+        it "responds with a friendly message" do
+          expect(response_body[:text]).to match(/#{user.name} hasn't set a where/)
+        end
+
+        it "responds with the necessary keys" do
+          expect(response_body.keys).to match_array(
+            [:response_type, :text, :username]
+          )
+        end
       end
     end
   end

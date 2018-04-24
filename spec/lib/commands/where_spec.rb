@@ -48,6 +48,18 @@ RSpec.describe Commands::Where do
         expect(response_body[:username]).to eq("Wherebot")
       end
 
+      context "when user is not found" do
+        subject(:response_body) do
+          described_class.new(
+            { user_name: "nope", command: "where_is" }.merge(extra_args)
+          ).response
+        end
+
+        it "returns a friendly message" do
+          expect(response_body[:text]).to match(/I couldn't save your message/)
+        end
+      end
+
       context "failure" do
         before { allow_any_instance_of(WhereMessage).to receive(:save).and_return(false) }
 
