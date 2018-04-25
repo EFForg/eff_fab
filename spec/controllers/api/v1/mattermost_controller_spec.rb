@@ -28,10 +28,10 @@ describe Api::V1::MattermostController do
     end
   end
 
-  describe "#where" do
+  describe "#set_my_where" do
     let(:text) { Faker::ChuckNorris.fact.parameterize('+') }
-    let(:command) { Commands::Where }
-    subject(:create) { post :where, slash_params }
+    let(:command) { Commands::SetMyWhere }
+    subject(:create) { post :set_my_where, slash_params }
 
     include_examples "mattermost command"
   end

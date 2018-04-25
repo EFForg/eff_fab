@@ -3,8 +3,8 @@ class Api::V1::MattermostController < Api::ApplicationController
 
   skip_before_action :login_by_basic_auth
 
-  def where
-    render json: Commands::Where.new(command_params).response
+  def set_my_where
+    render json: Commands::SetMyWhere.new(command_params).response
   end
 
   def where_is

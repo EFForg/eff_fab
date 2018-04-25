@@ -81,7 +81,7 @@ class Commands::WhereIs < Commands
   end
 end
 
-class Commands::Where < Commands
+class Commands::SetMyWhere < Commands
   def target_user
     @user ||= User.find_by(email: "#{@username}@eff.org")
   end
