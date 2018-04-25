@@ -44,8 +44,18 @@ RSpec.describe Commands::SetMyWhere do
         )
       end
 
-      it "sets the username" do
+      it "sets the response username" do
         expect(response_body[:username]).to eq("Wherebot")
+      end
+
+      context "when username contains an @" do
+        let(:args) do
+          { user_name: "@#{user.username}", text: body, command: 'where' }
+            .merge(extra_args)
+        end
+        it "finds the correct user" do
+          expect { response_body }.to change(user.where_messages, :count).by(1)
+        end
       end
 
       context "when user is not found" do

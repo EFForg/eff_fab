@@ -76,13 +76,14 @@ class Commands::WhereIs < Commands
   private
 
   def target_username
-    @body.split(' ').first
+    @body.split(' ').first.remove("@")
   end
 end
 
 class Commands::SetMyWhere < Commands
   def target_user
-    @user ||= User.find_by(email: "#{@username}@eff.org")
+    username = @username.remove("@")
+    @user ||= User.find_by(email: "#{username}@eff.org")
   end
 
   def command
