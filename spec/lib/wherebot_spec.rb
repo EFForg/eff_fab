@@ -136,7 +136,7 @@ RSpec.describe Wherebot do
 
       context "when email can't be saved" do
         before do
-          allow_any_instance_of(WhereMessage).to receive(:save).and_return(false)
+          allow_any_instance_of(WhereMessage).to receive(:save!).and_return(false)
         end
 
 

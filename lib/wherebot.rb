@@ -84,7 +84,7 @@ class Wherebot
       )
       wm.body = body
 
-      if wm.save
+      if wm.save!
         destroy_message
         true
       else
