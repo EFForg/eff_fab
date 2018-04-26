@@ -6,6 +6,8 @@
 #
 default: &default
   adapter: sqlite3
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
   pool: 5
   timeout: 5000
 
@@ -21,10 +23,12 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: <%= ENV['db_adapter'] %>
+  adapter: mysql2
   encoding: <%= ENV['db_encoding'] %>
   database: <%= ENV['db_database'] %>
   username: <%= ENV['db_username'] %>
   password: <%= ENV['db_password'] %>
   host: <%= ENV['db_host'] %>
   port: <%= ENV['db_port'] %>
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
