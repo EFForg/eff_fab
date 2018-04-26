@@ -10,6 +10,7 @@ services:
 
     volumes:
       - .:/opt/fab
+      - /opt/fab/tmp
 
     env_file: .env
 
