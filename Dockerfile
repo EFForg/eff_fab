@@ -29,15 +29,13 @@ RUN cd / && curl -sLo phantomjs.tar.bz2 https://github.com/Medium/phantomjs/rele
   tar -jxvf phantomjs.tar.bz2 > /dev/null && \
   rm phantomjs.tar.bz2
 
-# TODO: put stuff in the crontab
-# Set up crontab.
-#RUN echo "*/15 * * * * su -s/bin/sh www-data -c \
-  #'cd /opt/fab && bundle exec rake blog:update' >>/proc/1/fd/1 2>&1" >>/etc/crontabs/root \
-
 COPY Gemfile* ./
 RUN bundle install
 
 COPY . .
+
+COPY docker/crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/crontab
 
 RUN if [ "$BUILD_ENV" = "production" ]; \
   then bundle exec rake assets:precompile \

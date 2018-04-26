@@ -23,3 +23,14 @@ services:
 
     volumes:
       - ./mysql:/var/lib/mysql/
+
+  # Uncomment these services to run cron
+  #
+  # cron:
+  #   build: .
+  #   user: root
+  #   restart: always
+  #   command: cron -f
+  #   env_file: .env
+  #   environment:
+  #     ROLE: worker
