@@ -50,7 +50,7 @@ class Commands::WhereIs < Commands
   def response_body
     if target_user.nil?
       {
-        text: "I couldn't find \"#{target_username}\". Is that the right username?  A person's username is the part before \"@\" in their eff email."
+        text: "I couldn't find \"#{target_username}\". Is that the right username?\n  A person's username is the part before \"@\" in their eff email."
       }
     elsif target_user.last_whereabouts.present?
       time = target_user.last_whereabouts.sent_at
