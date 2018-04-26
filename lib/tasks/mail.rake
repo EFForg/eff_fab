@@ -27,4 +27,11 @@ namespace :mail do
   task destroy_old_wheres: :environment do |t, args|
     Wherebot.forget_old_messages
   end
+
+  desc "Remind people to send their PTO to Bamboo"
+  task send_pto_reminders: :environment do
+    User.where(staff: true).each do |user|
+      PtoMailer.remind(user).deliver
+    end
+  end
 end
