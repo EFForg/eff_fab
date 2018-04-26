@@ -84,15 +84,10 @@ class Wherebot
       )
       wm.body = body
 
-      if wm.save!
-        destroy_message
-        true
-      else
-        Raven.captureException(e)
-        false
-      end
+      destroy_message if wm.save!
     rescue => e
       Raven.captureException(e)
+      false
     end
 
     def body
@@ -174,6 +169,8 @@ class Wherebot
 
       @imap.copy(@id, TRASH)
       @imap.store(@id, "+FLAGS", [:Deleted])
+
+      true
     end
   end
 end
