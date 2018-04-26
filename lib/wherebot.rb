@@ -88,11 +88,11 @@ class Wherebot
         destroy_message
         true
       else
-        Rails.logger.error e
+        Raven.captureException(e)
         false
       end
     rescue => e
-      Rails.logger.error e
+      Raven.captureException(e)
     end
 
     def body

@@ -139,9 +139,14 @@ RSpec.describe Wherebot do
           allow_any_instance_of(WhereMessage).to receive(:save).and_return(false)
         end
 
-        it "records the failure" do
-          expect(Rails.logger).to receive(:error)
-          wherebot_message.create
+
+        it "skips the unsavable email and keeps going" do
+          expect { wherebot_message.create }.not_to raise_error
+        end
+
+        it "tells Sentry about it" do
+          expect(Raven).to receive(:captureException)
+           wherebot_message.create
         end
 
         context "when something goes horribly wrong" do
@@ -150,13 +155,13 @@ RSpec.describe Wherebot do
               .to receive(:save).and_raise("oh no you don't!")
           end
 
-          it "persists, nonetheless" do
+          it "skips the unsavable email and keeps going" do
             expect { wherebot_message.create }.not_to raise_error
           end
 
-          it "records the failure" do
-            expect(Rails.logger).to receive(:error)
-            wherebot_message.create
+          it "tells Sentry about it" do
+            expect(Raven).to receive(:captureException)
+             wherebot_message.create
           end
         end
       end
