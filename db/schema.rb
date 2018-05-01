@@ -14,78 +14,78 @@
 ActiveRecord::Schema.define(version: 20180426232903) do
 
   create_table "api_keys", force: :cascade do |t|
-    t.string   "access_token"
-    t.integer  "owner_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "access_token", limit: 255
+    t.integer  "owner_id",     limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "fabs", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",              limit: 4
     t.datetime "period"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.string   "gif_tag_file_name"
-    t.string   "gif_tag_content_type"
-    t.integer  "gif_tag_file_size"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "gif_tag_file_name",    limit: 255
+    t.string   "gif_tag_content_type", limit: 255
+    t.integer  "gif_tag_file_size",    limit: 4
     t.datetime "gif_tag_updated_at"
   end
 
-  add_index "fabs", ["period"], name: "index_fabs_on_period"
-  add_index "fabs", ["user_id"], name: "index_fabs_on_user_id"
+  add_index "fabs", ["period"], name: "index_fabs_on_period", using: :btree
+  add_index "fabs", ["user_id"], name: "index_fabs_on_user_id", using: :btree
 
   create_table "notes", force: :cascade do |t|
-    t.integer  "fab_id"
-    t.text     "body"
+    t.integer  "fab_id",     limit: 4
+    t.text     "body",       limit: 65535
     t.boolean  "forward"
     t.boolean  "achivement"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "notes", ["fab_id"], name: "index_notes_on_fab_id"
+  add_index "notes", ["fab_id"], name: "index_notes_on_fab_id", using: :btree
 
   create_table "teams", force: :cascade do |t|
-    t.text     "name"
-    t.integer  "weight"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "name",       limit: 65535
+    t.integer  "weight",     limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 191, default: "", null: false
-    t.string   "encrypted_password",                 default: "", null: false
+    t.string   "email",                  limit: 191,   default: "",   null: false
+    t.string   "encrypted_password",     limit: 255,   default: "",   null: false
     t.string   "reset_password_token",   limit: 191
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,     default: 0,    null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "name"
-    t.integer  "role"
-    t.integer  "team_id"
-    t.string   "title"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.string   "name",                   limit: 255
+    t.integer  "role",                   limit: 4
+    t.integer  "team_id",                limit: 4
+    t.string   "title",                  limit: 255
+    t.string   "avatar_file_name",       limit: 255
+    t.string   "avatar_content_type",    limit: 255
+    t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
-    t.text     "personal_emails",                    default: "--- []\n"
-    t.boolean  "staff",                              default: true
+    t.text     "personal_emails",        limit: 65535
+    t.boolean  "staff",                                default: true
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["team_id"], name: "index_users_on_team_id"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["team_id"], name: "index_users_on_team_id", using: :btree
 
   create_table "where_messages", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",    limit: 4
     t.datetime "sent_at"
-    t.text     "body"
-    t.string   "provenance"
+    t.text     "body",       limit: 65535
+    t.string   "provenance", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

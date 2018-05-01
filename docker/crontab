@@ -1,0 +1,2 @@
+*/10 * * * * root su -s/bin/sh www-data -c '. /var/www/.profile &&cd /opt/fab && bundle exec rake mail:update_wheres' >>/proc/1/fd/1 2>&1
+0 4 * * * root su -s/bin/sh www-data -c '. /var/www/.profile &&cd /opt/fab && bundle exec rake mail:forget_old_wheres' >>/proc/1/fd/1 2>&1
