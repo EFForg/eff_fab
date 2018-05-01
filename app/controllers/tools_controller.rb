@@ -62,7 +62,7 @@ class ToolsController < ApplicationController
 
   def populate_this_weeks_fabs
     new_records_count = 0
-    User.all.each do |u|
+    User.staff.each do |u|
       f = u.fabs.find_or_build_this_periods_fab
       if f.new_record?
         f.save
