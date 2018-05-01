@@ -4,17 +4,12 @@
   "http_method": "DELETE",
   "route": "/api/v1/users",
   "description": "Removes a user from the database",
-  "explanation": "If basic auth in addition to an APIAuthorization header containing\n          a valid admin's API token is present, the specified user will be removed from\n          the app.  Either username or email must be present to identify the user.",
+  "explanation": "If basic auth in addition to an APIAuthorization header containing\n        a valid admin's API token is present, the specified user will be removed from\n        the app.  Either username or email must be present to identify the user.",
   "parameters": [
     {
-      "scope": "user",
+      "required": true,
       "name": "username",
       "description": "The EFF-wide username; the part before '@eff.org' in their email"
-    },
-    {
-      "scope": "user",
-      "name": "email",
-      "description": "The user's EFF email"
     }
   ],
   "response_fields": [

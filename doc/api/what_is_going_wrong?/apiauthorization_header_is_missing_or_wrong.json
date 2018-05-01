@@ -1,13 +1,13 @@
 {
-  "resource": "Offboarding previous employees",
+  "resource": "What is going wrong?",
   "resource_explanation": null,
   "http_method": "DELETE",
   "route": "/api/v1/users",
-  "description": "Without authentication, fails",
+  "description": "APIAuthorization header is missing or wrong",
   "explanation": "If the APIAuthorization header is missing, or does not correspond\n        to an admin's API token, the request will fail. Admins can generate and view\n        a user's API token through their profile.",
   "parameters": [
     {
-      "scope": "user",
+      "required": true,
       "name": "username",
       "description": "The EFF-wide username; the part before '@eff.org' in their email"
     }
@@ -19,7 +19,7 @@
     {
       "request_method": "DELETE",
       "request_path": "/api/v1/users",
-      "request_body": "username=modesto.turner",
+      "request_body": null,
       "request_headers": {
       },
       "request_query_parameters": {
@@ -34,8 +34,8 @@
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "text/html",
         "Cache-Control": "no-cache",
-        "X-Request-Id": "22e9ed60-e5d7-46cb-92b2-42c781ce8cd5",
-        "X-Runtime": "0.002504",
+        "X-Request-Id": "1e31b77b-3624-47f2-856d-580021cecdc6",
+        "X-Runtime": "0.002629",
         "Content-Length": "0"
       },
       "response_content_type": "text/html",
