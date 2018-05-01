@@ -43,7 +43,8 @@ function instantiateOrResetParalax() {
 function sortTables() {
   $(".tablesorter").tablesorter({
     theme: 'materialize',
-    widgets: ['filter']
+    widgets: ['filter'],
+    sortLocaleCompare: true
   });
 };
 

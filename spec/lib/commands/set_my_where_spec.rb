@@ -1,11 +1,11 @@
 require 'commands'
 
-RSpec.describe Commands::Where do
+RSpec.describe Commands::SetMyWhere do
   let(:user) { FactoryGirl.create(:user, email: "cool.kitten@eff.org") }
   let(:body) { "WFC AUW EOM" }
   let(:extra_args) { {} }
   let(:args) do
-    { user_name: user.username, text: body, command: 'where' }.merge(extra_args)
+    { user_name: user.username, text: body, command: 'set_my_where' }.merge(extra_args)
   end
   let(:command) { described_class.new(args) }
 
@@ -46,6 +46,18 @@ RSpec.describe Commands::Where do
 
       it "sets the username" do
         expect(response_body[:username]).to eq("Wherebot")
+      end
+
+      context "when user is not found" do
+        subject(:response_body) do
+          described_class.new(
+            { user_name: "nope", command: "where_is" }.merge(extra_args)
+          ).response
+        end
+
+        it "returns a friendly message" do
+          expect(response_body[:text]).to match(/I couldn't save your message/)
+        end
       end
 
       context "failure" do

@@ -19,7 +19,7 @@
             <div class='description'><%= time_since(where.sent_at) %></span>
           </td>
           <td>
-            <%= mail_to(user.email, "Email: #{user.email}", subject: reply_subject(where)) %>
+            <%= mail_to(user.email, "Email: #{user.email}") %>
             <br />
             <%= link_to "Mattermost: @#{user.username}", mattermost_dm_link(user), target: "_blank" %>
           </td>

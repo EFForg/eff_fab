@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       end
       resources :mattermost, only: [] do
         collection do
-          post :where
+          post :set_my_where
           post :where_is
         end
       end
