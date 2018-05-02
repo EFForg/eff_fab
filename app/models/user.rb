@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
 
   before_save { |t| t.email = t.email.downcase }
 
+  scope :staff, -> { where(staff: true) }
+
   # this function returns the FAB due for the upcoming week, or builds it if
   # no such fab already exists
   def upcoming_fab
