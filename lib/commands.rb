@@ -50,7 +50,7 @@ class Commands::WhereIs < Commands
   def response_body
     if target_user.nil?
       {
-        text: "I couldn't find \"#{target_username}\". Is that the right username?\n  A person's username is the part before \"@\" in their eff email."
+        text: %(I couldn't find "#{target_username}".  Try typing their Mattermost name.)
       }
     elsif target_user.last_whereabouts.present?
       time = target_user.last_whereabouts.sent_at
@@ -76,13 +76,14 @@ class Commands::WhereIs < Commands
   private
 
   def target_username
-    @body.split(' ').first
+    @body.split(' ').first.remove("@")
   end
 end
 
 class Commands::SetMyWhere < Commands
   def target_user
-    @user ||= User.find_by(email: "#{@username}@eff.org")
+    username = @username.remove("@")
+    @user ||= User.find_by(email: "#{username}@eff.org")
   end
 
   def command
@@ -95,7 +96,7 @@ class Commands::SetMyWhere < Commands
 
   def message
     if target_user.present? && create_where
-      "Your whereabouts are now set to \"#{@body}\"."
+      %(Your whereabouts are now set to "#{@body}".)
     else
       "I couldn't save your message. Better send it it to where@eff.org :sweat_smile:"
     end

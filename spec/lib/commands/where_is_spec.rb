@@ -12,6 +12,7 @@ RSpec.describe Commands::WhereIs do
   before { ENV['MATTERMOST_TOKEN_WHEREIS'] = 'valid_token' }
 
   describe ".response" do
+    let(:attachment) { response_body[:attachments].first }
     subject(:response_body) { described_class.new(args).response }
 
     before do
@@ -33,7 +34,6 @@ RSpec.describe Commands::WhereIs do
 
       it "responds with the most recent where" do
         time = user.last_whereabouts.sent_at
-        attachment = response_body[:attachments].first
         expect(attachment[:title]).to include(time.strftime('%-l:%M%P'))
         expect(attachment[:title]).to include(time.strftime('%m/%d/%y'))
         expect(attachment[:author_name]).to include(user.name)
@@ -52,6 +52,16 @@ RSpec.describe Commands::WhereIs do
 
       it "sets the username" do
         expect(response_body[:username]).to eq("Wherebot")
+      end
+
+      context "when username contains an @" do
+        let(:args) do
+          { user_name: asker.username, command: 'where_is', text: "@#{user.username}" }
+            .merge(extra_args)
+        end
+        it "finds the correct user" do
+          expect(attachment[:author_name]).to include(user.name)
+        end
       end
 
       context "when user is not found" do
