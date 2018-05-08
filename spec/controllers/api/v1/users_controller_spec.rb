@@ -69,6 +69,24 @@ describe Api::V1::UsersController do
           )
         end
       end
+
+      context "without changes" do
+        # techOps uses this endpoint to create, update, and view users.
+        let(:personal_emails) { ['hi@ok.com', 'yes@also.com'] }
+        let!(:user) { FactoryGirl.create(:user, personal_emails: personal_emails) }
+        let(:action) { post :create, username: user.username }
+
+        it "does not update the user" do
+          old_password = user.encrypted_password
+          action
+          expect(user.reload.encrypted_password).to eq(old_password)
+        end
+
+        it "does not overwrite the personal emails" do
+          action
+          expect(user.reload.personal_emails).to match_array(personal_emails)
+        end
+      end
     end
   end
 end
