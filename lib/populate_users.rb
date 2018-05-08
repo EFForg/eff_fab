@@ -36,9 +36,9 @@ end
 
 def create_user_from_profile(profile, team)
   attrs = {}
-  attrs[:name] = profile.css('h2').text.strip
-  attrs[:title] = profile.css('h3').text.strip
-  attrs[:email] = profile.css('.email').text.strip
+  attrs[:name] = profile.css('.views-field-title').text.strip#profile.css('h2').text.strip
+  attrs[:title] = profile.css('.views-field-field-profile-title').text.strip#profile.css('h3').text.strip
+  attrs[:email] = profile.css('.views-field-field-profile-email').text.strip#profile.css('.email').text.strip
   attrs[:team] = get_team(profile)
   attrs[:password] = User.generate_password
 
