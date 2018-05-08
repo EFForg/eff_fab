@@ -145,6 +145,9 @@ RSpec.describe Wherebot do
 
         it "tells Sentry about it" do
           expect(Raven).to receive(:captureException)
+          expect(Raven).to receive(:extra_context).with(hash_including(
+            email: mail.from, subject: mail.subject
+          ))
           wherebot_message.create
         end
       end
