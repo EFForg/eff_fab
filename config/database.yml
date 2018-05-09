@@ -1,7 +1,7 @@
 default: &default
   host: <%= ENV['DB_HOST'] %>
   port: <%= ENV['db_port'] %>
-  username: <%= ENV['db_username'] %>
+  username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>
   database: <%=ENV['MYSQL_DATABASE'] %>
   adapter: mysql2
