@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 
   delegate :access_token, to: :api_key, allow_nil: true
 
+  before_validation :initialize_password
   before_save { |t| t.email = t.email.downcase }
 
   scope :staff, -> { where(staff: true) }
@@ -111,5 +112,15 @@ class User < ActiveRecord::Base
 
   def username
     email.split("@").first
+  end
+
+  def personal_emails=(emails)
+    write_attribute :personal_emails, (emails || []).split(',').flatten.compact.uniq
+  end
+
+  private
+
+  def initialize_password
+    self.password = User.generate_password if new_record? && self.password.blank?
   end
 end

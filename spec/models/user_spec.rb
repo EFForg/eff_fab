@@ -104,4 +104,28 @@ describe User do
     end
   end
 
+  context "parses personal emails" do
+    let(:user) { FactoryGirl.create(:user) }
+    subject(:save_user) { user.update(personal_emails: extra_emails) }
+
+    context "when emails are an array" do
+      let(:extra_emails) { 2.times.map { Faker::Internet.email } }
+
+      it "records extra emails" do
+        save_user
+        expect(user.reload.personal_emails).to match_array(extra_emails)
+      end
+    end
+
+    context "when emails are a string" do
+      let(:extra_emails) { "me@coolmail.net,me@evencoolermail.net" }
+
+      it "records extra emails" do
+        save_user
+        expect(user.reload.personal_emails).to match_array(
+          ["me@coolmail.net", "me@evencoolermail.net"]
+        )
+      end
+    end
+  end
 end
