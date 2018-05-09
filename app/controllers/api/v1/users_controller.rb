@@ -4,11 +4,11 @@ class Api::V1::UsersController < Api::ApplicationController
   # POST /api/v1/users
   def create
     # In practice, TechOps is using this endpoint to create new users,
-    # as well as update and look at existing users.
+    # as well as update existing users.
     # It's a little unconventional, but that's what's happening.
     @user = User.where(email: email).first_or_initialize
 
-    if create_update_or_view
+    if @user.update(new_params)
       render json: { success: true, user: @user.to_json }, status: :created
     else
       render json: { success: false, errors: @user.errors }, status: :unprocessable_entity
@@ -44,16 +44,11 @@ class Api::V1::UsersController < Api::ApplicationController
   end
 
   def new_params
-    new_params = secure_params
-    new_params.merge(password: User.generate_password) if @user.new_record?
-    new_params.merge(personal_emails: personal_emails) if personal_emails.any?
-  end
-
-  def create_update_or_view
-    if new_params || @user.new_record?
-      @user.save(new_params)
-    else
-      @user
+    new_params ||= begin
+      new_attrs = secure_params
+      new_attrs.merge!(password: User.generate_password) if @user.new_record?
+      new_attrs.merge!(personal_emails: personal_emails) if personal_emails.any?
+      new_attrs
     end
   end
 end
