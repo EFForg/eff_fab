@@ -1,6 +1,6 @@
 FROM ruby:2.3-slim
 
-RUN mkdir -p /opt/fab
+RUN mkdir -p /opt/fab /opt/fab/tmp
 WORKDIR /opt/fab
 
 ARG BUILD_ENV=production

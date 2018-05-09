@@ -33,11 +33,18 @@ $ docker-compose exec app rake db:setup
 ```
 $  cp .env.example .env
 $  bundle install
-$  rake db:create
-$  rake db:migrate
-$  rake user:populate_users
+$  bundle exec rake db:create
+$  bundle exec rake db:schema:load
+$  bundle exec rake user:populate_users
 $  rails s
 ```
+
+If you get errors like `Unknown MySQL server host 'db'`, try
+```
+$ mysql -u root
+mysql> create database eff_fab_dev;
+mysql> use eff_fab_dev;
+grant all privileges on *.* to 'fab'@'localhost' identified by 'some_password';
 
 ### Populate Database Records
 To prime up the database with a basic admin user, run `rake db:seed`.  To populate the app for EFF usage, login as the admin user (see application.yml for credentials) and navigate to `/admin` and click the button for `Populate Users`, this will scrape https://www.eff.org/about/staff for user names, emails, and pictures and plug them into the database.
