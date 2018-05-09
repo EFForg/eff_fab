@@ -27,32 +27,6 @@ describe Api::V1::UsersController do
       end
     end
 
-    context "with personal emails" do
-      subject(:post_request) do
-        post :create, { username: username, personal_emails: extra_emails }
-      end
-
-      context "when emails are an array" do
-        let(:extra_emails) { 2.times.map { Faker::Internet.email } }
-
-        it "records extra emails" do
-          post_request
-          expect(User.last.personal_emails).to match_array(extra_emails)
-        end
-      end
-
-      context "when emails are a string" do
-        let(:extra_emails) { "me@coolmail.net,me@evencoolermail.net" }
-
-        it "records extra emails" do
-          post_request
-          expect(User.last.personal_emails).to match_array(
-            ["me@coolmail.net", "me@evencoolermail.net"]
-          )
-        end
-      end
-    end
-
     describe "when user exists" do
       let(:user) { FactoryGirl.create(:user, staff: false) }
 
@@ -92,7 +66,6 @@ describe Api::V1::UsersController do
       end
 
       context "without changes" do
-        # techOps uses this endpoint to update users.
         let(:personal_emails) { ['hi@ok.com', 'yes@also.com'] }
         let!(:user) { FactoryGirl.create(:user, personal_emails: personal_emails) }
         let(:post_request) { post :create, username: user.username }
