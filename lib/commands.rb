@@ -98,7 +98,7 @@ class Commands::SetMyWhere < Commands
     if target_user.present? && create_where
       %(Your whereabouts are now set to "#{@body}".)
     else
-      "I couldn't save your message. Better send it it to where@eff.org :sweat_smile:"
+      "I couldn't save your message. Better send it to where@eff.org :sweat_smile:"
     end
   end
 

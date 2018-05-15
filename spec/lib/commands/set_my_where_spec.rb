@@ -89,7 +89,7 @@ RSpec.describe Commands::SetMyWhere do
 
         it "sets the text" do
           expect(response_body[:text]).to eq(
-            "I couldn't save your message. Better send it it to where@eff.org :sweat_smile:"
+            "I couldn't save your message. Better send it to where@eff.org :sweat_smile:"
           )
         end
       end
