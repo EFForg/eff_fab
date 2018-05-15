@@ -9,9 +9,11 @@
 
     <% if @user.upcoming_fab_still_missing? %>
       <p>
-        Hey, we noticed that you still haven't done your FAB. 
+        Hey, we noticed that you still haven't done your FAB.
       </p>
-      <p><a href="<%= ditto = new_user_fab_url(@user, host: ENV['domain_name'], protocol: 'https') %>"> <%= ditto %></a></p>
+      <p>
+        <%= link_to user_fabs_url(@user), user_fabs_url(@user, host: ENV['domain_name'], protocol: 'https') %>
+      </p>
     <% else %>
       <p>Thanks for doing your FAB.  You're awesome.</p>
     <% end %>
