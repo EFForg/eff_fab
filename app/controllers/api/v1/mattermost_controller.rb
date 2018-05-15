@@ -11,6 +11,14 @@ class Api::V1::MattermostController < Api::ApplicationController
     render json: Commands::WhereIs.new(command_params).response
   end
 
+  def add_fab_forward
+    render json: Commands::AddFabForward.new(command_params).response
+  end
+
+  def add_fab_back
+    render json: Commands::AddFabBack.new(command_params).response
+  end
+
   private
 
   def command_params
