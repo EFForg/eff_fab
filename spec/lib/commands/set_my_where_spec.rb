@@ -1,4 +1,4 @@
-require 'commands'
+require 'commands/set_my_where'
 
 RSpec.describe Commands::SetMyWhere do
   let(:user) { FactoryGirl.create(:user, email: "cool.kitten@eff.org") }

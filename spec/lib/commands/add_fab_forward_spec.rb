@@ -1,4 +1,4 @@
-require 'commands'
+require 'commands/add_fab_forward'
 
 RSpec.describe Commands::AddFabForward do
   let(:user) { FactoryGirl.create(:user) }

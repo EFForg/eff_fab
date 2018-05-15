@@ -1,4 +1,4 @@
-require 'commands'
+require 'commands/where_is'
 
 RSpec.describe Commands::WhereIs do
   let(:asker) { FactoryGirl.create(:user) }

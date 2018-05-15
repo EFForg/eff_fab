@@ -1,5 +1,5 @@
 class Api::V1::MattermostController < Api::ApplicationController
-  require_dependency 'commands'
+  Dir["#{Rails.root}/lib/commands/*.rb"].each {|file| require_dependency file }
 
   skip_before_action :login_by_basic_auth
 

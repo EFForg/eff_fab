@@ -1,4 +1,4 @@
-require 'commands'
+require 'commands/add_fab_back'
 
 RSpec.describe Commands::AddFabBack do
   let(:user) { FactoryGirl.create(:user) }
