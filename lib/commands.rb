@@ -4,7 +4,7 @@ class Commands
 
   def initialize(args)
     @body = args[:text]
-    @username = args[:user_name]
+    @username = args[:user_name].remove("@")
     @token = args[:token]
     @command = args[:command]
   end
@@ -82,8 +82,7 @@ end
 
 class Commands::SetMyWhere < Commands
   def target_user
-    username = @username.remove("@")
-    @user ||= User.find_by(email: "#{username}@eff.org")
+    @user ||= User.find_by(email: "#{@username}@eff.org")
   end
 
   def command
@@ -119,8 +118,7 @@ class Commands::AddFabForward < Commands
   end
 
   def target_user
-    username = @username.remove("@")
-    @user ||= User.find_by(email: "#{username}@eff.org")
+    @user ||= User.find_by(email: "#{@username}@eff.org")
   end
 
   def response_body
@@ -150,8 +148,7 @@ class Commands::AddFabBack < Commands
   end
 
   def target_user
-    username = @username.remove("@")
-    @user ||= User.find_by(email: "#{username}@eff.org")
+    @user ||= User.find_by(email: "#{@username}@eff.org")
   end
 
   def response_body
