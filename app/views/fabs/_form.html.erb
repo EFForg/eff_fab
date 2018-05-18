@@ -5,10 +5,9 @@
     <div class="form-inputs">
 
       <div class="clear"></div>
-      <%= display_fab_note_inputs form: f, forward: false %>
-      <%= display_fab_note_inputs form: f, forward: true %>
+      <%= render partial: 'display_fab_note_inputs', locals: {f: f, forward: false} %>
+      <%= render partial: 'display_fab_note_inputs', locals: {f: f, forward: true} %>
       <div class="clear"></div>
-
 
       <!-- <div>Gif Tag:
         <%= f.file_field :gif_tag %>

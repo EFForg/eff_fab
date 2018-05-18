@@ -44,7 +44,6 @@ feature 'User fabs page', :devise do
     expect(page).to have_content 'I have an old note'
   end
 
-
   scenario "user creates a new fab of marvelous expectations" do
     log_me_in
 
@@ -59,6 +58,41 @@ feature 'User fabs page', :devise do
     expect(fab.period.yday).to eq  Fab.get_start_of_current_fab_period.yday
     expect(fab.backward.first.body).to eq  "I'm making my fab"
     expect(fab.forward.first.body).to eq  "here's the forward I think..."
+  end
+
+  scenario "this week's backwards defaults to last week's forwards, and can be overridden" do
+    log_me_in FactoryGirl.create(:user)
+
+    last_forward = "some text"
+    next_text = "next week i will..."
+    # create last week's FAB
+    last_fab = FactoryGirl.create(:fab_due_in_prior_period, user_id: @me.id)
+    last_fab.forward.last.update(body: last_forward)
+
+    visit user_fabs_path(@me)
+
+    fill_in 'fab_notes_attributes_3_body', with: next_text
+    click_button 'SUBMIT FAB'
+
+    @me.reload
+    fab = @me.current_period_fab
+
+    # DB records the default back and the new forward
+    expect(fab).to be_present
+    expect(fab.backward.pluck(:body).select(&:present?))
+      .to match_array(last_fab.forward.pluck(:body).select(&:present?))
+    expect(fab.forward.pluck(:body)).to include(next_text)
+
+    # UX shows the default back and the new forward
+    visit user_fabs_path(@me)
+    expect(all('.fab-note-inputs.back input').map(&:value)).to include(last_forward)
+    expect(all('.fab-note-inputs.forward input').map(&:value)).to include(next_text)
+
+    # update this week's FAB
+    fill_in 'fab_notes_attributes_0_body', with: "updated text"
+    click_button 'SUBMIT FAB'
+    visit user_fabs_path(@me)
+    expect(all('.fab-note-inputs.back input').map(&:value)).to include("updated text")
   end
 
   # Scenario: User cannot see another user's profile
@@ -100,9 +134,8 @@ feature 'User fabs page', :devise do
     bring_up_my_fab
 
     # historic fabs display
-    first_fab_header_text = find_all('h3').last.text
-
-    expect(first_fab_header_text.downcase).to eq @me.fabs.second.display_date_for_header.downcase
+    expect(find_all('h3').last.text)
+      .to include(@me.fabs.second.period.strftime("%b %-d "))
 
     # currently editable fabs display
     editable_fab_header_text = find_all('h4').first.text
@@ -111,9 +144,7 @@ feature 'User fabs page', :devise do
     expect(editable_fab_header_text.downcase).to eq @me.fabs.first.display_back_start_day.downcase
     expect(editable_fab_header_text_forward.downcase).to eq @me.fabs.first.display_forward_start_day.downcase
   end
-
 end
-
 
 def log_me_in(me = nil)
   @me = me.nil? ? FactoryGirl.create(:user) : me
