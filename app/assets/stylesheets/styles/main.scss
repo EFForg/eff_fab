@@ -243,11 +243,6 @@
   }
 }
 
-.fab-notes {
-  padding-bottom: 20px;
-  padding-right: 10px;
-}
-
 .nested-fields {
   text-align: center;
   @include susy-breakpoint($md) {
@@ -348,22 +343,21 @@ h3 a {
   padding-top: 2em;
   padding-bottom: 1.5em;
 
-  .fab {
-    h3 a {
-      color: #bbb !important;
-      font-size: 14px;
-      text-transform: uppercase;
-      font-family: 'Montserrat';
-      font-weight: 300;
-      letter-spacing: 0.03em;
-      margin-bottom: 1em;
-    }
-    .fab-notes {
-      font-family: 'Lato';
-      font-weight: 300;
-      letter-spacing: 0.15px;
-    }
+  h3 a {
+    color: #bbb !important;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: 'Montserrat';
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    margin-bottom: 1em;
   }
+}
+.fab-notes {
+  font-family: 'Lato';
+  font-weight: 300;
+  letter-spacing: 0.15px;
+  padding-bottom: 20px;
 }
 // unless/until fabfilter works on individual fab pages
 body#fabs-index {

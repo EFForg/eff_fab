@@ -26,22 +26,35 @@ feature 'User fabs page', :devise do
   #   Given I am signed in
   #   When I visit the user profile page
   #   Then I see my own email address
-  scenario 'user sees own fab history' do
+  scenario 'User can see own historical FABs, including default backwards' do
     log_me_in FactoryGirl.create(:user)
 
-    @me.fabs << FactoryGirl.create(:fab_due_in_prior_period)
-    @me.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    current_fab = FactoryGirl.create(:fab_due_in_current_period, user_id: @me.id)
+    prev_fab = FactoryGirl.create(
+      :fab, user_id: @me.id, period: current_fab.period - 1.week
+    )
+    old_fab = FactoryGirl.create(
+      :fab, user_id: @me.id, period: current_fab.period - 2.weeks
+    )
+    old_fab.backward.each {|note| note.update(body: Faker::ChuckNorris.fact) }
+    old_fab.forward.last.update(body: "I'm looking to the future")
 
     visit user_fabs_path(@me)
 
-    # Should have an input that contains 'I have a note'
-    expect(page).to have_xpath("//input[@value='I have a note']")
+    # Should have an input for the current fab, not a list item
+    current_note = current_fab.notes.pluck(:body).find(&:present?)
+    expect(page).to have_xpath("//input[@value='#{current_note}']")
+    expect(page).not_to have_content current_note
 
-    first_fab_header_text = find_all('h4').first.text
+    # Should have a list item for each previous FAB
+    prev_fab_section = all('.fab').first
+    expect(prev_fab_section.find('h3').text).to eq prev_fab.display_date_for_header
+    expect(prev_fab_section).to have_content(prev_fab.backward.pluck(:body).find(&:present?))
+    expect(prev_fab_section).to have_content(old_fab.forward.last.body)
 
-    expect(first_fab_header_text).not_to eq @me.fabs.first.display_date_for_header
-    expect(page).not_to have_content 'I have a note'
-    expect(page).to have_content 'I have an old note'
+    old_fab_section = all('.fab')[1]
+    expect(old_fab_section.find('h3').text).to eq old_fab.display_date_for_header
+    expect(old_fab_section).to have_content(old_fab.backward.pluck(:body).find(&:present?))
   end
 
   scenario "user creates a new fab of marvelous expectations" do

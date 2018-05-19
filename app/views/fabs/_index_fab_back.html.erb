@@ -1,8 +1,9 @@
 <% time_span = fab.display_date_for_header %>
 
-<div>
+<div class="fab-notes">
   <h3><%= link_to time_span, [@user, fab] %> </h3>
-  <% fab.backward.each do |note| %>
-    <div class="fab-notes"><%= note.body %></div>
+  <% backward_or_placeholders(fab).each do |note| %>
+    <%= note %>
+    <br />
   <% end %>
 </div>
