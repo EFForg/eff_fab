@@ -29,6 +29,6 @@ module FabsHelper
     return backwards if backwards.all?(&:present?)
 
     placeholders = fab.exactly_previous_fab.forward.pluck(:body)
-    backwards.concat(placeholders).select(&:present?).compact.uniq
+    backwards.concat(placeholders).select(&:present?).uniq
   end
 end
