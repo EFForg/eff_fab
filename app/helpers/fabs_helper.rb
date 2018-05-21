@@ -1,10 +1,13 @@
 module FabsHelper
 
-  def display_fab_note_inputs(options)
-    form = options[:form]
-    forward = options[:forward]
+  def notes_for(fab, previous_fab, forward)
+    notes = fab.notes.select {|n| n.forward == forward}
+    autofills = forward ? [] : [previous_fab.try(:forward).try(:map, &:body)].flatten
+    notes.zip(autofills)
+  end
 
-    render partial: 'display_fab_note_inputs', locals: {f: form, forward: forward}
+  def header_for(forward)
+    (forward ? "Next Week" : "Last Week").capitalize
   end
 
   def show_fab_notes(options)
@@ -21,4 +24,11 @@ module FabsHelper
     end
   end
 
+  def backward_or_placeholders(fab)
+    backwards = fab.backward.pluck(:body)
+    return backwards if backwards.all?(&:present?)
+
+    placeholders = fab.exactly_previous_fab.forward.pluck(:body)
+    backwards.concat(placeholders).select(&:present?).uniq
+  end
 end
