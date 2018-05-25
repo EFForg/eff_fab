@@ -197,6 +197,12 @@ h3 a {
   }
 }
 
+.user-actions {
+  clear: both;
+  font-size: 1rem;
+  margin-top: 1em;
+}
+
 .fab-user {
   display: block;
   @include container(95%);
