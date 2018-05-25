@@ -31,4 +31,17 @@ module FabsHelper
     placeholders = fab.exactly_previous_fab.forward.pluck(:body)
     backwards.concat(placeholders).select(&:present?).uniq
   end
+
+  def expose_notes(fab, direction)
+    direction = 'backward' if direction == 'back'
+
+    notes = fab.send(direction)
+    notes.presence || [
+      OpenStruct.new({ body: direction == "forward" ? "=(" : "This user hasn't filled out this FAB!" }),
+      OpenStruct.new({ body: "" }),
+      OpenStruct.new({ body: "" })
+    ]
+
+    notes
+  end
 end

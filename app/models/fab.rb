@@ -22,23 +22,6 @@ class Fab < ActiveRecord::Base
     " Backwards: #{backwards} \n Forwards: #{forwards}"
   end
 
-  def expose_notes(direction)
-    if self.new_record?
-      notes = [
-        OpenStruct.new({ body: direction == "forward" ? "=(" : "This user hasn't filled out this FAB!" }),
-        OpenStruct.new({ body: "" }),
-        OpenStruct.new({ body: "" })
-      ]
-    else
-      case direction
-      when "forward"
-        forward
-      when "back"
-        backward
-      end
-    end
-  end
-
   # Returns "Week of March 28th, 2016"
   def display_back_start_day
     display_start_day_of_week(period)
