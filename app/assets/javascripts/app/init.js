@@ -44,8 +44,27 @@ function sortTables() {
   $(".tablesorter").tablesorter({
     theme: 'materialize',
     widgets: ['filter'],
+    headers: {
+      2 : { // if the cell order changes, this must also change
+        sorter: 'timestamp', // sort by sent_at
+        sortInitialOrder: 'desc' // show most recent msgs first
+      }
+    },
     sortLocaleCompare: true
   });
 };
+
+// parser for the timestamp data attribute
+$.tablesorter.addParser({
+  id: 'timestamp',
+  is: function() {
+    return false; // don't autodetect this parser
+  },
+  format: function(_content, _table, cell, _cellIndex) {
+    return $(cell).data().timestamp;
+  },
+  parsed: false, // don't use this parser by default
+  type: 'numeric'
+});
 
 $(document).on('turbolinks:load', sortTables);
