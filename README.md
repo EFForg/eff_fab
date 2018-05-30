@@ -27,6 +27,7 @@ $ cp .env.example .env
 $ cp docker-compose.yml.example docker-compose.yml
 $ docker-compose up --build -d
 $ docker-compose exec app rake db:setup
+$ docker-compose exec app rake user:populate_users
 ```
 
 ###Without Docker:
