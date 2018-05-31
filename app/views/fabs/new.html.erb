@@ -1,5 +1,10 @@
 <h1>New Fab</h1>
 
-<%= render 'form' %>
+<div class="fab-user">
+  <%= render 'users/portrait', user: @fab.user %>
+  <%= render 'form' %>
 
-<%= link_to 'Back', user_fabs_path %>
+  <div class="user-actions">
+    <%= link_to 'Back', user_fabs_path %>
+  </div>
+</div>

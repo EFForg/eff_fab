@@ -1,0 +1,11 @@
+<div style="background-image: url(<%= user.avatar.url(:thumb) %>)" class="portrait"></div>
+<figcaption>
+  <hgroup>
+    <h1><%= link_to(user.name, user_fabs_path(user)) %></h1>
+    <h2><%= user.title %></h2>
+  </hgroup>
+
+  <% if @fab.gif_tag.present? %>
+    <div style="background-image: url(<%= @fab.gif_tag.url(:thumb) %>)" class="portrait"></div>
+  <% end %>
+</figcaption>

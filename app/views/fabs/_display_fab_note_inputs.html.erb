@@ -8,7 +8,7 @@
   </h4>
 
   <% notes_for(@fab, @previous_fab, forward).each do |note, autofill| %>
-    <div class="nested-fields"</div>
+    <div class="nested-fields">
       <%= f.fields_for(:notes, note) do |f| %>
         <%= f.hidden_field :forward, value: note.forward %>
         <%= f.text_field :body, value: note.body || autofill %>

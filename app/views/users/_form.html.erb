@@ -27,29 +27,35 @@
       <%= f.input :title %>
     </div>
     <div class="form-field">
+      <%= f.label :team_id, "Team" %>
       <%= f.select :team_id, Team.all.collect {|t| [t.name, t.id]} %>
     </div>
     <div class="form-field">
       <%= f.input :avatar, as: :file %>
     </div>
+    <div class="form-field ">
+      <%= f.input :staff, inline_label: "Require this user to fill out FABs" %>
+    </div>
+
+    <% if @user.persisted? && current_user.try(:admin?) %>
+      <p>
+        API token: <%= @user.access_token %>
+        <br />
+        <%= link_to 'Generate API token', generate_access_token_user_path(@user), method: :post %>
+      </p>
+    <% end %>
   </div>
 
-  <% if @user.new_record? %>
-    <div class="">
-      <%# create user %>
-      <%= f.button :submit %>
-    </div>
-  <% else %>
-    <div>
+  <div class="form-actions">
+    <%= f.button :submit %>
+    <% if @user.persisted? && current_user.try(:admin?) %>
       <div>
-        <%= f.button :submit %>
+        <%= link_to 'Delete user', @user, method: :delete, data: { confirm: 'Are you sure you want to delete this user?' } %>
       </div>
-      <%= link_to "Cancel", user_fabs_path(@user), class: 'button' %>
-      <% if current_user.try(:admin?) %>
-        <p><%= link_to 'Generate API token', generate_access_token_user_path(@user), method: :post %></p>
-        <p><%= link_to 'Delete user', @user, method: :delete, data: { confirm: 'Are you sure you want to delete this user?' } %></p>
-      <% end %>
+    <% end %>
+    <div>
+      <%= link_to "Cancel", @user.persisted? ? user_fabs_path(@user) : users_path %>
     </div>
-  <% end %>
+  </div>
 
 <% end %>

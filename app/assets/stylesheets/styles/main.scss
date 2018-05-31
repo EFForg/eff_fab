@@ -73,6 +73,136 @@
   }
 }
 
+#container {
+  margin-top: 20px;
+}
+
+.nav-container nav {
+  text-align: center;
+}
+
+.team-name-header {
+  text-transform: uppercase;
+  color: #bbb;
+  letter-spacing: 0.1em;
+  font-family: 'Montserrat';
+  font-weight: 400;
+  text-align: center;
+  font-size: 1.8em;
+
+  @include container(95%);
+  @include susy-breakpoint($md) {
+    @include container(70%);
+  }
+}
+
+.nested-fields {
+  text-align: center;
+  @include susy-breakpoint($md) {
+    text-align: left;
+  }
+  input {
+    width: 95%;
+    @include susy-breakpoint($md) {
+      width: 75%;
+    }
+  }
+}
+
+.form-actions {
+  text-align: center;
+
+  input {
+    margin-top: 2em;
+    font-size: 0.55em;
+    color: $link-color;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Montserrat';
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    background-color: transparent;
+    border: 1px solid $link-color;
+    padding: 0.9em 2.5em 1em 2.5em;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+      background-color: $link-color;
+    }
+  }
+}
+
+/*form#new_user {*/
+/*form {*/
+/*}*/
+
+.new_user, .edit_user {
+  @include container(95%);
+  @include susy-breakpoint($md) {
+    @include container(70%);
+  }
+
+  background-color: $content-bg-color;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 2em;
+  margin-bottom: 100px;
+
+  input {
+    margin: .25rem;
+    min-width: 10rem;
+    text-align: left;
+  }
+
+  input.boolean {
+    min-width: inherit;
+  }
+
+  input[type="submit"] {
+    font-size: 0.8em;
+    text-transform: uppercase;
+  }
+
+  label {
+    display: inline-block;
+    width: 50px;
+    text-align: right;
+    margin-right: 5px;
+  }
+
+  .boolean label {
+    width: inherit;
+  }
+
+  .form-inputs {
+    margin-bottom: 1em;
+  }
+
+  .form-actions {
+    div {
+      margin: .5em;
+    }
+  }
+}
+
+h3 a {
+  color: $font-color-alt;
+  text-decoration: none;
+
+  &:visited { color: $font-color-alt; }
+
+  &:hover {
+    color: $link-color-hover;
+    background-color: $link-bg-color-hover;
+  }
+}
+
+.user-actions {
+  clear: both;
+  font-size: 1rem;
+  margin-top: 1em;
+}
+
 .fab-user {
   display: block;
   @include container(95%);
@@ -196,106 +326,11 @@
   }
 }
 
-#container {
-  margin-top: 20px;
-}
-
-.nav-container nav {
-  text-align: center;
-}
-
-.team-name-header {
-  text-transform: uppercase;
-  color: #bbb;
-  letter-spacing: 0.1em;
-  font-family: 'Montserrat';
-  font-weight: 400;
-  text-align: center;
-  font-size: 1.8em;
-
-  @include container(95%);
-  @include susy-breakpoint($md) {
-    @include container(70%);
-  }
-}
-
-.user-details {
-  color: $font-color-alt;
-
-  .profile-image{
-    float:left;
-    margin-right: 5%;
-  }
-
-  .profile-name {
-    color: $font-color-alt;
-    font-weight: bold;
-    font-size: $font-size-big;
-
-    a {
-      color: $font-color-alt;
-      text-decoration: none;
-    }
-
-    a:hover {
-      background-color: #eff;
-    }
-  }
-}
-
-.nested-fields {
-  text-align: center;
-  @include susy-breakpoint($md) {
-    text-align: left;
-  }
-  input {
-    width: 95%;
-    @include susy-breakpoint($md) {
-      width: 75%;
-    }
-  }
-}
-
 .fab-note-inputs {
   em {
     margin-top: 4px;
     font-size: 12px;
     color: #bbb;
-  }
-}
-
-.form-actions {
-  text-align: center;
-
-  input {
-    margin-top: 2em;
-    font-size: 0.55em;
-    color: $link-color;
-    border: none;
-    border-radius: 4px;
-    font-family: 'Montserrat';
-    font-weight: 300;
-    letter-spacing: 0.06em;
-    background-color: transparent;
-    border: 1px solid $link-color;
-    padding: 0.9em 2.5em 1em 2.5em;
-    &:hover {
-      cursor: pointer;
-      color: #fff;
-      background-color: $link-color;
-    }
-  }
-}
-
-h3 a {
-  color: $font-color-alt;
-  text-decoration: none;
-
-  &:visited { color: $font-color-alt; }
-
-  &:hover {
-    color: $link-color-hover;
-    background-color: $link-bg-color-hover;
   }
 }
 
@@ -332,7 +367,6 @@ h3 a {
   color: $link-disabled-color;
 }
 
-
 .fabs-back {
   @include container(95%);
   @include susy-breakpoint($md) {
@@ -353,57 +387,18 @@ h3 a {
     margin-bottom: 1em;
   }
 }
+
 .fab-notes {
   font-family: 'Lato';
   font-weight: 300;
   letter-spacing: 0.15px;
   padding-bottom: 20px;
 }
+
 // unless/until fabfilter works on individual fab pages
 body#fabs-index {
   .fab-forward-btn,.fab-backward-btn {
     display: none !important;
-  }
-}
-
-form#new_user {
-  @include container(95%);
-  @include susy-breakpoint($md) {
-    @include container(70%);
-  }
-  background-color: $content-bg-color;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  padding: 2em;
-
-  input[type="submit"] {
-    margin-top: 1em;
-    font-size: 0.8em;
-    color: $link-color;
-    border: none;
-    border-radius: 4px;
-    font-family: 'Montserrat';
-    font-weight: 300;
-    letter-spacing: 0.06em;
-    background-color: transparent;
-    border: 1px solid $link-color;
-    padding: 0.9em 2.5em 1em 2.5em;
-    text-transform: uppercase;
-    &:hover {
-      cursor: pointer;
-      color: #fff;
-      background-color: $link-color;
-    }
-  }
-}
-
-.edit_user {
-  .form-field {
-    margin-bottom: 10px;
-  }
-
-  label {
-    margin-right: 8px;
   }
 }
 

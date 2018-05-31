@@ -31,4 +31,16 @@ module FabsHelper
     placeholders = fab.exactly_previous_fab.forward.pluck(:body)
     backwards.concat(placeholders).select(&:present?).uniq
   end
+
+  def expose_notes(fab, direction)
+    forward = direction == 'forward'
+    direction = 'backward' unless forward
+
+    notes = fab.send(direction)
+    return notes if notes.present?
+
+    notes = 3.times.map { fab.notes.new(forward: forward) }
+    notes.first.body = forward ? "=(" : "This user hasn't filled out this FAB!"
+    notes
+  end
 end

@@ -4,9 +4,9 @@
     <h4>
       <%= fab.present_start_day_for_week(direction == "forward") %>
     </h4>
-  
+
     <ul>
-      <% fab.expose_notes(direction).each do |note| %>
+      <% expose_notes(fab, direction).each do |note| %>
         <li><%= note.body %><%= "&zwnj;".html_safe %>
       <% end %>
     </ul>
