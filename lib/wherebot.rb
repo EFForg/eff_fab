@@ -86,8 +86,9 @@ class Wherebot
 
       destroy_message if wm.save!
     rescue => e
-      Raven.extra_context(email: from, subject: subject, body: body)
-      Raven.captureException(e)
+      Raven.captureException(
+        e, extra: { email: from, subject: subject, body: body }.to_json
+      )
       false
     end
 
