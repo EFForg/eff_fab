@@ -33,15 +33,14 @@ module FabsHelper
   end
 
   def expose_notes(fab, direction)
-    direction = 'backward' if direction == 'back'
+    forward = direction == 'forward'
+    direction = 'backward' unless forward
 
     notes = fab.send(direction)
-    notes.presence || [
-      OpenStruct.new({ body: direction == "forward" ? "=(" : "This user hasn't filled out this FAB!" }),
-      OpenStruct.new({ body: "" }),
-      OpenStruct.new({ body: "" })
-    ]
+    return notes if notes.present?
 
+    notes = 3.times.map { fab.notes.new(forward: forward) }
+    notes.first.body = forward ? "=(" : "This user hasn't filled out this FAB!"
     notes
   end
 end
