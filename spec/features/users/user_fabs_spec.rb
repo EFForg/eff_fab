@@ -16,7 +16,7 @@ feature 'User fabs page', :devise do
     visit user_fabs_path(@me)
 
     expect(page.find("#hero h1")).to have_content(
-      "Where are your coworkers located on the time/space continuum, and what are they doing now?"
+      "What are your coworkers up to this week?"
     )
     expect(page.find("#front img")["src"]).to match(/forward-text-white/)
     expect(page.find("#front img")["alt"]).to eq("Forward & Back")

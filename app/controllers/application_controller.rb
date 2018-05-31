@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_hero
-    @hero_text = "Where are your coworkers located on the time/space continuum, and what are they doing now?"
+    @hero_text = "What are your coworkers up to this week?"
     @hero_title = "Forward & Back"
     @hero_image = ActionController::Base.helpers.asset_path('forward-text-white.svg')
   end

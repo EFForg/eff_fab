@@ -33,7 +33,7 @@
   z-index: 5;
   @include container(70%);
   @include susy-breakpoint($md) {
-    @include container(95%);
+    width: 95%;
   }
   h1 {
     color: #fff;
