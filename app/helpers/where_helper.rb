@@ -1,6 +1,7 @@
 module WhereHelper
   def where_or_stub_for(user)
-    user.last_whereabouts || WhereMessage.new(body: I18n.t('shruggie'))
+    user.last_whereabouts || 
+      WhereMessage.new(body: I18n.t('shruggie'), subject: '')
   end
 
   def mattermost_dm_link(user)

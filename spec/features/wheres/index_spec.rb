@@ -8,7 +8,9 @@ RSpec.feature "The list of all users' most recent whereabouts", type: :feature d
     FactoryGirl.create(:where_message, body: "Flex day at the Sunnydale job fair")
   end
   let!(:where2) do
-    FactoryGirl.create(:where_message, body: "Sick recovering from demon attack")
+    FactoryGirl.create(:where_message,
+                       subject: "Out sick", 
+                       body: "Recovering from demon attack")
   end
 
   before do
@@ -31,6 +33,7 @@ RSpec.feature "The list of all users' most recent whereabouts", type: :feature d
     expect(page).to have_content(where1.body)
     expect(page).to have_content(where2.user.name)
     expect(page).to have_content(where2.body)
+    expect(page).to have_content(where2.subject)
   end
 
   scenario "User can visit one user's historical whereabouts page" do

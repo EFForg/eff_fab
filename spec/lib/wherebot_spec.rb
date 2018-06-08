@@ -87,8 +87,12 @@ RSpec.describe Wherebot do
     describe ".create" do
       let(:create) { wherebot_message.create }
 
-      it "concatenates the subject and body" do
-        expect(wherebot_message.body).to eq(message_body(mail_subject, message))
+      it "sets the body" do
+        expect(wherebot_message.body).to eq(message)
+      end
+
+      it 'sets the subject' do
+        expect(wherebot_message.subject).to eq(mail_subject)
       end
 
       it "finds the where_message's owner by email address" do

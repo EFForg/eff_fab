@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180426232903) do
+ActiveRecord::Schema.define(version: 20180608205327) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string   "access_token", limit: 255
@@ -84,10 +84,11 @@ ActiveRecord::Schema.define(version: 20180426232903) do
   create_table "where_messages", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.datetime "sent_at"
-    t.text     "body",       limit: 65535
+    t.text     "body",       limit: 16777215
     t.string   "provenance", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "subject",    limit: 255,      default: ""
   end
 
 end
