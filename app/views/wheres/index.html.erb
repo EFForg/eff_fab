@@ -1,5 +1,5 @@
 <div id="where-list">
-  <table class="tablesorter striped-table where-table">
+  <table class="tablesorter striped-table">
     <thead>
       <tr>
         <th class="sortable">Name</th>
@@ -15,9 +15,9 @@
           <td><%= link_to user.name, user_wheres_path(user) %></td>
           <td><%= user.team_name %></td>
           <td data-timestamp='<%= where.sent_at.try(:to_i) %>'>
-            <%= where.subject %>
+            <b><%= where.subject %></b>
             <% if where.subject.present? && where.body.present? %>
-              <hr />
+              <br />
             <% end %>
             <%= where.body %>
             <div class='description'><%= time_since(where.sent_at) %></div>

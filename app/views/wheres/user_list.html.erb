@@ -4,7 +4,7 @@
   <% if @wheres.empty? %>
     <div class='where-empty-state'><%= I18n.t('shruggie') %></div>
   <% else %>
-    <table class="tablesorter striped-table where-table">
+    <table class="tablesorter striped-table">
       <thead>
         <tr>
           <th class="sent-at">
@@ -18,9 +18,9 @@
           <tr>
             <td class="description"><%= time_since(where.sent_at) %></td>
             <td>
-              <%= where.subject %>
+              <b><%= where.subject %></b>
               <% if where.subject.present? && where.body.present? %>
-                <hr />
+                <br />
               <% end %>
               <%= where.body %>
             </td>
