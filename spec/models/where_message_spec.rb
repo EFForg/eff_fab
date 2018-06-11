@@ -5,6 +5,11 @@ RSpec.describe WhereMessage, type: :model do
     expect(FactoryGirl.create(:where_message).user).to be_a(User)
   end
 
+  it 'must have either a body or a subject' do
+    where = FactoryGirl.build(:where_message, subject: '', body: '')
+    expect(where).not_to be_valid
+  end
+
   describe "#ensure_sent_at" do
     let(:whereabout) { FactoryGirl.build(:where_message, sent_at: sent_at) }
 

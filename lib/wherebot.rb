@@ -82,6 +82,7 @@ class Wherebot
       wm = WhereMessage.find_or_initialize_by(
         provenance: WHEREBOT_ORIGIN, sent_at: date, user: user
       )
+      wm.subject = nice_subject
       wm.body = body
 
       destroy_message if wm.save!
@@ -97,7 +98,8 @@ class Wherebot
       body = reject_encryption(body)
       strip_junk_from(body)
       body = remove_trailing_junk(body)
-      "#{nice_subject}\n#{body}".strip.chomp.force_encoding('UTF-8')
+      body ||= ''
+      body.strip.chomp.force_encoding('UTF-8')
     end
 
     private
@@ -162,7 +164,7 @@ class Wherebot
     def nice_subject
       nice_subject = subject || ''
       nice_subject.gsub!('[EFF-where] ', '')
-      nice_subject
+      nice_subject.force_encoding('UTF-8')
     end
 
     def destroy_message

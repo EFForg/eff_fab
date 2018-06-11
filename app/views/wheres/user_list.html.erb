@@ -17,7 +17,13 @@
         <% @wheres.each do |where| %>
           <tr>
             <td class="description"><%= time_since(where.sent_at) %></td>
-            <td><%= where.body %></td>
+            <td>
+              <b><%= where.subject %></b>
+              <% if where.subject.present? && where.body.present? %>
+                <br />
+              <% end %>
+              <%= where.body %>
+            </td>
           </tr>
         <% end %>
       </tbody>
