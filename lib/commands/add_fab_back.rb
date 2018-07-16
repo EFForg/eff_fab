@@ -25,7 +25,7 @@ class Commands::AddFabBack < Commands
     fab = target_user.fabs.find_or_create_by(period: Fab.get_start_of_current_fab_period)
     return false unless fab.persisted?
 
-    note = fab.backward.find { |note| note.body.nil? } || fab.backward.new
+    note = fab.backward.find { |note| note.body.blank? } || fab.backward.new
     note.update(body: @body)
   end
 end

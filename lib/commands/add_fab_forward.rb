@@ -25,7 +25,7 @@ class Commands::AddFabForward < Commands
     fab = target_user.fabs.find_or_create_by(period: Fab.get_start_of_current_fab_period)
     return false unless fab.persisted?
 
-    note = fab.forward.find { |note| note.body.nil? } || fab.forward.new
+    note = fab.forward.find { |note| note.body.blank? } || fab.forward.new
     note.update(body: @body)
   end
 end
