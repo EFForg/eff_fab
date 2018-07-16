@@ -13,6 +13,8 @@ describe Api::V1::MattermostController do
   before do
     ENV['MATTERMOST_TOKEN_WHERE'] = auth_token
     ENV['MATTERMOST_TOKEN_WHEREIS'] = auth_token
+    ENV['MATTERMOST_TOKEN_ADDFABFORWARD'] = auth_token
+    ENV['MATTERMOST_TOKEN_ADDFABBACK'] = auth_token
   end
 
   shared_examples "mattermost command" do
@@ -40,6 +42,22 @@ describe Api::V1::MattermostController do
     let(:text) { user.username }
     let(:command) { Commands::WhereIs }
     subject(:create) { post :where_is, slash_params }
+
+    include_examples "mattermost command"
+  end
+
+  describe "#add_fab_back" do
+    let(:text) { "This week I built a Mattermost bot to update FABs" }
+    let(:command) { Commands::AddFabBack }
+    subject(:create) { post :add_fab_back, slash_params }
+
+    include_examples "mattermost command"
+  end
+
+  describe "#add_fab_forward" do
+    let(:text) { "Next week I will built a giant bot to destroy the city" }
+    let(:command) { Commands::AddFabForward }
+    subject(:create) { post :add_fab_forward, slash_params }
 
     include_examples "mattermost command"
   end

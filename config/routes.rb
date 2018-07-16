@@ -37,6 +37,8 @@ Rails.application.routes.draw do
         collection do
           post :set_my_where
           post :where_is
+          post :add_fab_forward
+          post :add_fab_back
         end
       end
     end
