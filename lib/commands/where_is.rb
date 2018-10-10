@@ -18,7 +18,8 @@ class Commands::WhereIs < Commands
           fallback: msg,
           title: "#{time.strftime('%-l:%M%P')}, #{time.strftime('%m/%d/%y')}:",
           author_name: target_user.name,
-          text: target_user.last_whereabouts.body,
+          text: [target_user.last_whereabouts.subject,
+                 target_user.last_whereabouts.body].join(" // "),
           color: "#008800"
         }]
       }
