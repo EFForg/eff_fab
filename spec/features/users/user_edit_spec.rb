@@ -50,6 +50,8 @@ feature 'User profile edit' do
     fill_in 'Title', :with => 'Office Dog'
     click_button 'Update User'
     expect(page).to have_content 'User updated'
+    user.reload
+    expect(user.title).to eq("Office Dog")
   end
 
   scenario "user can't edit another user's profile" do
