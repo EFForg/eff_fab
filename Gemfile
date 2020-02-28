@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'dotenv-rails'
 
-gem 'rails', '4.2.10'
+gem 'rails', '4.2.11.1'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
