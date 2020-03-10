@@ -51,7 +51,9 @@ class Wherebot
 
       puts "importing #{total} new messages"
       new.each do |id|
-        Wherebot::Message.new(@imap, id, @destructive).create
+        ActiveRecord::Base.logger.silence do
+          Wherebot::Message.new(@imap, id, @destructive).create
+        end
         done += 1
         percent = done * 100.0 / total
         puts "#{percent.floor}%" if percent > 1 && (percent % 10) == 0
