@@ -21,7 +21,7 @@ http://phantomjs.org/download.html
 Setup
 -----
 
-###With Docker:
+### With Docker:
 ```
 $ cp .env.example .env
 $ cp docker-compose.yml.example docker-compose.yml
@@ -30,7 +30,7 @@ $ docker-compose exec app rake db:setup
 $ docker-compose exec app rake user:populate_users
 ```
 
-###Without Docker:
+### Without Docker:
 ```
 $  cp .env.example .env
 $  bundle install
@@ -40,12 +40,13 @@ $  bundle exec rake user:populate_users
 $  rails s
 ```
 
-If you get errors like `Unknown MySQL server host 'db'`, try
+If you get errors like `Unknown MySQL server host 'db'`, try:
 ```
 $ mysql -u root
 mysql> create database eff_fab_dev;
 mysql> use eff_fab_dev;
 grant all privileges on *.* to 'fab'@'localhost' identified by 'some_password';
+```
 
 ### Populate Database Records
 To prime up the database with a basic admin user, run `rake db:seed`.  To populate the app for EFF usage, login as the admin user (see application.yml for credentials) and navigate to `/admin` and click the button for `Populate Users`, this will scrape https://www.eff.org/about/staff for user names, emails, and pictures and plug them into the database.
