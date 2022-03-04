@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   validates_associated :team
 
-  belongs_to :team
+  belongs_to :team, optional: true
   has_one :api_key, foreign_key: :owner_id, dependent: :destroy
   has_many :fabs, dependent: :destroy
   has_many :where_messages, dependent: :destroy

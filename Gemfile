@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
-gem 'dotenv-rails'
 
-gem 'rails', '4.2.11.1'
+gem 'rails', '~> 5.2'
+gem 'dotenv-rails'
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
@@ -23,10 +25,10 @@ gem 'mysql2'
 
 group :development do
   gem 'web-console', '~> 2.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'better_errors'
   gem "binding_of_caller"
-  gem 'quiet_assets'
   gem 'rails_layout'
   gem 'spring-commands-rspec'
 end

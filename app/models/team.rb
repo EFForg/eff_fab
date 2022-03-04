@@ -10,7 +10,7 @@ class Team < ActiveRecord::Base
       self.all
     end
 
-    teams << self.runner_ups
+    teams + [self.runner_ups]
   end
 
   def self.runner_ups
