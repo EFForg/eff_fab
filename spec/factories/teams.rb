@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :team do
-    name "MyText"
-    weight 1
+    name { "MyText" }
+    weight { 1 }
   end
 end

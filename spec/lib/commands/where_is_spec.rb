@@ -1,8 +1,8 @@
 require 'commands/where_is'
 
 RSpec.describe Commands::WhereIs do
-  let(:asker) { FactoryGirl.create(:user) }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:asker) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:extra_args) { {} }
   let(:args) do
     { user_name: asker.username, command: 'where_is', text: user.username }

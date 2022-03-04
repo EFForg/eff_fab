@@ -1,8 +1,8 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     name { Faker::Name.name }
     sequence(:email) {|n| "person_#{n}@eff.org" }
-    password "please123"
+    password { "please123" }
 
     # put user on a team
     before(:create) do |user|
@@ -13,18 +13,18 @@ FactoryGirl.define do
     end
 
     trait :with_api_key do
-      association :api_key
+      after(:create) { |user| user.create_api_key! }
     end
   end
 
   factory :user_with_yesterweeks_fab, parent: :user_with_completed_fab do
     after(:create) do |user|
-      user.fabs << FactoryGirl.create(:fab_due_in_prior_period)
+      user.fabs << FactoryBot.create(:fab_due_in_prior_period)
     end
   end
 
   factory :user_admin, parent: :user do
-    role :admin
+    role { :admin }
   end
 
   factory :user_with_completed_fab, parent: :user do
@@ -38,7 +38,6 @@ FactoryGirl.define do
     end
   end
 
-  factory :user_with_incompleted_fab, parent: :user do
-  end
+  factory :user_with_incompleted_fab, parent: :user
 
 end

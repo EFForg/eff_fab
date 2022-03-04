@@ -2,7 +2,7 @@
  Warden.test_mode!
 
  feature 'User profile page', :devise do
-   let(:user) { FactoryGirl.create(:user, :with_api_key, email: 'user@eff.org') }
+   let(:user) { FactoryBot.create(:user, :with_api_key, email: 'user@eff.org') }
 
    after(:each) do
      Warden.test_reset!
@@ -17,7 +17,7 @@
    end
 
    scenario "user cannot see another user's API key" do
-     me = FactoryGirl.create(:user)
+     me = FactoryBot.create(:user)
      login_as(me)
      visit user_path(user)
      expect(page).to have_content 'User'

@@ -2,16 +2,16 @@ require 'rails_helper'
 
 RSpec.describe WhereMessage, type: :model do
   it 'has a user' do
-    expect(FactoryGirl.create(:where_message).user).to be_a(User)
+    expect(FactoryBot.create(:where_message).user).to be_a(User)
   end
 
   it 'must have either a body or a subject' do
-    where = FactoryGirl.build(:where_message, subject: '', body: '')
+    where = FactoryBot.build(:where_message, subject: '', body: '')
     expect(where).not_to be_valid
   end
 
   describe "#ensure_sent_at" do
-    let(:whereabout) { FactoryGirl.build(:where_message, sent_at: sent_at) }
+    let(:whereabout) { FactoryBot.build(:where_message, sent_at: sent_at) }
 
     context "when sent_at is present" do
       let(:sent_at) { 2.days.ago }

@@ -16,7 +16,7 @@ feature 'User index page', :devise do
   #   When I visit the user index page
   #   Then I see my own email address
   scenario 'user sees own email address' do
-    user = FactoryGirl.create(:user_admin)
+    user = FactoryBot.create(:user_admin)
     login_as(user, scope: :user)
     visit users_path
     expect(page).to have_content user.name
@@ -25,7 +25,7 @@ feature 'User index page', :devise do
   describe "tight timing logic of what I see when navigating to /users" do
 
     before :each do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       login_as(@user, scope: :user)
     end
 

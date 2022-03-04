@@ -1,8 +1,8 @@
 require "mailers"
 
 RSpec.describe "mailer tasks" do
-  let!(:staff) { FactoryGirl.create(:user) }
-  let!(:intern) { FactoryGirl.create(:user, staff: false) }
+  let!(:staff) { FactoryBot.create(:user) }
+  let!(:intern) { FactoryBot.create(:user, staff: false) }
 
   describe "turbo_remind" do
     before do

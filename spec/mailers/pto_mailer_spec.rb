@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe PtoMailer, type: :mailer do
   describe "remind" do
-    let!(:user) { FactoryGirl.create(:user) }
+    let!(:user) { FactoryBot.create(:user) }
     let(:mail) { described_class.remind(user).deliver }
 
     it "sends email to specified user" do

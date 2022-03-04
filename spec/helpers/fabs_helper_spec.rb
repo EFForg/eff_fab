@@ -3,7 +3,7 @@ RSpec.describe FabsHelper do
     let(:back1) { "hi" }
     let(:old_back1) { "just some strings" }
     let(:old_back2) { "just so we can assert equality" }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:now) { Fab.get_start_of_current_fab_period }
     let!(:current_fab) { user.fabs.create(period: now) }
     let!(:prior_fab) { user.fabs.create(period: now - 1.week) }

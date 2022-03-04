@@ -7,7 +7,7 @@ RSpec.describe Fab, type: :model do
     before :each do
       stub_time!
 
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
     end
 
     it "should find or build fabs for the current period" do
@@ -39,7 +39,7 @@ RSpec.describe Fab, type: :model do
   end
 
   it "should be able to create a new fab the first time and query it the second time" do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
 
     fab = @user.fabs.find_or_build_this_periods_fab
 
@@ -54,7 +54,7 @@ RSpec.describe Fab, type: :model do
   it "should pull up fabs logically via Fab#find_or_build_this_periods_fab" do
     allow(DateTime).to receive(:now) { ActiveSupport::TimeZone[ENV['time_zone']].parse("Thursday 2001-10-18 4:59PM") }
 
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     fab = @user.fabs.find_or_build_this_periods_fab
 
     expect(fab.id).to be_nil
@@ -138,7 +138,7 @@ RSpec.describe Fab, type: :model do
 
   describe "which_neighbor_fabs_exist" do
     it "should be one previous fab and no next fab" do
-      user = FactoryGirl.create(:user_with_yesterweeks_fab)
+      user = FactoryBot.create(:user_with_yesterweeks_fab)
       fab = user.fabs.first
       a = fab.which_neighbor_fabs_exist?
       expect(a).to eq [true, false]
@@ -148,15 +148,16 @@ RSpec.describe Fab, type: :model do
   describe "Fab#get_fab_state_for_period" do
 
     before :each do
-      @user = FactoryGirl.create(:user)
-      @team_mate = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
+      @team_mate = FactoryBot.create(:user)
     end
 
     it "should have tested logic" do
       expect(Fab.get_fab_state_for_period).to be :someone_on_staff_missed_fab
 
-      @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
-      @team_mate.fabs << FactoryGirl.create(:fab_due_in_current_period)
+      @user.fabs << FactoryBot.build(:fab_due_in_current_period)
+      @team_mate.fabs << FactoryBot.build(:fab_due_in_current_period)
+
       expect(Fab.get_fab_state_for_period).to be :happy_fab_cake_time
     end
 
@@ -164,8 +165,8 @@ RSpec.describe Fab, type: :model do
       yesterweek_period = Fab.get_start_of_current_fab_period - 1.week
       expect(Fab.get_fab_state_for_period(yesterweek_period)).to be :someone_on_staff_missed_fab
 
-      @user.fabs << FactoryGirl.create(:fab_due_in_prior_period)
-      @team_mate.fabs << FactoryGirl.create(:fab_due_in_prior_period)
+      @user.fabs << FactoryBot.build(:fab_due_in_prior_period)
+      @team_mate.fabs << FactoryBot.build(:fab_due_in_prior_period)
 
       expect(Fab.get_fab_state_for_period(yesterweek_period)).to be :happy_fab_cake_time
       expect(Fab.get_fab_state_for_period).to be :someone_on_staff_missed_fab
@@ -173,8 +174,8 @@ RSpec.describe Fab, type: :model do
 
     describe "tight timing logic" do
       before :each do
-        @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
-        @team_mate.fabs << FactoryGirl.create(:fab_due_in_current_period)
+        @user.fabs << FactoryBot.build(:fab_due_in_current_period)
+        @team_mate.fabs << FactoryBot.build(:fab_due_in_current_period)
 
         @exact_due_moment_of_fab = Fab.get_start_of_current_fab_period + 1.week + Fab.n_hours_until_fab_due.hours
       end

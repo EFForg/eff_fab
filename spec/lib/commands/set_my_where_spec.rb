@@ -1,7 +1,7 @@
 require 'commands/set_my_where'
 
 RSpec.describe Commands::SetMyWhere do
-  let(:user) { FactoryGirl.create(:user, email: "cool.kitten@eff.org") }
+  let(:user) { FactoryBot.create(:user, email: "cool.kitten@eff.org") }
   let(:body) { "WFC AUW EOM" }
   let(:extra_args) { {} }
   let(:args) do

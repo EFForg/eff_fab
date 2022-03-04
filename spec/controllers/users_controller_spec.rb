@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 describe UsersController, type: :controller do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:user_admin) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin) { FactoryBot.create(:user_admin) }
 
   describe 'DELETE #destroy' do
-    let(:destroy) { delete :destroy, { user_id: user.id, id: user.id } }
+    let(:destroy) { delete :destroy, params: { user_id: user.id, id: user.id } }
 
     before { sign_in admin }
 

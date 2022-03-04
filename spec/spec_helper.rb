@@ -16,9 +16,7 @@
 # users commonly want.
 #
 
-require 'capybara/poltergeist'
 require 'rspec_api_documentation'
-Capybara.javascript_driver = :poltergeist
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

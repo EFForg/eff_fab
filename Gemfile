@@ -35,10 +35,11 @@ end
 
 group :development, :test do
   gem 'byebug'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry-rails'
   gem 'pry-rescue'
+  gem 'rspec-core'
   gem 'rspec-rails'
 end
 
@@ -47,7 +48,7 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
-  gem 'poltergeist'
+  gem 'webdrivers'
 end
 
 group :production do

@@ -3,7 +3,7 @@ describe User do
   before :each do
     stub_time!
 
-    @user = FactoryGirl.create(:user, email: 'user@example.com')
+    @user = FactoryBot.create(:user, email: 'user@example.com')
   end
 
   subject { @user }
@@ -20,52 +20,52 @@ describe User do
   end
 
   it "should be able to tell if a team mate didn't do their fab" do
-    @other = FactoryGirl.create(:user, email: 'other@example.com')
+    @other = FactoryBot.create(:user, email: 'other@example.com')
     @user.fabs.find_or_build_this_periods_fab.save
 
     expect(@user.upcoming_fab_still_missing_for_team_mate?).to be true
   end
 
   it "should say no team mate's fabs are missing if it's only their own fab missing" do
-    @other = FactoryGirl.create(:user, email: 'other@example.com')
-    @other.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @other = FactoryBot.create(:user, email: 'other@example.com')
+    @other.fabs << FactoryBot.build(:fab_due_in_current_period)
 
     expect(@user.upcoming_fab_still_missing_for_team_mate?).to be false
   end
 
   it "should say no team mate's are missing fabs if everyone did theirs" do
-    @other = FactoryGirl.create(:user, email: 'other@example.com')
-    @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
-    @other.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @other = FactoryBot.create(:user, email: 'other@example.com')
+    @user.fabs << FactoryBot.build(:fab_due_in_current_period)
+    @other.fabs << FactoryBot.build(:fab_due_in_current_period)
 
     expect(@user.upcoming_fab_still_missing_for_team_mate?).to be false
     expect(@other.upcoming_fab_still_missing_for_team_mate?).to be false
   end
 
   it "should tell when you're the only person on team missing fab" do
-    @other = FactoryGirl.create(:user, email: 'other@example.com')
+    @other = FactoryBot.create(:user, email: 'other@example.com')
     expect(@user.only_person_of_team_missing_fab?).to be false
 
-    @other.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @other.fabs << FactoryBot.build(:fab_due_in_current_period)
     expect(@user.only_person_of_team_missing_fab?).to be true
 
-    @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @user.fabs << FactoryBot.build(:fab_due_in_current_period)
     expect(@user.only_person_of_team_missing_fab?).to be false
   end
 
   it "should have tested logic for user#get_fab_state" do
-    @team_mate = FactoryGirl.create(:user)
-    @outsider = FactoryGirl.create(:user, team_id: FactoryGirl.create(:team, name: 'meh').id)
+    @team_mate = FactoryBot.create(:user)
+    @outsider = FactoryBot.create(:user, team_id: FactoryBot.create(:team, name: 'meh').id)
 
     expect(@user.get_fab_state).to be :i_missed_fab
 
-    @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @user.fabs << FactoryBot.build(:fab_due_in_current_period)
     expect(@user.get_fab_state).to be :a_team_mate_missed_fab
 
-    @team_mate.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @team_mate.fabs << FactoryBot.build(:fab_due_in_current_period)
     expect(@user.get_fab_state).to be :someone_on_staff_missed_fab
 
-    @outsider.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @outsider.fabs << FactoryBot.build(:fab_due_in_current_period)
     expect(@user.get_fab_state).to be :happy_fab_cake_time
   end
 
@@ -74,7 +74,7 @@ describe User do
 
     expect(@user.has_missing_fab_for_period?(period)).to be_truthy
 
-    @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+    @user.fabs << FactoryBot.build(:fab_due_in_current_period)
 
     f = @user.fabs.first
 
@@ -97,7 +97,7 @@ describe User do
       r = User.find_users_with_missing_fabs_current_period
       expect(r.count).to eq 1
 
-      @user.fabs << FactoryGirl.create(:fab_due_in_current_period)
+      @user.fabs << FactoryBot.build(:fab_due_in_current_period)
       r = User.find_users_with_missing_fabs_current_period
       expect(r.count).to eq 0
 
@@ -105,7 +105,7 @@ describe User do
   end
 
   context "parses personal emails" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     subject(:save_user) { user.update(personal_emails: extra_emails) }
 
     context "when emails are an array" do

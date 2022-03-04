@@ -1,7 +1,7 @@
 require 'commands/add_fab_forward'
 
 RSpec.describe Commands::AddFabForward do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:body) { "Next week I'll write a Great American Novel" }
   let(:username) { user.username }
   let(:extra_args) { {} }

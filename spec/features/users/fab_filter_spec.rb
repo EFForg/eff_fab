@@ -6,18 +6,19 @@ feature 'users fabFilter' do
 
   before :each do
     # populate teams
-    FactoryGirl.create(:team, name: "activism", weight: 1)
-    FactoryGirl.create(:team, name: "international", weight: 2)
-    FactoryGirl.create(:team, name: "web development", weight: 3)
-    FactoryGirl.create(:team, name: "tech projects", weight: 4)
-    FactoryGirl.create(:team, name: "tech ops", weight: 5)
-    FactoryGirl.create(:team, name: "press/graphics", weight: 6)
-    FactoryGirl.create(:team, name: "legal", weight: 7)
-    FactoryGirl.create(:team, name: "development", weight: 8)
-    FactoryGirl.create(:team, name: "finance/hr", weight: 13)
-    FactoryGirl.create(:team, name: "operations", weight: 14)
-    FactoryGirl.create(:team, name: "executive", weight: 15)
+    FactoryBot.create(:team, name: "activism", weight: 1)
+    FactoryBot.create(:team, name: "international", weight: 2)
+    FactoryBot.create(:team, name: "web development", weight: 3)
+    FactoryBot.create(:team, name: "tech projects", weight: 4)
+    FactoryBot.create(:team, name: "tech ops", weight: 5)
+    FactoryBot.create(:team, name: "press/graphics", weight: 6)
+    FactoryBot.create(:team, name: "legal", weight: 7)
+    FactoryBot.create(:team, name: "development", weight: 8)
+    FactoryBot.create(:team, name: "finance/hr", weight: 13)
+    FactoryBot.create(:team, name: "operations", weight: 14)
+    FactoryBot.create(:team, name: "executive", weight: 15)
   end
+
   # Scenario: Visit the home page
   #   Given I am a visitor
   #   When I visit the home page

@@ -16,7 +16,7 @@ feature 'User registration edit', :devise do
   #   When I change my email address
   #   Then I see an account updated message
   scenario 'user changes email address' do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     login_as(user, :scope => :user)
     visit edit_user_registration_path(user)
     fill_in 'Email', :with => 'newemail@example.com'
@@ -31,8 +31,8 @@ feature 'User registration edit', :devise do
   #   When I try to edit another user's profile
   #   Then I see my own 'edit profile' page
   scenario "user cannot cannot edit another user's registration", :me do
-    me = FactoryGirl.create(:user)
-    other = FactoryGirl.create(:user, email: 'other@example.com')
+    me = FactoryBot.create(:user)
+    other = FactoryBot.create(:user, email: 'other@example.com')
     login_as(me, :scope => :user)
     visit edit_user_registration_path(other)
     expect(page).to have_content 'Edit User'
@@ -43,7 +43,7 @@ end
 
 feature 'User profile edit' do
   scenario "user can edit own profile" do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     login_as(user, :scope => :user)
     visit edit_user_path(user)
     fill_in 'Name', :with => 'Neko'
@@ -55,23 +55,23 @@ feature 'User profile edit' do
   end
 
   scenario "user can't edit another user's profile" do
-    me = FactoryGirl.create(:user)
-    other = FactoryGirl.create(:user, email: 'other@example.com')
+    me = FactoryBot.create(:user)
+    other = FactoryBot.create(:user, email: 'other@example.com')
     login_as(me, :scope => :user)
     visit edit_user_path(other)
     expect(page).to have_content 'Access denied'
   end
 
   scenario "user can't delete own account" do
-    me = FactoryGirl.create(:user)
+    me = FactoryBot.create(:user)
     login_as(me, :scope => :user)
     visit edit_user_path(me)
     expect(page).to have_no_content 'Delete user'
   end
 
   context "admin user" do
-    let(:admin) { FactoryGirl.create(:user_admin) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:admin) { FactoryBot.create(:user_admin) }
+    let(:user) { FactoryBot.create(:user) }
 
     before do
       login_as(admin)

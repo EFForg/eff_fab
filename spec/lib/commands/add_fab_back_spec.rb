@@ -1,7 +1,7 @@
 require 'commands/add_fab_back'
 
 RSpec.describe Commands::AddFabBack do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:body) { "This week I wrote a Mattermost command for updating FABs" }
   let(:username) { user.username }
   let(:extra_args) { {} }

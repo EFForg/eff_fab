@@ -2,14 +2,14 @@ require 'rails_helper'
 
 describe Api::V1::UsersController do
   let(:username) { Faker::Internet.user_name }
-  let!(:admin) { FactoryGirl.create(:user_admin, :with_api_key) }
+  let!(:admin) { FactoryBot.create(:user_admin, :with_api_key) }
 
   before {
     @request.headers['APIAuthorization'] = admin.access_token
   }
 
   describe "POST #create" do
-    subject(:post_request) { post :create, { username: username } }
+    subject(:post_request) { post :create, params: { username: username } }
 
     it "creates a user" do
       expect { post_request }.to change(User, :count).by(1)
@@ -28,10 +28,10 @@ describe Api::V1::UsersController do
     end
 
     describe "when user exists" do
-      let(:user) { FactoryGirl.create(:user, staff: false) }
+      let(:user) { FactoryBot.create(:user, staff: false) }
 
       it "updates the user" do
-        post :create, { username: user.username, staff: true }
+        post :create, params: { username: user.username, staff: true }
         expect(response).to be_successful
         expect(user.reload.staff).to eq(true)
       end
@@ -40,7 +40,7 @@ describe Api::V1::UsersController do
         let(:personal_emails) { 2.times.map { Faker::Internet.email } }
         let(:extra_emails) { "me@coolmail.net,me@evencoolermail.net" }
         let!(:user) do
-          FactoryGirl.create(
+          FactoryBot.create(
             :user,
             email: "#{username}@eff.org",
             personal_emails: personal_emails
@@ -48,7 +48,7 @@ describe Api::V1::UsersController do
         end
 
         it "overwrites the existing emails with new emails" do
-          post :create, { username: username, personal_emails: extra_emails }
+          post :create, params: { username: username, personal_emails: extra_emails }
 
           expect(User.last.personal_emails).to match_array(
             ["me@coolmail.net", "me@evencoolermail.net"]
@@ -58,7 +58,7 @@ describe Api::V1::UsersController do
         it "retains the existing emails if no new emails are present" do
           expect(user.reload.staff).to be_truthy
 
-          post :create, { username: username, staff: false }
+          post :create, params: { username: username, staff: false }
 
           expect(user.reload.personal_emails).to match_array(personal_emails)
           expect(user.reload.staff).to be_falsey
@@ -67,8 +67,8 @@ describe Api::V1::UsersController do
 
       context "without changes" do
         let(:personal_emails) { ['hi@ok.com', 'yes@also.com'] }
-        let!(:user) { FactoryGirl.create(:user, personal_emails: personal_emails) }
-        let(:post_request) { post :create, username: user.username }
+        let!(:user) { FactoryBot.create(:user, personal_emails: personal_emails) }
+        let(:post_request) { post :create, params: { username: user.username } }
 
         it "does not update the user" do
           old_password = user.encrypted_password

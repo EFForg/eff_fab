@@ -17,7 +17,7 @@ resource "Onboarding New Employees" do
 
     header "APIAuthorization", :auth
 
-    let!(:admin) { FactoryGirl.create(:user_admin, :with_api_key) }
+    let!(:admin) { FactoryBot.create(:user_admin, :with_api_key) }
     let(:auth) { admin.access_token }
     let(:user) { User.last }
     let(:username) { "#{Faker::Name.first_name}.#{Faker::Name.last_name}".downcase }
@@ -46,7 +46,7 @@ resource "Onboarding New Employees" do
     end
 
     context "when user already exists" do
-      let!(:user) { FactoryGirl.create(:user, email: "#{username}@eff.org") }
+      let!(:user) { FactoryBot.create(:user, email: "#{username}@eff.org") }
 
       example "Update a user who already exists" do
         explanation "If the username matches an existing user,
@@ -64,10 +64,10 @@ resource "Offboarding previous employees" do
 
     header "APIAuthorization", :auth
 
-    let!(:user) { FactoryGirl.create(:user, email: "#{username}@eff.org") }
+    let!(:user) { FactoryBot.create(:user, email: "#{username}@eff.org") }
     let(:username) { Faker::Internet.user_name }
     let(:raw_post) { { username: username } }
-    let!(:admin) { FactoryGirl.create(:user_admin, :with_api_key) }
+    let!(:admin) { FactoryBot.create(:user_admin, :with_api_key) }
     let(:auth) { admin.access_token }
 
     example "Removes a user from the database" do

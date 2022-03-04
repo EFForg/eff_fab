@@ -16,7 +16,7 @@ feature 'Site navigation:', :devise do
   end
 
   context "A signed-in user" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:links) do
       [root_path, users_path, wheres_path, user_fabs_path(user.id),
        destroy_user_session_path, edit_user_path(user)]
@@ -32,7 +32,7 @@ feature 'Site navigation:', :devise do
     end
 
     context "with admin permissions" do
-      let(:user) { FactoryGirl.create(:user_admin) }
+      let(:user) { FactoryBot.create(:user_admin) }
 
       scenario "can sign out, administrate, view FAB, or view Whereabouts" do
         expect(all('a').map {|a| a[:href] }.uniq).to match_array(links + [admin_path])

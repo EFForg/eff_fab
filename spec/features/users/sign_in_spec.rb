@@ -3,7 +3,7 @@
 #   I want to sign in
 #   So I can visit protected areas of the site
 feature 'Sign in', :devise do
-  given(:user) { FactoryGirl.create(:user) }
+  given(:user) { FactoryBot.create(:user) }
 
   # Scenario: User can sign in with valid credentials
   #   Given I exist as a user

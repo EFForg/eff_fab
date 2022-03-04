@@ -59,8 +59,8 @@ RSpec.describe Wherebot do
   end
 
   describe "forget_old_messages" do
-    let!(:new) { FactoryGirl.create(:where_message, sent_at: 29.days.ago) }
-    let!(:old) { FactoryGirl.create(:where_message, sent_at: 31.days.ago) }
+    let!(:new) { FactoryBot.create(:where_message, sent_at: 29.days.ago) }
+    let!(:old) { FactoryBot.create(:where_message, sent_at: 31.days.ago) }
 
     it "destroys old where messages, but not new ones" do
       expect(WhereMessage.where("sent_at < ?", 30.days.ago)).to include(old)
@@ -70,7 +70,7 @@ RSpec.describe Wherebot do
   end
 
   describe 'Wherebot::Message' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:mail_subject) { "#{user.name} on the way!" }
     let(:message) { "OMW AUW EOM" }
     let(:mail_id) { rand(1..100) }
@@ -121,7 +121,7 @@ RSpec.describe Wherebot do
         # probably, the body method has changed, so the same email has a new body
         let(:old_body) { "probably not as good" }
         let!(:old_email) do
-          FactoryGirl.create(
+          FactoryBot.create(
             :where_message, body: old_body, sent_at: mail.date, user: user,
             provenance: Wherebot::WHEREBOT_ORIGIN
           )
@@ -158,9 +158,9 @@ RSpec.describe Wherebot do
 
       context "sent from a personal email" do
         let(:email) { 'also_me@me.com' }
-        let!(:user) { FactoryGirl.create(:user, personal_emails: ["pre_#{email}"]) }
-        let!(:user2) { FactoryGirl.create(:user, personal_emails: [email]) }
-        let!(:user3) { FactoryGirl.create(:user, personal_emails: ["3_#{email}"]) }
+        let!(:user) { FactoryBot.create(:user, personal_emails: ["pre_#{email}"]) }
+        let!(:user2) { FactoryBot.create(:user, personal_emails: [email]) }
+        let!(:user3) { FactoryBot.create(:user, personal_emails: ["3_#{email}"]) }
         let(:mail) { Mail.new(subject: mail_subject, from: [email]) }
 
         it "assigns where_message to the correct user" do

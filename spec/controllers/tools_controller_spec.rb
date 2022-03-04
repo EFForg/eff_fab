@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe ToolsController, type: :controller do
   describe 'POST #populate_this_weeks_fabs' do
-    let(:admin) { FactoryGirl.create(:user_admin) }
-    let!(:staff) { FactoryGirl.create(:user) }
-    let!(:intern) { FactoryGirl.create(:user, staff: false) }
+    let(:admin) { FactoryBot.create(:user_admin) }
+    let!(:staff) { FactoryBot.create(:user) }
+    let!(:intern) { FactoryBot.create(:user, staff: false) }
     subject(:action) { post :populate_this_weeks_fabs }
 
     before { sign_in admin }
